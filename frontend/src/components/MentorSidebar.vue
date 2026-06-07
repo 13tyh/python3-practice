@@ -98,6 +98,7 @@ function updateCategory(event: Event) {
       >
         <PanelLeftClose v-if="isOpen" :size="20" />
         <PanelLeftOpen v-else :size="20" />
+        <span v-if="!isOpen" class="sidebar-toggle-label">Menu</span>
       </button>
     </div>
 

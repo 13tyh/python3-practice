@@ -2,39 +2,59 @@
 
 Docker コンテナ内で Python 3 を学び、既存プロジェクトに参画した時に「読める・書ける・直せる・判断できる・提案できる」状態を目指す学習環境です。
 
+## 完成状態
+
+このリポジトリは、Docker だけで Python 学習環境、MongoDB、実行API、Vue/TypeScript の学習UIまで起動できる状態です。
+
+- ローカルに Python / Node.js / npm / pnpm がなくても起動可能
+- 初期表示は `http://localhost:5173/#home`
+- Stepごとに「問題」「学ぶこと」「書くファイル」「参照リソース」「実行コマンド」を確認可能
+- UI上の `実行` から許可済みコマンドを実行可能
+- Stepの完了チェックは、対象テストが成功した時だけ付く
+- ホームで効率ルート、苦手カテゴリ、今日やるStepを確認可能
+- RAG可視化、MongoDB練習、レビュー課題、解答例比較をAPIキーなしで利用可能
+- GitHub Actions で Docker build、Python品質チェック、frontend test/e2e/build を確認
+
 ## 起動
 
 Windows PowerShell / macOS Terminal 共通です。
 
 ```bash
 docker compose up -d --build
+```
+
+ブラウザで次を開きます。
+
+- 学習UI: `http://localhost:5173/#home`
+- 実行API: `http://localhost:8000`
+
+コンテナに入って直接操作する場合:
+
+```bash
 docker compose exec app bash
 ```
 
-Vue/TypeScript の step 画面:
-
-```bash
-docker compose up -d --build
-```
-
-ブラウザで `http://localhost:5173` を開きます。
-ローカルに Node.js / npm / pnpm が無くても Docker 内で起動します。
 Vue と実行APIは hot reload 対応です。`frontend/`、`tools/`、`docs/` の変更は保存後に反映されます。
-画面の `実行` ボタンから、許可された `pytest` / `poetry run ...` コマンドを実行できます。
-実行APIは `http://localhost:8000` で起動します。
-アプリ本体とローカルRAG可視化は API キーなしで動きます。
+
+Docker Desktop では次の固定名で表示されます。
+
+- `python-master-frontend`: Vue/TypeScript 学習UI
+- `python-master-api`: UI実行用API
+- `python-master-app`: Python学習用コンテナ
+- `python-master-mongo`: 練習用MongoDB
+- `python-master-mongo-express`: MongoDB確認UI
 
 ## 画面でできること
 
 ![Python Master app overview](docs/assets/app-overview.png)
 
-- Stepごとの問題、学ぶこと、対象ファイル、参考URLの確認
-- UIから許可済みテストコマンドを実行
-- 失敗ログ、対象ファイル候補、解答例 `solutions/` の比較
-- 実務ラボでレビュー練習、弱点分析、RAG可視化、Mongoコマンド確認
-- 学習レポートをMarkdownで出力
-- 進捗とメモをJSONでバックアップ/復元
-- 初回ガイド、専用Step検索、進捗リセット
+- ホーム: 効率ルート、苦手カテゴリ、今日の候補、学習状況を見る
+- Step画面: 問題、学ぶこと、注意点、参考URL、対象ファイルを見る
+- 実行: UIから `pytest` / `poetry run ...` など許可済みコマンドを実行する
+- 比較: 自分の答えと `solutions/` を見比べる
+- 実務ラボ: レビュー練習、RAG可視化、Mongoコマンド確認、メモを使う
+- 絞り込み: 今日、未完了、基礎復習、軽量モードで学習量を調整する
+- リセット: 進捗と学習ログを最初からやり直す
 
 ショートカット:
 
@@ -43,6 +63,8 @@ Vue と実行APIは hot reload 対応です。`frontend/`、`tools/`、`docs/` �
 - `r`: 現在Stepの主コマンドを実行
 - `/`: Step検索を開く
 - `s`: サイドバー開閉
+- `l`: 軽量モード切り替え
+- `h`: ホームへ戻る
 - `Esc`: モーダルを閉じる
 
 コンテナ内で使う基本コマンド:
@@ -98,15 +120,16 @@ GitHub Actions は `.github/workflows/ci.yml` で次を実行します。
 - `docker compose build app frontend`
 - `docker compose run --rm --no-deps app poetry run build`
 - `docker compose run --rm --no-deps frontend pnpm test`
+- `docker compose run --rm --no-deps frontend pnpm test:e2e`
 - `docker compose run --rm --no-deps frontend pnpm build`
 
 ローカルで同じ確認をするなら:
 
 ```bash
-docker compose exec app poetry run build
-docker compose exec frontend pnpm test
-docker compose exec frontend pnpm test:e2e
-docker compose exec frontend pnpm build
+docker compose run --rm --no-deps app poetry run build
+docker compose run --rm --no-deps frontend pnpm test
+docker compose run --rm --no-deps frontend pnpm test:e2e
+docker compose run --rm --no-deps frontend pnpm build
 ```
 
 ## トラブルシュート

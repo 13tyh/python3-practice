@@ -17,6 +17,10 @@
     align-items: start;
   }
 
+  .sidebar-collapsed .mentor-main {
+    padding: 76px 18px 18px;
+  }
+
   .mentor-main {
     padding: 18px;
   }
@@ -35,6 +39,10 @@
 @media (max-width: 560px) {
   .mentor-main {
     padding: 14px;
+  }
+
+  .sidebar-collapsed .mentor-main {
+    padding: 76px 14px 14px;
   }
 
   .mission-card,
