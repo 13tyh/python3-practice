@@ -15,11 +15,6 @@ describe("app accessibility", () => {
     window.localStorage.setItem("python-master-onboarding-seen", "true");
     window.location.hash = "#00_environment";
     vi.restoreAllMocks();
-    vi.stubGlobal("URL", {
-      createObjectURL: vi.fn(() => "blob:report"),
-      revokeObjectURL: vi.fn(),
-    });
-    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
   });
 
   it("主要操作に名前と状態がある", async () => {
@@ -30,7 +25,7 @@ describe("app accessibility", () => {
     expect(wrapper.find(".run-card button").attributes("aria-label")).toContain("実行");
     expect(wrapper.find(".mentor-search input").attributes("aria-label")).toBe("Stepを検索");
     expect(wrapper.find(".sidebar-filter select").attributes("aria-label")).toBe("category filter");
-    expect(wrapper.find(".phase-toggle").attributes("aria-expanded")).toBe("true");
+    expect(wrapper.find(".phase-toggle").attributes("aria-expanded")).toBe("false");
     expect(wrapper.findAll(".learning-toolbar button").every((button) => Boolean(button.attributes("title")))).toBe(true);
   });
 

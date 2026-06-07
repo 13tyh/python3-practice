@@ -37,6 +37,19 @@ describe("Python Master app", () => {
     vi.restoreAllMocks();
   });
 
+  it("hashなし起動ではhomeへ正規化し、Step画面へ行かない", async () => {
+    mockFetch();
+    const wrapper = mount(App);
+    await flushPromises();
+
+    expect(window.location.hash).toBe("#home");
+    expect(wrapper.find(".home-dashboard").exists()).toBe(true);
+    expect(wrapper.text()).toContain("次の1手だけ決める");
+    expect(wrapper.text()).not.toContain("今回のゴール");
+    expect(wrapper.find(".sidebar-home-link").classes()).toContain("active");
+    expect(wrapper.find(".mentor-step-list button.active").exists()).toBe(false);
+  });
+
   it("hashのStepを表示し、主要パネルを出す", async () => {
     window.location.hash = "#03_files";
     mockFetch();
@@ -110,6 +123,7 @@ describe("Python Master app", () => {
   });
 
   it("軽量モードで参照パネルと実務ラボを畳める", async () => {
+    window.location.hash = "#00_environment";
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();

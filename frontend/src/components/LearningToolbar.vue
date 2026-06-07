@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { BookOpenCheck, Download, FileDown, Flag, Gauge, HelpCircle, Home, ListFilter, RotateCcw, Search, Upload } from "lucide-vue-next";
-import { ref } from "vue";
+import { BookOpenCheck, Flag, Gauge, HelpCircle, Home, ListFilter, RotateCcw, Search } from "lucide-vue-next";
 
 defineProps<{
   hideDone: boolean;
@@ -10,9 +9,6 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  downloadBackup: [];
-  downloadReport: [];
-  importBackup: [text: string];
   finishSession: [];
   startBasicReview: [];
   openHome: [];
@@ -23,21 +19,6 @@ const emit = defineEmits<{
   toggleLightMode: [];
   toggleTodayOnly: [];
 }>();
-
-const fileInput = ref<HTMLInputElement | null>(null);
-
-function pickBackup() {
-  fileInput.value?.click();
-}
-
-function importBackup(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => emit("importBackup", String(reader.result ?? ""));
-  reader.readAsText(file);
-  (event.target as HTMLInputElement).value = "";
-}
 </script>
 
 <template>
@@ -89,22 +70,9 @@ function importBackup(event: Event) {
       <Flag :size="17" />
       終了
     </button>
-    <button type="button" title="学習レポートをMarkdownで保存" @click="$emit('downloadReport')">
-      <FileDown :size="17" />
-      レポート
-    </button>
-    <button type="button" title="進捗をJSONで保存" @click="$emit('downloadBackup')">
-      <Download :size="17" />
-      保存
-    </button>
-    <button type="button" title="進捗JSONを読み込む" @click="pickBackup">
-      <Upload :size="17" />
-      読込
-    </button>
     <button type="button" title="進捗をリセット" @click="$emit('resetProgress')">
       <RotateCcw :size="17" />
       リセット
     </button>
-    <input ref="fileInput" type="file" accept="application/json,.json" @change="importBackup" />
   </section>
 </template>

@@ -27,14 +27,9 @@ describe("app e2e flow", () => {
     window.localStorage.setItem("python-master-onboarding-seen", "true");
     window.location.hash = "#00_environment";
     vi.restoreAllMocks();
-    vi.stubGlobal("URL", {
-      createObjectURL: vi.fn(() => "blob:report"),
-      revokeObjectURL: vi.fn(),
-    });
-    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
   });
 
-  it("起動、検索、Step選択、テスト成功、バックアップ出力まで進める", async () => {
+  it("起動、検索、Step選択、テスト成功、ホーム復帰まで進める", async () => {
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();
@@ -62,21 +57,12 @@ describe("app e2e flow", () => {
     const homeButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("ホーム"));
     await homeButton?.trigger("click");
     expect(wrapper.text()).toContain("効率ルート");
-
-    const backupButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("保存"));
-    await backupButton?.trigger("click");
-    expect(URL.createObjectURL).toHaveBeenCalled();
+    expect(wrapper.findAll(".learning-toolbar button").some((button) => button.text().includes("レポート"))).toBe(false);
+    expect(wrapper.findAll(".learning-toolbar button").some((button) => button.text().includes("保存"))).toBe(false);
+    expect(wrapper.findAll(".learning-toolbar button").some((button) => button.text().includes("読込"))).toBe(false);
   });
 
-  it("学習メモ一覧を表示し、Markdownレポートへ含める", async () => {
-    const reportBlob: { value: Blob | null } = { value: null };
-    vi.stubGlobal("URL", {
-      createObjectURL: vi.fn((blob: Blob) => {
-        reportBlob.value = blob;
-        return "blob:report";
-      }),
-      revokeObjectURL: vi.fn(),
-    });
+  it("学習メモ一覧を表示する", async () => {
     window.localStorage.setItem(
       "python-master-lab:00_environment",
       JSON.stringify({ answer: "Dockerの役割を説明した", ragQuestion: "なぜDockerで統一する？", review: "envとログを確認" }),
@@ -92,11 +78,5 @@ describe("app e2e flow", () => {
 
     expect(wrapper.text()).toContain("学習メモ一覧");
     expect(wrapper.text()).toContain("Dockerの役割を説明した");
-
-    const reportButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("レポート"));
-    await reportButton?.trigger("click");
-
-    expect(reportBlob.value).not.toBeNull();
-    await expect(reportBlob.value?.text()).resolves.toContain("Dockerの役割を説明した");
   });
 });

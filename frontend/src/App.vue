@@ -18,13 +18,13 @@ import RunResultCard from "./components/RunResultCard.vue";
 import SessionSummaryModal from "./components/SessionSummaryModal.vue";
 import StudyRail from "./components/StudyRail.vue";
 import { useStepProgress } from "./composables/useStepProgress";
-import { useLearningLog, type LearningEvent } from "./composables/useLearningLog";
+import { useLearningLog } from "./composables/useLearningLog";
 import { useStepRunner } from "./composables/useStepRunner";
 import { buildStepGuide, getPhase, isRunnable, statusLabel } from "./data/learningUi";
 import { learningPhases } from "./data/phaseConfig";
 import { analyzeLearningLog } from "./data/learningLogAnalysis";
 import { filterSteps, findStepById, stepAtOffset, stepNumberOf } from "./data/stepNavigation";
-import { categories, steps, type Step, type StepStatus } from "./data/steps";
+import { categories, steps, type Step } from "./data/steps";
 
 const initialHash = window.location.hash.replace("#", "");
 const selectedId = ref(initialHash && initialHash !== "home" ? initialHash : steps[0].id);
@@ -33,7 +33,7 @@ const selectedCategory = ref("all");
 const hideDone = ref(window.localStorage.getItem("python-master-hide-done") === "true");
 const isSidebarOpen = ref(true);
 const isLightMode = ref(window.localStorage.getItem("python-master-light-mode") === "true");
-const isHomeView = ref(initialHash === "home");
+const isHomeView = ref(!initialHash || initialHash === "home");
 const isOnboardingOpen = ref(false);
 const isSearchOpen = ref(false);
 const isSessionSummaryOpen = ref(false);
@@ -44,16 +44,14 @@ const inspectedFile = ref("");
 const latestSession = ref<SessionSummary | null>(null);
 const stepReferences = ref<StepReference[]>([]);
 const {
-  exportProgress,
   getStatus,
-  importProgress,
   markTestFailed,
   markTestPassed,
   markTestStarted,
   resetProgress,
   setStatus,
 } = useStepProgress();
-const { exportLearningLog, importLearningLog, learningEvents, recordRun, resetLearningLog } = useLearningLog();
+const { learningEvents, recordRun, resetLearningLog } = useLearningLog();
 
 onMounted(async () => {
   window.addEventListener("hashchange", syncSelectedFromHash);
@@ -132,19 +130,19 @@ function stepNumber(id: string) {
 
 function syncSelectedFromHash() {
   const hashId = window.location.hash.replace("#", "");
-  if (hashId === "home") {
+  if (!hashId || hashId === "home") {
     isHomeView.value = true;
-    return;
-  }
-  if (!hashId) {
-    isHomeView.value = false;
-    selectedId.value = steps[0].id;
+    if (!hashId) replaceHashWithHome();
     return;
   }
   if (steps.some((step) => step.id === hashId)) {
     isHomeView.value = false;
     selectedId.value = hashId;
   }
+}
+
+function replaceHashWithHome() {
+  window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#home`);
 }
 
 function selectStep(step: Step) {
@@ -208,83 +206,6 @@ function isTypingTarget(target: EventTarget | null) {
   return Boolean(element && "closest" in element && element.closest("input, textarea, select, [contenteditable='true']"));
 }
 
-function downloadReport() {
-  const byCategory = new Map<string, { done: number; total: number }>();
-  for (const step of steps) {
-    const entry = byCategory.get(step.category) ?? { done: 0, total: 0 };
-    entry.total += 1;
-    if (getStatus(step.id) === "done") entry.done += 1;
-    byCategory.set(step.category, entry);
-  }
-  const memoLines = collectLabMemos()
-    .flatMap(({ step, state }) => [
-      `### ${step.title} (${step.id})`,
-      state.answer ? `- 理解メモ: ${state.answer}` : "",
-      state.review ? `- レビュー: ${state.review}` : "",
-      state.ragQuestion ? `- RAG質問: ${state.ragQuestion}` : "",
-      "",
-    ])
-    .filter(Boolean);
-  const lines = [
-    "# Python Master 学習レポート",
-    "",
-    `- 出力日時: ${new Date().toISOString()}`,
-    `- 完了: ${doneCount.value} / ${steps.length}`,
-    `- 学習中: ${doingCount.value}`,
-    "",
-    "## カテゴリ別",
-    ...[...byCategory.entries()].map(([category, value]) => `- ${category}: ${value.done} / ${value.total}`),
-    "",
-    "## 未完了の次候補",
-    ...steps.filter((step) => getStatus(step.id) !== "done").slice(0, 10).map((step) => `- ${step.title} (${step.id})`),
-    "",
-    "## 学習メモ",
-    ...(memoLines.length > 0 ? memoLines : ["- まだメモはありません"]),
-    "",
-    "## 学習ログ",
-    `- 実行回数: ${learningEvents.value.length}`,
-    `- 失敗回数: ${learningEvents.value.filter((event) => !event.ok).length}`,
-    ...learningEvents.value.slice(-10).map((event) => `- ${event.at} ${event.ok ? "OK" : "NG"} ${event.stepTitle}`),
-  ];
-  downloadText("python-master-report.md", lines.join("\n"), "text/markdown");
-}
-
-function downloadBackup() {
-  const labEntries: Record<string, string> = {};
-  for (let index = 0; index < window.localStorage.length; index += 1) {
-    const key = window.localStorage.key(index) ?? "";
-    if (key.startsWith("python-master-lab:")) labEntries[key] = window.localStorage.getItem(key) ?? "";
-  }
-  downloadText(
-    "python-master-backup.json",
-    JSON.stringify(
-      {
-        exportedAt: new Date().toISOString(),
-        labEntries,
-        learningEvents: exportLearningLog(),
-        progress: exportProgress(),
-        version: 1,
-      },
-      null,
-      2,
-    ),
-    "application/json",
-  );
-}
-
-function importBackup(text: string) {
-  const data = JSON.parse(text) as {
-    labEntries?: Record<string, string>;
-    learningEvents?: LearningEvent[];
-    progress?: { passedTests?: Record<string, boolean>; statuses?: Record<string, StepStatus> };
-  };
-  if (data.progress) importProgress(data.progress);
-  importLearningLog(data.learningEvents);
-  for (const [key, value] of Object.entries(data.labEntries ?? {})) {
-    if (key.startsWith("python-master-lab:")) window.localStorage.setItem(key, value);
-  }
-}
-
 function resetAllProgress() {
   resetProgress();
   resetLearningLog();
@@ -344,35 +265,6 @@ function toggleLightMode() {
   window.localStorage.setItem("python-master-light-mode", String(isLightMode.value));
 }
 
-function downloadText(filename: string, body: string, type: string) {
-  const url = URL.createObjectURL(new Blob([body], { type }));
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = filename;
-  anchor.click();
-  URL.revokeObjectURL(url);
-}
-
-function collectLabMemos() {
-  return steps
-    .map((step) => ({ step, state: readLabState(step.id) }))
-    .filter(({ state }) => state.answer || state.review || state.ragQuestion);
-}
-
-function readLabState(stepId: string) {
-  const raw = window.localStorage.getItem(`python-master-lab:${stepId}`);
-  if (!raw) return { answer: "", ragQuestion: "", review: "" };
-  try {
-    const value = JSON.parse(raw) as { answer?: string; ragQuestion?: string; review?: string };
-    return {
-      answer: value.answer?.trim() ?? "",
-      ragQuestion: value.ragQuestion?.trim() ?? "",
-      review: value.review?.trim() ?? "",
-    };
-  } catch {
-    return { answer: "", ragQuestion: "", review: "" };
-  }
-}
 </script>
 
 <template>
@@ -404,10 +296,7 @@ function readLabState(stepId: string) {
         :is-home-view="isHomeView"
         :is-light-mode="isLightMode"
         :is-today-only="isTodayOnly"
-        @download-backup="downloadBackup"
-        @download-report="downloadReport"
         @finish-session="finishSession"
-        @import-backup="importBackup"
         @open-home="openHome"
         @open-guide="isOnboardingOpen = true"
         @open-search="isSearchOpen = true"
