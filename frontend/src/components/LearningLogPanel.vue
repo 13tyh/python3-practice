@@ -34,18 +34,6 @@ function formatDate(value: string) {
       </div>
     </div>
 
-    <section class="today-focus" aria-label="今日やる3問">
-      <div>
-        <span>Today</span>
-        <h4>今日やる3問</h4>
-      </div>
-      <a v-for="item in analysis.todayTop3" :key="item.stepId" :href="`#${item.stepId}`">
-        <strong>{{ item.label }}</strong>
-        <span>{{ item.title }}</span>
-        <small>{{ item.reason }}</small>
-      </a>
-    </section>
-
     <ol class="focus-list">
       <li v-for="item in analysis.focusQueue" :key="item.stepId">
         <a class="focus-link" :href="`#${item.stepId}`">

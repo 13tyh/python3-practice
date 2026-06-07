@@ -349,10 +349,17 @@ function toggleLightMode() {
       />
 
       <section v-if="isHomeView" class="home-dashboard">
-        <article class="home-hero">
-          <span>home</span>
-          <h2>次の1手だけ決める</h2>
-          <p>上から順番に進めます。後半Phaseは、前半が終わるまで出しすぎません。</p>
+        <article class="home-hero home-focus">
+          <span>Today</span>
+          <h2>今日やる3問を上から片づける</h2>
+          <p>迷う時間を減らすために、失敗復習、基礎、次のStepだけを先に出します。</p>
+          <div class="home-focus-grid">
+            <a v-for="item in learningAnalysis.todayTop3" :key="item.stepId" :href="`#${item.stepId}`">
+              <strong>{{ item.label }}</strong>
+              <span>{{ item.title }}</span>
+              <small>{{ item.reason }}</small>
+            </a>
+          </div>
           <div class="home-actions">
             <button type="button" @click="toggleTodayOnly">今日だけ表示</button>
             <button type="button" @click="startBasicReview">基礎復習</button>
@@ -360,6 +367,24 @@ function toggleLightMode() {
             <button type="button" @click="finishSession">学習終了</button>
           </div>
         </article>
+
+        <aside class="home-side-panel" aria-label="学習状況">
+          <article class="home-stat-card">
+            <span>Progress</span>
+            <strong>{{ progressPercent }}%</strong>
+            <small>{{ doneCount }} / {{ steps.length }} 完了</small>
+          </article>
+          <article class="home-stat-card">
+            <span>Runs</span>
+            <strong>{{ learningAnalysis.totalRuns }}</strong>
+            <small>成功率 {{ learningAnalysis.successRate }}%</small>
+          </article>
+          <article class="home-rule-card">
+            <strong>15分ルール</strong>
+            <p>読む、書く、実行、1行メモ。詰まったら解答例と差分を見る。</p>
+          </article>
+        </aside>
+
         <LearningLogPanel :events="learningEvents" :get-status="getStatus" :steps="steps" />
       </section>
 

@@ -44,7 +44,7 @@ describe("Python Master app", () => {
 
     expect(window.location.hash).toBe("#home");
     expect(wrapper.find(".home-dashboard").exists()).toBe(true);
-    expect(wrapper.text()).toContain("次の1手だけ決める");
+    expect(wrapper.text()).toContain("今日やる3問を上から片づける");
     expect(wrapper.text()).not.toContain("今回のゴール");
     expect(wrapper.find(".sidebar-home-link").classes()).toContain("active");
     expect(wrapper.find(".mentor-step-list button.active").exists()).toBe(false);
@@ -119,7 +119,7 @@ describe("Python Master app", () => {
     const homeButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("ホーム"));
     await homeButton?.trigger("click");
 
-    expect(wrapper.text()).toContain("次の1手だけ決める");
+    expect(wrapper.text()).toContain("今日やる3問を上から片づける");
     expect(wrapper.find(".home-dashboard").text()).toContain("効率ルート");
     expect(wrapper.text()).not.toContain("今回のゴール");
     expect(homeButton?.classes()).toContain("active");
