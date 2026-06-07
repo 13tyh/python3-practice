@@ -13,4 +13,3 @@ def test_transaction() -> None:
     assert tx.rolled_back
     assert target.should_use_transaction(2, True)
     assert not target.should_use_transaction(1, False)
-

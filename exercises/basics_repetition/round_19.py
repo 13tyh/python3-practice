@@ -14,4 +14,3 @@ def divide_or_raise(a: int, b: int) -> float:
 def get_index(items: list[str], index: int) -> str:
     # TODO
     raise NotImplementedError
-

@@ -1,4 +1,4 @@
-# 14 LangChain
+# 45 Langchain
 
 対象: `src/mastery/langchain_practice.py`
 

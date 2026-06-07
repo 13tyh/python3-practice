@@ -12,4 +12,3 @@ def test_round_37() -> None:
     assert sign_label(-1) == "negative"
     assert can_buy(100, 100)
     assert not can_buy(101, 100)
-

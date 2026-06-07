@@ -11,4 +11,3 @@ def test_chunk_to_text() -> None:
 def test_build_output_paths(tmp_path: Path) -> None:
     paths = build_output_paths(tmp_path, [DocChunk("A/B", "x"), DocChunk("C", "y")])
     assert paths == [tmp_path / "01_A_B.pdf", tmp_path / "02_C.pdf"]
-

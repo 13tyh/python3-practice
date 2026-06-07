@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import csv
 from pathlib import Path
 
 
@@ -23,4 +22,3 @@ def export_documents_to_csv(
 ) -> None:
     # TODO
     raise NotImplementedError
-

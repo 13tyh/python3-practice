@@ -39,4 +39,3 @@ def test_to_vertex_batch_predict_kwargs() -> None:
         "predictions_format": "jsonl",
         "sync": False,
     }
-

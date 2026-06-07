@@ -1,5 +1,5 @@
-from importlib import import_module
 import logging
+from importlib import import_module
 
 target = import_module("exercises.logging_python.02_error_logging")
 
@@ -29,4 +29,3 @@ def test_should_log_debug() -> None:
 
 def test_safe_log_message() -> None:
     assert target.safe_log_message("hello\nworld") == "hello world"
-

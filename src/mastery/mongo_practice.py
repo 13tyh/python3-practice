@@ -27,4 +27,3 @@ def seed_users() -> None:
 def find_high_score_users(min_score: int) -> list[dict[str, Any]]:
     db = get_db()
     return list(db.users.find({"score": {"$gte": min_score}}, {"_id": 0}).sort("score", -1))
-

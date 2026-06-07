@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass
 
 
@@ -28,4 +27,3 @@ def safe_filename(title: str) -> str:
     """ファイル名に使いにくい文字を _ にする。"""
     # TODO
     raise NotImplementedError
-

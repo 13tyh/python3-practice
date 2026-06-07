@@ -24,4 +24,3 @@ def test_copy_mutability_tasks() -> None:
     assert deep == nested
     assert deep is not nested
     assert deep[0]["tags"] is not nested[0]["tags"]
-

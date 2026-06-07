@@ -17,7 +17,12 @@ def score(query: str, chunk: Chunk) -> float:
     raise NotImplementedError
 
 
-def retrieve(query: str, chunks: list[Chunk], top_k: int, min_score: float = 0) -> list[tuple[Chunk, float]]:
+def retrieve(
+    query: str,
+    chunks: list[Chunk],
+    top_k: int,
+    min_score: float = 0,
+) -> list[tuple[Chunk, float]]:
     # TODO
     raise NotImplementedError
 

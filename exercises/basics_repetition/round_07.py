@@ -21,4 +21,3 @@ def format_japanese_date(value: date) -> str:
 def is_weekend_name(day_name: str) -> bool:
     # TODO
     raise NotImplementedError
-

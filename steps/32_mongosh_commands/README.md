@@ -1,4 +1,4 @@
-# 58 Mongosh Commands
+# 32 mongosh Commands
 
 目的: Python から DB を触る前に、`mongosh` で状態確認・検索・更新・集計・index確認ができるようにする。
 

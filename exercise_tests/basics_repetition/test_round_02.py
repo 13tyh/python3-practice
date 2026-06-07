@@ -18,4 +18,3 @@ def test_round_02() -> None:
     assert require_key({"name": "Aki"}, "name") == "Aki"
     with pytest.raises(KeyError):
         require_key({}, "name")
-

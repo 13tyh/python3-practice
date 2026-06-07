@@ -9,4 +9,3 @@ def test_rag_quality() -> None:
     assert target.require_citations("answer [source: docs.md]")
     assert target.rerank_by_score([("a", 0.1), ("b", 0.9)]) == [("b", 0.9), ("a", 0.1)]
     assert target.compare_chunk_sizes({200: 0.7, 500: 0.8}) == 500
-

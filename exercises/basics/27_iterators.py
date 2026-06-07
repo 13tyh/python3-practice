@@ -21,4 +21,3 @@ def flatten(items: list[list[str]]) -> list[str]:
 def chunked(items: list[int], size: int) -> Iterator[list[int]]:
     # TODO
     raise NotImplementedError
-

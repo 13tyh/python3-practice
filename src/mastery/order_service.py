@@ -21,4 +21,3 @@ def can_free_ship(total: int, prefecture: str) -> bool:
     if prefecture in {"北海道", "沖縄"}:
         threshold = 8000
     return total >= threshold
-

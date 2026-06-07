@@ -14,4 +14,3 @@ def normalize_search_keyword(keyword: str | None) -> str:
 def normalize_tags(tags: list[str]) -> list[str]:
     # TODO
     raise NotImplementedError
-

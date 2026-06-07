@@ -18,4 +18,3 @@ def insert_user(conn: sqlite3.Connection, name: str) -> int:
 def list_users(conn: sqlite3.Connection) -> list[tuple[int, str]]:
     # TODO
     raise NotImplementedError
-

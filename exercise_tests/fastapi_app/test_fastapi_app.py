@@ -21,4 +21,3 @@ def test_fastapi_task_flow() -> None:
 
     missing = client.patch("/tasks/missing/done")
     assert missing.status_code == 404
-

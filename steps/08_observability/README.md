@@ -1,4 +1,4 @@
-# 42 Observability
+# 08 Observability
 
 request id、structured logging、metrics、tracing の考え方。
 

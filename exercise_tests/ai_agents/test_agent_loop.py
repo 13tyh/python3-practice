@@ -11,4 +11,3 @@ def test_ai_agents() -> None:
     assert target.validate_tool_call(call, {"search"})
     assert not target.validate_tool_call(call, {"write_file"})
     assert target.update_memory(["a", "b"], "c", 2) == ["b", "c"]
-

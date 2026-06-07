@@ -21,4 +21,3 @@ def run_in_transaction(tx: FakeTransaction, should_fail: bool) -> str:
 def should_use_transaction(operations_count: int, writes_multiple_resources: bool) -> bool:
     # TODO
     raise NotImplementedError
-

@@ -7,4 +7,3 @@ def test_round_23() -> None:
     assert page_count(5, 2) == 3
     assert has_next_page(5, 2, 2)
     assert not has_next_page(4, 2, 2)
-

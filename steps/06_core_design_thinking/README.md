@@ -1,4 +1,4 @@
-# 57 Core Design Thinking
+# 06 Core Design Thinking
 
 目的: 重要な考え方を、処理を書きながら身につける。
 

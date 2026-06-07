@@ -1,4 +1,4 @@
-# 15 Logging
+# 07 Logging
 
 目的: `print` ではなく `logging` を使って、実務で追えるログを書けるようにする。
 

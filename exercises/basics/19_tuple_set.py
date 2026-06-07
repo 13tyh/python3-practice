@@ -24,4 +24,3 @@ def common_items(a: set[str], b: set[str]) -> set[str]:
 def difference_items(a: set[str], b: set[str]) -> set[str]:
     # TODO
     raise NotImplementedError
-

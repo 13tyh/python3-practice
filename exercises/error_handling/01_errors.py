@@ -25,4 +25,3 @@ def to_http_error(error: DomainError) -> dict[str, int | str]:
 def should_retry(error: Exception) -> bool:
     # TODO
     raise NotImplementedError
-

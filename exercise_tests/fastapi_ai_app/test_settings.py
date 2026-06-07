@@ -15,4 +15,3 @@ def test_validate_ai_settings() -> None:
         "model is required",
         "timeout_seconds must be positive",
     ]
-

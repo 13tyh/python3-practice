@@ -4,8 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .model import CreateStudyLogRequest, StudyLog, StudyLogResponse
-from .service import create_study_log, suggest_next_action
+from .model import StudyLog, StudyLogResponse
 
 
 def to_response(log: StudyLog) -> StudyLogResponse:
@@ -24,4 +23,3 @@ def next_action_endpoint(logs: list[StudyLog]) -> dict[str, str]:
     """次の行動を返す endpoint。"""
     # TODO
     raise NotImplementedError
-

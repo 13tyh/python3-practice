@@ -14,4 +14,3 @@ def test_retriever() -> None:
     results = target.retrieve("python api", chunks, top_k=1)
     assert results[0][0].id == "c1"
     assert target.build_context(results) == "[source: a.md]\npython fastapi api"
-

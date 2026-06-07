@@ -15,4 +15,3 @@ def is_allowed_import(from_layer: str, to_layer: str) -> bool:
     """router -> service -> repository の向きだけ許可する。"""
     # TODO
     raise NotImplementedError
-

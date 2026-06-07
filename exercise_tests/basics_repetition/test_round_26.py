@@ -13,4 +13,3 @@ def test_round_26() -> None:
     assert not is_valid_age(-1)
     assert user_initials("Tanaka Taro") == "TT"
     assert remove_empty_strings(["a", "", " ", "b"]) == ["a", "b"]
-

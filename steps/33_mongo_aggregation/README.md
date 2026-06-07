@@ -1,4 +1,4 @@
-# 25 Mongo Aggregation
+# 33 Mongo Aggregation
 
 目的: MongoDB の aggregation pipeline を読める・作れるようにする。
 

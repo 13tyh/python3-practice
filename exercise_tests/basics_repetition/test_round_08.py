@@ -16,4 +16,3 @@ def test_round_08() -> None:
     assert replace_tabs("a\tb\tc") == "a b c"
     assert is_postal_code("123-4567")
     assert not is_postal_code("1234567")
-

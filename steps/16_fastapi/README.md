@@ -1,4 +1,4 @@
-# 18 FastAPI
+# 16 FastAPI
 
 目的: FastAPI の基本と、`schema/router/service` の分け方を理解する。
 

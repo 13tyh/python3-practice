@@ -26,4 +26,3 @@ class Counter:
     def get(self) -> int:
         # TODO
         raise NotImplementedError
-

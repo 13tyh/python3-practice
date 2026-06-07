@@ -1,4 +1,4 @@
-# 44 Package Design
+# 11 Package Design
 
 import の向き、circular import、public/private API。
 

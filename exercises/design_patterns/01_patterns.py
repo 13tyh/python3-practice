@@ -26,4 +26,3 @@ def formatter_factory(name: str) -> Formatter:
 def apply_strategy(text: str, formatter: Formatter) -> str:
     # TODO
     raise NotImplementedError
-

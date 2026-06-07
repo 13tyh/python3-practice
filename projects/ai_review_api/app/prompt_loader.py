@@ -7,4 +7,3 @@ def load_prompt(path: Path) -> str:
 
 def render_prompt(template: str, values: dict[str, str]) -> str:
     return template.format(**values)
-

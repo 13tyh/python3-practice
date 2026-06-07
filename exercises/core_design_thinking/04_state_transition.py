@@ -17,4 +17,3 @@ def can_transition(current: str, next_status: str) -> bool:
 def transition(current: str, next_status: str) -> str:
     # TODO
     raise NotImplementedError
-

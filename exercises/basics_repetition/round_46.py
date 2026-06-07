@@ -19,4 +19,3 @@ def lengths(words: list[str]) -> list[int]:
 def strip_all(values: list[str]) -> list[str]:
     # TODO
     raise NotImplementedError
-

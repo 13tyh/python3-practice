@@ -17,4 +17,3 @@ def test_count_word() -> None:
 
 def test_slugify() -> None:
     assert target.slugify("Hello Python World") == "hello-python-world"
-

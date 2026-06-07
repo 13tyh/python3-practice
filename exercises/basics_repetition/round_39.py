@@ -24,4 +24,3 @@ def count_items(items: list[str]) -> int:
 def contains_item(items: list[str], item: str) -> bool:
     # TODO
     raise NotImplementedError
-

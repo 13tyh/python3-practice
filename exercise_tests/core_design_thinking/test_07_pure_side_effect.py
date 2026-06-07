@@ -10,4 +10,3 @@ def test_pure_side_effect(tmp_path: Path) -> None:
     path = tmp_path / "report.txt"
     target.create_report(path, rows)
     assert path.read_text(encoding="utf-8") == "Aki: 90\nRen: 80\n"
-

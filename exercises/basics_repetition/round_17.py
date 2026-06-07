@@ -19,4 +19,3 @@ def sum_nested_amounts(groups: dict[str, list[int]]) -> dict[str, int]:
 def find_missing_keys(data: dict[str, str], required: list[str]) -> list[str]:
     # TODO
     raise NotImplementedError
-

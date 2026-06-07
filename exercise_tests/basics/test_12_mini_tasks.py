@@ -18,4 +18,3 @@ def test_validate_user_input() -> None:
 def test_calculate_cart() -> None:
     items = [{"price": 100, "quantity": 2}, {"price": 50, "quantity": 1}]
     assert target.calculate_cart(items) == {"subtotal": 250, "tax": 25, "total": 275}
-

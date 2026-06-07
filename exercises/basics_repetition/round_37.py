@@ -24,4 +24,3 @@ def sign_label(number: int) -> str:
 def can_buy(price: int, money: int) -> bool:
     # TODO
     raise NotImplementedError
-

@@ -13,4 +13,3 @@ def test_round_27() -> None:
     assert transpose_2x2(matrix) == [[1, 3], [2, 4]]
     assert find_largest_row([[1], [2, 3], [4]]) == [2, 3]
     assert find_largest_row([]) == []
-

@@ -20,4 +20,3 @@ def compare_chunk_sizes(metrics: dict[int, float]) -> int:
     """score が一番高い chunk size を返す。"""
     # TODO
     raise NotImplementedError
-

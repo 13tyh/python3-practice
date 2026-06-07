@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import json
-import os
 from importlib import import_module
 
 ModelDeployment = import_module("exercises.model_mapping.01_model_registry").ModelDeployment

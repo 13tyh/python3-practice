@@ -6,4 +6,3 @@ def test_round_29() -> None:
     lines = ["INFO:login:ok", "ERROR:review:failed", "ERROR:chat:timeout"]
     assert count_log_levels(lines) == {"INFO": 1, "ERROR": 2}
     assert error_messages(lines) == ["failed", "timeout"]
-

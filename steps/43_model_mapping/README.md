@@ -1,4 +1,4 @@
-# 28 Model Mapping
+# 43 Model Mapping
 
 目的: `deployment_name` と `model_name` の違いを理解する。
 

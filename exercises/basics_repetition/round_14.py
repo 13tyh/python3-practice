@@ -16,4 +16,3 @@ def ensure_parent(path: Path) -> None:
 def list_files_by_suffix(path: Path, suffix: str) -> list[Path]:
     # TODO
     raise NotImplementedError
-

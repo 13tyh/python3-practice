@@ -9,4 +9,3 @@ def test_tuple_set_tasks() -> None:
     assert target.unique_names(["Aki", "Ren", "Aki"]) == {"Aki", "Ren"}
     assert target.common_items({"a", "b"}, {"b", "c"}) == {"b"}
     assert target.difference_items({"a", "b"}, {"b", "c"}) == {"a"}
-

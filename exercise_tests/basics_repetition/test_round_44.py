@@ -6,4 +6,3 @@ def test_round_44() -> None:
     assert tax(1000) == 100
     assert total_price(100, 3) == 330
     assert receipt_line("Pen", 100, 3) == "Pen: 100 x 3 = 330"
-

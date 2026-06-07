@@ -29,4 +29,3 @@ def mark_running(job: Job) -> None:
 def should_retry(job: Job, max_attempts: int) -> bool:
     # TODO
     raise NotImplementedError
-

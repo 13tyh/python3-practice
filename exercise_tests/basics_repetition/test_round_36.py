@@ -7,4 +7,3 @@ def test_round_36() -> None:
     assert multiply(3, 4) == 12
     assert divide_floor(7, 2) == 3
     assert remainder(7, 2) == 1
-

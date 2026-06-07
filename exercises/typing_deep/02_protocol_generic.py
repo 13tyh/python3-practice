@@ -30,4 +30,3 @@ def greet_named(value: HasName) -> str:
 def is_str_list(value: object) -> TypeGuard[list[str]]:
     # TODO
     raise NotImplementedError
-

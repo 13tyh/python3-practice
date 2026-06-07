@@ -20,4 +20,3 @@ class InMemoryReviewRepository:
 
     def list_reviews(self) -> list[Review]:
         return list(self._items)
-

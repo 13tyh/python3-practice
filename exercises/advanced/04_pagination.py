@@ -14,4 +14,3 @@ def total_pages(total_count: int, per_page: int) -> int:
 def build_page_info(total_count: int, page: int, per_page: int) -> dict[str, int | bool]:
     # TODO
     raise NotImplementedError
-

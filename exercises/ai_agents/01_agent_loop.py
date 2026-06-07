@@ -26,4 +26,3 @@ def validate_tool_call(call: ToolCall, allowed_tools: set[str]) -> bool:
 def update_memory(memory: list[str], message: str, limit: int) -> list[str]:
     # TODO
     raise NotImplementedError
-

@@ -10,4 +10,3 @@ def test_regex_tasks() -> None:
     assert target.is_simple_phone_number("090-1234-5678")
     assert not target.is_simple_phone_number("09012345678")
     assert target.replace_spaces("hello   python\tworld") == "hello python world"
-

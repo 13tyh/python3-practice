@@ -24,4 +24,3 @@ def append_log(path: Path, message: str) -> None:
 def count_lines(path: Path) -> int:
     # TODO
     raise NotImplementedError
-

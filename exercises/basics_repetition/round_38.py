@@ -24,4 +24,3 @@ def text_length(text: str) -> int:
 def first_char(text: str) -> str | None:
     # TODO
     raise NotImplementedError
-

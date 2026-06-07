@@ -1,6 +1,6 @@
-from importlib import import_module
 import subprocess
 import sys
+from importlib import import_module
 
 import pytest
 
@@ -29,4 +29,3 @@ def test_explain_result() -> None:
     ng = subprocess.CompletedProcess(["x"], 7, "", "error")
     assert target.explain_result(ok) == "ok"
     assert target.explain_result(ng) == "failed: 7"
-

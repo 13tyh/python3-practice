@@ -12,4 +12,3 @@ def test_documents() -> None:
         target.Chunk("doc1-1", "doc1", "cde", "manual.md", 1),
         target.Chunk("doc1-2", "doc1", "ef", "manual.md", 2),
     ]
-

@@ -24,4 +24,3 @@ def test_csv_export(tmp_path: Path) -> None:
     exported = tmp_path / "export.csv"
     export_documents_to_csv(exported, [{"name": "Ren", "score": 80}], ["name", "score"])
     assert read_csv(exported) == [{"name": "Ren", "score": "80"}]
-

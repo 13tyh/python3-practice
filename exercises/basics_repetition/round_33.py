@@ -14,4 +14,3 @@ def create_resource(payload: dict[str, object], resource_id: str) -> dict[str, o
 def response_status(response: dict[str, object]) -> str:
     # TODO
     raise NotImplementedError
-

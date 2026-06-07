@@ -1,4 +1,4 @@
-# 39 Dependency Injection
+# 17 Dependency Injection
 
 service / repository / client を差し替え可能にする。
 

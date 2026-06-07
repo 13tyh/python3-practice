@@ -20,4 +20,3 @@ def normalize_numbers(numbers: list[int]) -> list[int]:
     """負数は0にする。"""
     # TODO
     raise NotImplementedError
-

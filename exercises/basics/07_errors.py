@@ -23,4 +23,3 @@ def get_required(data: dict[str, str], key: str) -> str:
     """keyがなければKeyErrorをそのまま出す。"""
     # TODO
     raise NotImplementedError
-

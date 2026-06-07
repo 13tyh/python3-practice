@@ -21,4 +21,3 @@ def find_user_email(users: list[dict[str, str]], user_id: str) -> str:
         if user.get("id") == user_id:
             return user["email"]
     raise ValueError(f"user not found: {user_id}")
-

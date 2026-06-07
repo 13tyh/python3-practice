@@ -12,4 +12,3 @@ def test_dataclass_deep_tasks() -> None:
     moved = target.move_customer(customer, target.Address("Osaka", "530-0001"))
     assert moved.address.city == "Osaka"
     assert customer.address.city == "Tokyo"
-

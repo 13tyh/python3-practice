@@ -1,108 +1,110 @@
 <script setup lang="ts">
 import {
   AlertTriangle,
-  BookOpen,
-  CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
-  Circle,
-  ClipboardCheck,
-  Database,
-  ExternalLink,
-  FileCode2,
-  Lightbulb,
-  LoaderCircle,
-  ListChecks,
-  PanelLeftClose,
-  PanelLeftOpen,
   PencilLine,
-  Play,
-  Search,
-  Terminal,
 } from "lucide-vue-next";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { fetchStepReferences, type StepReference } from "./api/learningApi";
+import CommandList from "./components/CommandList.vue";
+import CommandCenter from "./components/CommandCenter.vue";
+import LearningToolbar from "./components/LearningToolbar.vue";
+import LearningLogPanel from "./components/LearningLogPanel.vue";
+import LessonHeader from "./components/LessonHeader.vue";
+import MentorSidebar from "./components/MentorSidebar.vue";
+import MasteryLab from "./components/MasteryLab.vue";
+import MissionBoard from "./components/MissionBoard.vue";
+import OnboardingModal from "./components/OnboardingModal.vue";
+import RunResultCard from "./components/RunResultCard.vue";
+import SessionSummaryModal from "./components/SessionSummaryModal.vue";
+import StudyRail from "./components/StudyRail.vue";
+import { useStepProgress } from "./composables/useStepProgress";
+import { useLearningLog, type LearningEvent } from "./composables/useLearningLog";
+import { useStepRunner } from "./composables/useStepRunner";
+import { buildStepGuide, getPhase, isRunnable, statusLabel } from "./data/learningUi";
+import { learningPhases } from "./data/phaseConfig";
+import { analyzeLearningLog } from "./data/learningLogAnalysis";
+import { filterSteps, findStepById, stepAtOffset, stepNumberOf } from "./data/stepNavigation";
 import { categories, steps, type Step, type StepStatus } from "./data/steps";
 
-const selectedId = ref(window.location.hash.replace("#", "") || steps[0].id);
+const initialHash = window.location.hash.replace("#", "");
+const selectedId = ref(initialHash && initialHash !== "home" ? initialHash : steps[0].id);
 const query = ref("");
 const selectedCategory = ref("all");
-const statuses = ref<Record<string, StepStatus>>({});
-const passedTests = ref<Record<string, boolean>>({});
+const hideDone = ref(window.localStorage.getItem("python-master-hide-done") === "true");
 const isSidebarOpen = ref(true);
-const runningCommand = ref("");
-const runResult = ref<RunResult | null>(null);
-const runError = ref("");
+const isLightMode = ref(window.localStorage.getItem("python-master-light-mode") === "true");
+const isHomeView = ref(initialHash === "home");
+const isOnboardingOpen = ref(false);
+const isSearchOpen = ref(false);
+const isSessionSummaryOpen = ref(false);
+const isTodayOnly = ref(window.localStorage.getItem("python-master-today-only") === "true");
+const isReferenceOpen = ref(false);
+const isLabOpen = ref(false);
+const inspectedFile = ref("");
+const latestSession = ref<SessionSummary | null>(null);
 const stepReferences = ref<StepReference[]>([]);
-
-const storageKey = "python-master-step-status";
-const passedTestsStorageKey = "python-master-passed-tests";
-const apiBase = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
-
-type RunResult = {
-  command: string;
-  exit_code: number;
-  duration_ms: number;
-  stdout: string;
-  stderr: string;
-};
-
-type StepReference = {
-  step: string;
-  comment: string;
-  urls: string[];
-};
+const {
+  exportProgress,
+  getStatus,
+  importProgress,
+  markTestFailed,
+  markTestPassed,
+  markTestStarted,
+  resetProgress,
+  setStatus,
+} = useStepProgress();
+const { exportLearningLog, importLearningLog, learningEvents, recordRun, resetLearningLog } = useLearningLog();
 
 onMounted(async () => {
-  const saved = localStorage.getItem(storageKey);
-  if (saved) statuses.value = JSON.parse(saved) as Record<string, StepStatus>;
-  const savedPassedTests = localStorage.getItem(passedTestsStorageKey);
-  if (savedPassedTests) passedTests.value = JSON.parse(savedPassedTests) as Record<string, boolean>;
+  window.addEventListener("hashchange", syncSelectedFromHash);
+  window.addEventListener("keydown", handleShortcut);
+  syncSelectedFromHash();
+  if (window.localStorage.getItem("python-master-onboarding-seen") !== "true") {
+    isOnboardingOpen.value = true;
+  }
   try {
-    const response = await fetch(`${apiBase}/api/step-references`);
-    if (response.ok) {
-      stepReferences.value = (await response.json()) as StepReference[];
-    }
+    stepReferences.value = await fetchStepReferences();
   } catch {
     stepReferences.value = [];
   }
 });
 
-watch(
-  statuses,
-  (value) => localStorage.setItem(storageKey, JSON.stringify(value)),
-  { deep: true },
-);
+onUnmounted(() => {
+  window.removeEventListener("hashchange", syncSelectedFromHash);
+  window.removeEventListener("keydown", handleShortcut);
+});
 
-watch(
-  passedTests,
-  (value) => localStorage.setItem(passedTestsStorageKey, JSON.stringify(value)),
-  { deep: true },
-);
-
-const selectedStep = computed(() => steps.find((step) => step.id === selectedId.value) ?? steps[0]);
-
-const filteredSteps = computed(() => {
-  const text = query.value.trim().toLowerCase();
-  return steps.filter((step) => {
-    const categoryOk =
-      selectedCategory.value === "all" ||
-      (selectedCategory.value === "basic" && step.level === "基礎") ||
-      step.category === selectedCategory.value;
-    const textOk =
-      text.length === 0 ||
-      [step.id, step.title, step.summary, step.category, step.level].some((value) =>
-        value.toLowerCase().includes(text),
-      );
-    return categoryOk && textOk;
-  });
+const selectedStep = computed(() => findStepById(steps, selectedId.value));
+const { runCommand, runError, runningCommand, runResult } = useStepRunner(selectedStep, {
+  markTestFailed,
+  markTestPassed,
+  markTestStarted,
+  setStatus,
+}, { recordRun });
+const learningAnalysis = computed(() => analyzeLearningLog(steps, getStatus, learningEvents.value));
+const todayStepIds = computed(() => new Set(learningAnalysis.value.focusQueue.map((item) => item.stepId)));
+const visibleSteps = computed(() => {
+  let result = isTodayOnly.value ? steps.filter((step) => todayStepIds.value.has(step.id)) : steps;
+  if (hideDone.value) result = result.filter((step) => getStatus(step.id) !== "done");
+  return result.length > 0 ? result : steps;
+});
+const filteredSteps = computed(() => filterSteps(visibleSteps.value, query.value, selectedCategory.value));
+const phaseGroups = computed(() => {
+  const visibleIds = new Set(filteredSteps.value.map((step) => step.id));
+  return learningPhases
+    .map((phase) => ({
+      id: phase.id,
+      title: phase.title,
+      steps: phase.steps.filter((step) => visibleIds.has(step.id)),
+    }))
+    .filter((phase) => phase.steps.length > 0);
 });
 
 const doneCount = computed(() => steps.filter((step) => getStatus(step.id) === "done").length);
 const doingCount = computed(() => steps.filter((step) => getStatus(step.id) === "doing").length);
 const progressPercent = computed(() => Math.round((doneCount.value / steps.length) * 100));
-const selectedNumber = computed(() => stepNumber(selectedStep.value.id));
+const selectedNumber = computed(() => stepNumberOf(steps, selectedStep.value.id));
 const currentPhase = computed(() => getPhase(selectedNumber.value));
-const nextStep = computed(() => steps[selectedNumber.value] ?? null);
 const runnableCommands = computed(() => selectedStep.value.commands.filter((command) => isRunnable(command)));
 const additionalCommands = computed(() => selectedStep.value.commands.slice(1));
 const primaryCommand = computed(() => selectedStep.value.commands[0] ?? "");
@@ -113,268 +115,326 @@ const selectedReference = computed(() =>
   stepReferences.value.find((reference) => reference.step === selectedStep.value.id),
 );
 const selectedGuide = computed(() => buildStepGuide(selectedStep.value));
-const resultGuide = computed(() => {
-  if (!runResult.value) return "実行ボタンを押すと、ここに終了コード、標準出力、エラーが表示されます。";
-  if (runResult.value.exit_code === 0) return "成功です。このStepは完了にして、次のStepへ進めます。";
-  return "失敗ログの最初のFAILURESと行番号を読み、対象ファイルのTODOを直します。";
-});
 
-const categoryLabels: Record<string, string> = {
-  setup: "環境",
-  python: "Python",
-  test: "テスト",
-  design: "設計",
-  ops: "運用",
-  reading: "読解",
-  api: "API",
-  security: "認証/安全",
-  performance: "性能",
-  db: "DB",
-  data: "分析/出力",
-  ai: "AI",
-  review: "レビュー",
-  project: "総仕上げ",
+type SessionSummary = {
+  at: string;
+  failedRuns: number;
+  nextItems: string[];
+  totalRuns: number;
 };
 
-const writingTipsByCategory: Record<string, string[]> = {
-  setup: ["まずREADMEの手順を1つずつ実行する", "失敗したコマンドとエラー行をメモする"],
-  python: ["小さい関数に分けて、入力と戻り値を先に決める", "リスト内包表記は1行で読める時だけ使う"],
-  test: ["正常系、異常系、境界値を分けて書く", "外部APIやDBはfakeやfixtureに置き換える"],
-  design: ["router、service、modelの責務を分ける", "副作用のある処理と純粋な計算を分ける"],
-  ops: ["loggerを使い、request_idや処理時間を残す", "secretや個人情報はログに出さない"],
-  reading: ["入口、呼び出し先、テストの順に読む", "変更前に影響範囲をメモする"],
-  api: ["リクエスト/レスポンスの型を先に作る", "HTTP例外と業務例外を混ぜない"],
-  security: ["認証、認可、入力検証を別々に考える", "危険な入力は境界で止める"],
-  performance: ["N+1、全件読み込み、重いループを先に疑う", "計測してから改善する"],
-  db: ["検索条件、index、projectionを意識して書く", "mongoshで実データを確認してから実装する"],
-  data: ["読み込み、変換、出力を段階に分ける", "CSV/PDF/JSONLは文字コードと欠損値を確認する"],
-  ai: ["prompt、model、入力、出力をログで追える形にする", "AI出力はschemaとテストで検証する"],
-  review: ["何が悪いか、なぜ危険か、どう直すかを書く", "AIの答えを鵜呑みにせず根拠を確認する"],
-  project: ["settings、logger、router、service、modelを揃える", "小さく動かしてから結合する"],
-};
-
-const cautionTipsByCategory: Record<string, string[]> = {
-  python: ["mutable default引数を使わない", "例外を bare except で握りつぶさない"],
-  db: ["find()の結果を無制限に全件メモリへ載せない", "本番相当データではindexなし検索に注意する"],
-  api: ["routerにDB操作やAI呼び出しを全部書かない", "型ヒントと実際の戻り値をズラさない"],
-  ai: ["deployment_nameとmodel_nameを混同しない", "prompt injectionと空回答をテストする"],
-  performance: ["推測で最適化しない", "N+1をループ内DB/API呼び出しとして探す"],
-};
-
-function getStatus(id: string): StepStatus {
-  const status = statuses.value[id] ?? "todo";
-  if (status === "done" && !passedTests.value[id]) return "doing";
-  return status;
-}
-
-function setStatus(id: string, status: StepStatus) {
-  statuses.value = { ...statuses.value, [id]: status };
-}
+watch(hideDone, (value) => window.localStorage.setItem("python-master-hide-done", String(value)));
+watch(isTodayOnly, (value) => window.localStorage.setItem("python-master-today-only", String(value)));
 
 function stepNumber(id: string) {
-  return steps.findIndex((step) => step.id === id) + 1;
+  return stepNumberOf(steps, id);
 }
 
-function getPhase(number: number) {
-  if (number <= 5) return "Phase 1 / Python基礎";
-  if (number <= 15) return "Phase 2 / テスト・設計";
-  if (number <= 28) return "Phase 3 / FastAPI・外部API";
-  if (number <= 43) return "Phase 4 / DB・性能・分析";
-  if (number <= 56) return "Phase 5 / AI・RAG";
-  return "Phase 6 / 統合・レビュー";
-}
-
-function categoryLabel(category: string) {
-  return categoryLabels[category] ?? category;
-}
-
-function buildStepGuide(step: Step) {
-  const categoryTips = writingTipsByCategory[step.category] ?? [
-    "目的を1つ決めて、小さい単位で実装する",
-    "動かした結果を見ながら修正する",
-  ];
-  const cautionTips = cautionTipsByCategory[step.category] ?? [];
-  return {
-    writing: [
-      `まず ${step.files[0]} を開いて、TODOかREADMEの指示を読む`,
-      ...categoryTips,
-      `最後に ${step.commands[0] ?? "pytest"} で確認する`,
-    ],
-    cautions: [...step.reviewPoints, ...cautionTips].slice(0, 5),
-  };
-}
-
-function statusLabel(status: StepStatus) {
-  if (status === "done") return "完了";
-  if (status === "doing") return "学習中";
-  return "未着手";
+function syncSelectedFromHash() {
+  const hashId = window.location.hash.replace("#", "");
+  if (hashId === "home") {
+    isHomeView.value = true;
+    return;
+  }
+  if (!hashId) {
+    isHomeView.value = false;
+    selectedId.value = steps[0].id;
+    return;
+  }
+  if (steps.some((step) => step.id === hashId)) {
+    isHomeView.value = false;
+    selectedId.value = hashId;
+  }
 }
 
 function selectStep(step: Step) {
+  isHomeView.value = false;
   selectedId.value = step.id;
   window.location.hash = step.id;
 }
 
 function move(offset: number) {
-  const index = steps.findIndex((step) => step.id === selectedStep.value.id);
-  const next = steps[Math.min(Math.max(index + offset, 0), steps.length - 1)];
-  selectStep(next);
+  selectStep(stepAtOffset(steps, selectedStep.value.id, offset));
 }
 
-function isRunnable(command: string) {
-  return (
-    command === "python --version" ||
-    command === "ruff check ." ||
-    command === "black --check ." ||
-    command === "mypy src" ||
-    command === "poetry run lint" ||
-    command === "poetry run fmt" ||
-    command === "poetry run fmt --fix" ||
-    command === "poetry run build" ||
-    command.startsWith("pytest ") ||
-    command.startsWith("poetry run pytest ")
+function inspectFile(file: string) {
+  inspectedFile.value = file;
+  isLabOpen.value = true;
+}
+
+function closeOnboarding() {
+  window.localStorage.setItem("python-master-onboarding-seen", "true");
+  isOnboardingOpen.value = false;
+}
+
+function handleShortcut(event: KeyboardEvent) {
+  if (isTypingTarget(event.target)) return;
+  if (event.key === "j") {
+    event.preventDefault();
+    move(1);
+  }
+  if (event.key === "k") {
+    event.preventDefault();
+    move(-1);
+  }
+  if (event.key === "r") {
+    event.preventDefault();
+    runCommand(primaryCommand.value);
+  }
+  if (event.key === "/") {
+    event.preventDefault();
+    isSearchOpen.value = true;
+  }
+  if (event.key === "s") {
+    event.preventDefault();
+    isSidebarOpen.value = !isSidebarOpen.value;
+  }
+  if (event.key === "l") {
+    event.preventDefault();
+    toggleLightMode();
+  }
+  if (event.key === "h") {
+    event.preventDefault();
+    openHome();
+  }
+  if (event.key === "Escape") {
+    isSearchOpen.value = false;
+    isOnboardingOpen.value = false;
+  }
+}
+
+function isTypingTarget(target: EventTarget | null) {
+  const element = target as HTMLElement | null;
+  return Boolean(element && "closest" in element && element.closest("input, textarea, select, [contenteditable='true']"));
+}
+
+function downloadReport() {
+  const byCategory = new Map<string, { done: number; total: number }>();
+  for (const step of steps) {
+    const entry = byCategory.get(step.category) ?? { done: 0, total: 0 };
+    entry.total += 1;
+    if (getStatus(step.id) === "done") entry.done += 1;
+    byCategory.set(step.category, entry);
+  }
+  const memoLines = collectLabMemos()
+    .flatMap(({ step, state }) => [
+      `### ${step.title} (${step.id})`,
+      state.answer ? `- 理解メモ: ${state.answer}` : "",
+      state.review ? `- レビュー: ${state.review}` : "",
+      state.ragQuestion ? `- RAG質問: ${state.ragQuestion}` : "",
+      "",
+    ])
+    .filter(Boolean);
+  const lines = [
+    "# Python Master 学習レポート",
+    "",
+    `- 出力日時: ${new Date().toISOString()}`,
+    `- 完了: ${doneCount.value} / ${steps.length}`,
+    `- 学習中: ${doingCount.value}`,
+    "",
+    "## カテゴリ別",
+    ...[...byCategory.entries()].map(([category, value]) => `- ${category}: ${value.done} / ${value.total}`),
+    "",
+    "## 未完了の次候補",
+    ...steps.filter((step) => getStatus(step.id) !== "done").slice(0, 10).map((step) => `- ${step.title} (${step.id})`),
+    "",
+    "## 学習メモ",
+    ...(memoLines.length > 0 ? memoLines : ["- まだメモはありません"]),
+    "",
+    "## 学習ログ",
+    `- 実行回数: ${learningEvents.value.length}`,
+    `- 失敗回数: ${learningEvents.value.filter((event) => !event.ok).length}`,
+    ...learningEvents.value.slice(-10).map((event) => `- ${event.at} ${event.ok ? "OK" : "NG"} ${event.stepTitle}`),
+  ];
+  downloadText("python-master-report.md", lines.join("\n"), "text/markdown");
+}
+
+function downloadBackup() {
+  const labEntries: Record<string, string> = {};
+  for (let index = 0; index < window.localStorage.length; index += 1) {
+    const key = window.localStorage.key(index) ?? "";
+    if (key.startsWith("python-master-lab:")) labEntries[key] = window.localStorage.getItem(key) ?? "";
+  }
+  downloadText(
+    "python-master-backup.json",
+    JSON.stringify(
+      {
+        exportedAt: new Date().toISOString(),
+        labEntries,
+        learningEvents: exportLearningLog(),
+        progress: exportProgress(),
+        version: 1,
+      },
+      null,
+      2,
+    ),
+    "application/json",
   );
 }
 
-function isTestCommand(command: string) {
-  return command.startsWith("pytest ") || command.startsWith("poetry run pytest ");
+function importBackup(text: string) {
+  const data = JSON.parse(text) as {
+    labEntries?: Record<string, string>;
+    learningEvents?: LearningEvent[];
+    progress?: { passedTests?: Record<string, boolean>; statuses?: Record<string, StepStatus> };
+  };
+  if (data.progress) importProgress(data.progress);
+  importLearningLog(data.learningEvents);
+  for (const [key, value] of Object.entries(data.labEntries ?? {})) {
+    if (key.startsWith("python-master-lab:")) window.localStorage.setItem(key, value);
+  }
 }
 
-async function runCommand(command: string) {
-  if (!isRunnable(command) || runningCommand.value) return;
-  runningCommand.value = command;
-  runError.value = "";
-  runResult.value = null;
-  setStatus(selectedStep.value.id, "doing");
-  if (isTestCommand(command)) {
-    passedTests.value = { ...passedTests.value, [selectedStep.value.id]: false };
+function resetAllProgress() {
+  resetProgress();
+  resetLearningLog();
+  for (const key of Object.keys(window.localStorage)) {
+    if (key.startsWith("python-master-lab:")) window.localStorage.removeItem(key);
   }
+}
+
+function openHome() {
+  isHomeView.value = true;
+  window.location.hash = "home";
+}
+
+function toggleTodayOnly() {
+  isTodayOnly.value = !isTodayOnly.value;
+  if (isTodayOnly.value) selectFirstFocusStep();
+}
+
+function toggleHideDone() {
+  hideDone.value = !hideDone.value;
+}
+
+function startBasicReview() {
+  selectedCategory.value = "basic";
+  hideDone.value = true;
+  isTodayOnly.value = false;
+  const firstBasic = steps.find((step) => step.level === "基礎" && getStatus(step.id) !== "done");
+  if (firstBasic) selectStep(firstBasic);
+}
+
+function selectFirstFocusStep() {
+  const first = steps.find((step) => step.id === learningAnalysis.value.focusQueue[0]?.stepId);
+  if (first) selectStep(first);
+}
+
+function finishSession() {
+  const summary: SessionSummary = {
+    at: new Date().toISOString(),
+    failedRuns: learningEvents.value.filter((event) => !event.ok).length,
+    nextItems: learningAnalysis.value.focusQueue.map((item) => `${item.label}: ${item.title}`),
+    totalRuns: learningEvents.value.length,
+  };
+  latestSession.value = summary;
+  saveSessionSummary(summary);
+  isSessionSummaryOpen.value = true;
+}
+
+function saveSessionSummary(summary: SessionSummary) {
+  const key = "python-master-session-summaries";
+  const saved = window.localStorage.getItem(key);
+  const summaries = saved ? (JSON.parse(saved) as SessionSummary[]) : [];
+  window.localStorage.setItem(key, JSON.stringify([...summaries, summary].slice(-30)));
+}
+
+function toggleLightMode() {
+  isLightMode.value = !isLightMode.value;
+  window.localStorage.setItem("python-master-light-mode", String(isLightMode.value));
+}
+
+function downloadText(filename: string, body: string, type: string) {
+  const url = URL.createObjectURL(new Blob([body], { type }));
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
+function collectLabMemos() {
+  return steps
+    .map((step) => ({ step, state: readLabState(step.id) }))
+    .filter(({ state }) => state.answer || state.review || state.ragQuestion);
+}
+
+function readLabState(stepId: string) {
+  const raw = window.localStorage.getItem(`python-master-lab:${stepId}`);
+  if (!raw) return { answer: "", ragQuestion: "", review: "" };
   try {
-    const response = await fetch(`${apiBase}/api/run`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ command }),
-    });
-    if (!response.ok) {
-      const body = (await response.json()) as { detail?: string };
-      throw new Error(body.detail ?? "コマンド実行に失敗しました");
-    }
-    runResult.value = (await response.json()) as RunResult;
-    if (isTestCommand(command) && runResult.value.exit_code === 0) {
-      passedTests.value = { ...passedTests.value, [selectedStep.value.id]: true };
-      setStatus(selectedStep.value.id, "done");
-    } else {
-      if (isTestCommand(command)) {
-        passedTests.value = { ...passedTests.value, [selectedStep.value.id]: false };
-      }
-      setStatus(selectedStep.value.id, "doing");
-    }
-  } catch (error) {
-    runError.value = error instanceof Error ? error.message : "コマンド実行に失敗しました";
-  } finally {
-    runningCommand.value = "";
+    const value = JSON.parse(raw) as { answer?: string; ragQuestion?: string; review?: string };
+    return {
+      answer: value.answer?.trim() ?? "",
+      ragQuestion: value.ragQuestion?.trim() ?? "",
+      review: value.review?.trim() ?? "",
+    };
+  } catch {
+    return { answer: "", ragQuestion: "", review: "" };
   }
 }
 </script>
 
 <template>
-  <div class="mentor-shell" :class="{ 'sidebar-collapsed': !isSidebarOpen }">
-    <aside class="mentor-nav">
-      <div class="sidebar-head">
-        <div class="mentor-brand">
-          <div class="brand-mark">
-            <BookOpen :size="21" />
-          </div>
-          <div>
-            <h1>Python Master</h1>
-            <p>{{ doneCount }}/{{ steps.length }} 完了</p>
-          </div>
-        </div>
-        <button
-          class="sidebar-toggle"
-          type="button"
-          :title="isSidebarOpen ? 'サイドバーを閉じる' : 'サイドバーを開く'"
-          :aria-expanded="isSidebarOpen"
-          @click="isSidebarOpen = !isSidebarOpen"
-        >
-          <PanelLeftClose v-if="isSidebarOpen" :size="20" />
-          <PanelLeftOpen v-else :size="20" />
-        </button>
-      </div>
-
-      <div class="sidebar-metrics">
-        <div>
-          <span>Progress</span>
-          <strong>{{ progressPercent }}%</strong>
-        </div>
-        <div>
-          <span>Active</span>
-          <strong>{{ doingCount }}</strong>
-        </div>
-      </div>
-
-      <div class="progress-track">
-        <div class="progress-bar" :style="{ width: `${progressPercent}%` }" />
-      </div>
-
-      <div class="current-step-card">
-        <span>Current</span>
-        <strong>{{ selectedNumber }}. {{ selectedStep.title }}</strong>
-        <small>{{ currentPhase }}</small>
-      </div>
-
-      <label class="mentor-search">
-        <Search :size="17" />
-        <input v-model="query" type="search" placeholder="Stepを検索" />
-      </label>
-
-      <div class="sidebar-filter">
-        <select v-model="selectedCategory" aria-label="category filter">
-          <option value="all">全部のカテゴリ</option>
-          <option value="basic">基本</option>
-          <option v-for="category in categories" :key="category" :value="category">
-            {{ categoryLabel(category) }}
-          </option>
-        </select>
-        <span>{{ filteredSteps.length }} steps</span>
-      </div>
-
-      <nav class="mentor-step-list" aria-label="steps">
-        <button
-          v-for="step in filteredSteps"
-          :key="step.id"
-          :class="{ active: step.id === selectedStep.id }"
-          type="button"
-          @click="selectStep(step)"
-        >
-          <span class="step-index">{{ stepNumber(step.id) }}</span>
-          <span>
-            <strong>{{ step.title }}</strong>
-            <small>{{ categoryLabel(step.category) }} / {{ step.level }}</small>
-          </span>
-          <component :is="getStatus(step.id) === 'done' ? CheckCircle2 : Circle" :size="16" />
-        </button>
-      </nav>
-    </aside>
+  <div class="mentor-shell" :class="{ 'sidebar-collapsed': !isSidebarOpen, 'home-view': isHomeView, 'light-mode': isLightMode }">
+    <MentorSidebar
+      :categories="categories"
+      :done-count="doneCount"
+      :doing-count="doingCount"
+      :get-status="getStatus"
+      :is-home-view="isHomeView"
+      :is-open="isSidebarOpen"
+      :phase-groups="phaseGroups"
+      :progress-percent="progressPercent"
+      :query="query"
+      :selected-category="selectedCategory"
+      :selected-step="selectedStep"
+      :step-number="stepNumber"
+      :steps-length="steps.length"
+      @open-home="openHome"
+      @select-step="selectStep"
+      @update:is-open="isSidebarOpen = $event"
+      @update:query="query = $event"
+      @update:selected-category="selectedCategory = $event"
+    />
 
     <main class="mentor-main">
-      <header class="mentor-header">
-        <div>
-          <div class="mentor-kicker">{{ currentPhase }} / {{ selectedStep.id }}</div>
-          <h2>{{ selectedStep.title }}</h2>
-          <p>{{ selectedStep.summary }}</p>
-        </div>
-        <div class="mentor-arrows">
-          <button type="button" title="前のstep" @click="move(-1)">
-            <ChevronLeft :size="20" />
-          </button>
-          <button type="button" title="次のstep" @click="move(1)">
-            <ChevronRight :size="20" />
-          </button>
-        </div>
-      </header>
+      <LearningToolbar
+        :hide-done="hideDone"
+        :is-home-view="isHomeView"
+        :is-light-mode="isLightMode"
+        :is-today-only="isTodayOnly"
+        @download-backup="downloadBackup"
+        @download-report="downloadReport"
+        @finish-session="finishSession"
+        @import-backup="importBackup"
+        @open-home="openHome"
+        @open-guide="isOnboardingOpen = true"
+        @open-search="isSearchOpen = true"
+        @reset-progress="resetAllProgress"
+        @start-basic-review="startBasicReview"
+        @toggle-hide-done="toggleHideDone"
+        @toggle-light-mode="toggleLightMode"
+        @toggle-today-only="toggleTodayOnly"
+      />
 
-      <section class="lesson-strip" aria-label="lesson overview">
+      <section v-if="isHomeView" class="home-dashboard">
+        <article class="home-hero">
+          <span>home</span>
+          <h2>次の1手だけ決める</h2>
+          <p>上から順番に進めます。後半Phaseは、前半が終わるまで出しすぎません。</p>
+          <div class="home-actions">
+            <button type="button" @click="toggleTodayOnly">今日だけ表示</button>
+            <button type="button" @click="startBasicReview">基礎復習</button>
+            <button type="button" @click="finishSession">学習終了</button>
+          </div>
+        </article>
+        <LearningLogPanel :events="learningEvents" :get-status="getStatus" :steps="steps" />
+      </section>
+
+      <LessonHeader v-if="!isHomeView" :current-phase="currentPhase" :step="selectedStep" @move="move" />
+
+      <section v-if="!isHomeView" class="lesson-strip" aria-label="lesson overview">
         <div class="lesson-chip">
           <span>Step</span>
           <strong>{{ selectedNumber }} / {{ steps.length }}</strong>
@@ -393,46 +453,15 @@ async function runCommand(command: string) {
         </div>
       </section>
 
-      <section class="mission-board">
-        <article class="mission-card">
-          <span>今回のゴール</span>
-          <h3>{{ selectedStep.goals[0] }}</h3>
-          <p>{{ selectedStep.files[0] }} から読み、TODOを1つずつ動かして直す。</p>
-          <div class="learning-route">
-            <div>
-              <strong>1</strong>
-              <span>読む</span>
-            </div>
-            <div>
-              <strong>2</strong>
-              <span>書く</span>
-            </div>
-            <div>
-              <strong>3</strong>
-              <span>動かす</span>
-            </div>
-            <div>
-              <strong>4</strong>
-              <span>判断</span>
-            </div>
-          </div>
-        </article>
-        <article class="run-card">
-          <span>確認コマンド</span>
-          <code>{{ primaryCommand }}</code>
-          <button
-            type="button"
-            :disabled="!isRunnable(primaryCommand) || Boolean(runningCommand)"
-            @click="runCommand(primaryCommand)"
-          >
-            <LoaderCircle v-if="runningCommand === primaryCommand" :size="17" />
-            <Play v-else :size="17" />
-            テスト実行
-          </button>
-        </article>
-      </section>
+      <MissionBoard
+        v-if="!isHomeView"
+        :primary-command="primaryCommand"
+        :running-command="runningCommand"
+        :step="selectedStep"
+        @run="runCommand"
+      />
 
-      <section class="mentor-workspace">
+      <section v-if="!isHomeView" class="mentor-workspace">
         <div class="work-lane">
           <article class="work-card">
             <div class="work-title">
@@ -454,387 +483,60 @@ async function runCommand(command: string) {
             </ul>
           </article>
 
-          <article class="result-card">
-            <div class="work-title">
-              <Terminal :size="20" />
-              <h3>実行結果</h3>
-            </div>
-            <p v-if="!runError">{{ resultGuide }}</p>
-            <p v-if="runningCommand">実行中: {{ runningCommand }}</p>
-            <p v-if="runError" class="run-error">{{ runError }}</p>
-            <div v-if="runResult" class="run-summary" :class="{ success: runResult?.exit_code === 0 }">
-              <strong>{{ runResult?.exit_code === 0 ? "成功" : "失敗" }}</strong>
-              <span>exit {{ runResult?.exit_code }}</span>
-              <span>{{ runResult?.duration_ms }} ms</span>
-              <code>{{ runResult?.command }}</code>
-            </div>
-            <pre v-if="runResult?.stdout"><code>{{ runResult?.stdout }}</code></pre>
-            <pre v-if="runResult?.stderr" class="stderr"><code>{{ runResult?.stderr }}</code></pre>
-          </article>
+          <RunResultCard
+            :run-error="runError"
+            :run-result="runResult"
+            :running-command="runningCommand"
+            @inspect-file="inspectFile"
+          />
 
-          <article v-if="additionalCommands.length > 0" class="work-card">
-            <div class="work-title">
-              <Terminal :size="20" />
-              <h3>追加コマンド</h3>
-            </div>
-            <div v-for="commandText in additionalCommands" :key="commandText" class="mini-runner">
-              <code>{{ commandText }}</code>
-              <button
-                type="button"
-                :disabled="!isRunnable(commandText) || Boolean(runningCommand)"
-                @click="runCommand(commandText)"
-              >
-                実行
-              </button>
-            </div>
-          </article>
+          <CommandList :commands="additionalCommands" :running-command="runningCommand" @run="runCommand" />
         </div>
 
-        <aside class="study-rail">
-          <article class="rail-card">
-            <div class="work-title">
-              <Lightbulb :size="20" />
-              <h3>学ぶこと</h3>
-            </div>
-            <ul>
-              <li v-for="goal in selectedStep.goals" :key="goal">{{ goal }}</li>
-            </ul>
-          </article>
-
-          <article class="rail-card">
-            <div class="work-title">
-              <FileCode2 :size="20" />
-              <h3>対象ファイル</h3>
-            </div>
-            <code v-for="file in selectedStep.files" :key="file">{{ file }}</code>
-          </article>
-
-          <article v-if="selectedReference" class="rail-card">
-            <h3>参照リソース</h3>
-            <p>{{ selectedReference.comment }}</p>
-            <div class="reference-links">
-              <a
-                v-for="url in selectedReference.urls"
-                :key="url"
-                :href="url"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <ExternalLink :size="15" />
-                {{ url }}
-              </a>
-            </div>
-          </article>
-
-          <article v-if="shouldShowMongo" class="rail-card">
-            <div class="work-title">
-              <Database :size="20" />
-              <h3>Mongo確認</h3>
-            </div>
-            <code>docker compose exec mongo mongosh</code>
-            <code>use python_master</code>
-            <code>show collections</code>
-            <code>db.subscriptions.find({}, { "_id": 0 })</code>
-          </article>
-        </aside>
-      </section>
-    </main>
-  </div>
-
-  <div v-if="false" class="app-shell">
-    <aside class="sidebar">
-      <div class="brand-row">
-        <div class="brand-mark">
-          <BookOpen :size="22" />
-        </div>
-        <div>
-          <h1>Python Master</h1>
-          <p>{{ doneCount }}/{{ steps.length }} 完了</p>
-        </div>
-      </div>
-
-      <div class="progress">
-        <div class="progress-meta">
-          <span>{{ progressPercent }}%</span>
-          <span>学習中 {{ doingCount }}</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-bar" :style="{ width: `${progressPercent}%` }" />
-        </div>
-      </div>
-
-      <div class="current-mini">
-        <span>現在</span>
-        <strong>{{ selectedNumber }}. {{ selectedStep.title }}</strong>
-        <small>{{ currentPhase }}</small>
-      </div>
-
-      <label class="search-box">
-        <Search :size="17" />
-        <input v-model="query" type="search" placeholder="RAG、Mongo、FastAPI..." />
-      </label>
-
-      <div class="tabs" aria-label="category filter">
-        <button
-          class="tab"
-          :class="{ active: selectedCategory === 'all' }"
-          type="button"
-          @click="selectedCategory = 'all'"
-        >
-          全部
-        </button>
-        <button
-          v-for="category in categories"
-          :key="category"
-          class="tab"
-          :class="{ active: selectedCategory === category }"
-          type="button"
-          @click="selectedCategory = category"
-        >
-          {{ categoryLabel(category) }}
-        </button>
-      </div>
-
-      <nav class="step-list" aria-label="steps">
-        <button
-          v-for="step in filteredSteps"
-          :key="step.id"
-          class="step-button"
-          :class="{ active: step.id === selectedStep.id }"
-          type="button"
-          @click="selectStep(step)"
-        >
-          <component :is="getStatus(step.id) === 'done' ? CheckCircle2 : Circle" :size="17" />
-          <span>
-            <strong>{{ step.id }} {{ step.title }}</strong>
-            <small>{{ step.level }} / {{ categoryLabel(step.category) }}</small>
-          </span>
-        </button>
-      </nav>
-    </aside>
-
-    <main class="content">
-      <section class="step-header">
-        <div>
-          <div class="step-kicker">
-            {{ currentPhase }} / {{ selectedStep.id }} / {{ selectedStep.level }}
-          </div>
-          <h2>{{ selectedStep.title }}</h2>
-          <p>{{ selectedStep.summary }}</p>
-        </div>
-        <div class="header-actions">
-          <button class="icon-button" type="button" title="前のstep" @click="move(-1)">
-            <ChevronLeft :size="20" />
-          </button>
-          <button class="icon-button" type="button" title="次のstep" @click="move(1)">
-            <ChevronRight :size="20" />
-          </button>
-        </div>
-      </section>
-
-      <section class="quick-run">
-        <div>
-          <span>このStepの確認</span>
-          <code>{{ primaryCommand }}</code>
-        </div>
-        <button
-          type="button"
-          :disabled="!isRunnable(primaryCommand) || Boolean(runningCommand)"
-          @click="runCommand(primaryCommand)"
-        >
-          <LoaderCircle v-if="runningCommand === primaryCommand" :size="17" />
-          <Play v-else :size="17" />
-          テスト実行
-        </button>
-      </section>
-
-      <section class="flow-strip" aria-label="learning flow">
-        <div class="flow-step active">
-          <span>1</span>
-          <strong>読む</strong>
-          <small>問題と書き方</small>
-        </div>
-        <div class="flow-step">
-          <span>2</span>
-          <strong>書く</strong>
-          <small>対象ファイル</small>
-        </div>
-        <div class="flow-step">
-          <span>3</span>
-          <strong>動かす</strong>
-          <small>テスト実行</small>
-        </div>
-        <div class="flow-step">
-          <span>4</span>
-          <strong>直す</strong>
-          <small>ログ確認</small>
-        </div>
-      </section>
-
-      <section class="workspace-grid">
-        <div class="practice-column">
-          <article class="focus-card problem-card">
-            <div class="panel-title">
-              <ClipboardCheck :size="20" />
-              <h3>問題</h3>
-            </div>
-            <h4>{{ selectedStep.goals[0] }}</h4>
-            <p>{{ selectedStep.files[0] }} を開いて、READMEか最初のTODOから進める。</p>
-          </article>
-
-          <section class="guide-grid">
-            <article class="guide-card">
-              <div class="panel-title">
-                <PencilLine :size="20" />
-                <h3>書き方</h3>
-              </div>
-              <ol>
-                <li v-for="tip in selectedGuide.writing" :key="tip">{{ tip }}</li>
-              </ol>
-            </article>
-
-            <article class="guide-card caution-card">
-              <div class="panel-title">
-                <AlertTriangle :size="20" />
-                <h3>注意点</h3>
-              </div>
-              <ul>
-                <li v-for="tip in selectedGuide.cautions" :key="tip">{{ tip }}</li>
-              </ul>
-            </article>
-          </section>
-
-          <section class="runner-panel">
-            <div class="panel-title">
-              <Terminal :size="19" />
-              <h3>テスト実行結果</h3>
-            </div>
-            <p v-if="!runError">{{ resultGuide }}</p>
-            <p v-if="runningCommand">実行中: {{ runningCommand }}</p>
-            <p v-if="runError" class="run-error">{{ runError }}</p>
-            <div v-if="runResult" class="run-summary" :class="{ success: runResult?.exit_code === 0 }">
-              <strong>{{ runResult?.exit_code === 0 ? "成功" : "失敗" }}</strong>
-              <span>exit {{ runResult?.exit_code }}</span>
-              <span>{{ runResult?.duration_ms }} ms</span>
-              <code>{{ runResult?.command }}</code>
-            </div>
-            <pre v-if="runResult?.stdout"><code>{{ runResult?.stdout }}</code></pre>
-            <pre v-if="runResult?.stderr" class="stderr"><code>{{ runResult?.stderr }}</code></pre>
-          </section>
-
-          <section class="detail-grid compact-details">
-            <article class="panel">
-              <div class="panel-title">
-                <Terminal :size="19" />
-                <h3>その他の実行コマンド</h3>
-              </div>
-              <div v-for="commandText in additionalCommands" :key="commandText" class="command-runner">
-                <code>{{ commandText }}</code>
-                <button
-                  type="button"
-                  :disabled="!isRunnable(commandText) || Boolean(runningCommand)"
-                  @click="runCommand(commandText)"
-                >
-                  <LoaderCircle v-if="runningCommand === commandText" :size="17" />
-                  <Play v-else :size="17" />
-                  実行
-                </button>
-              </div>
-              <p v-if="additionalCommands.length === 0" class="manual-note">
-                追加コマンドはありません。まず上の確認コマンドを実行します。
-              </p>
-            </article>
-          </section>
-
-          <section v-if="shouldShowMongo" class="mongo-band">
-            <div class="panel-title">
-              <Database :size="20" />
-              <h3>Mongo seed 確認</h3>
-            </div>
-            <div class="mongo-grid">
-              <code>docker compose exec mongo mongosh</code>
-              <code>use python_master</code>
-              <code>show collections</code>
-              <code>db.subscriptions.find({}, { "_id": 0 })</code>
-              <code>db.users.find({ group_ids: "g-reviewer" })</code>
-            </div>
-          </section>
-        </div>
-
-        <aside class="context-rail">
-          <article class="side-panel">
-            <div class="panel-title">
-              <Lightbulb :size="20" />
-              <h3>学ぶこと</h3>
-            </div>
-            <ul>
-              <li v-for="goal in selectedStep.goals" :key="goal">{{ goal }}</li>
-            </ul>
-          </article>
-
-          <article class="side-panel">
-            <div class="panel-title">
-              <FileCode2 :size="20" />
-              <h3>参照</h3>
-            </div>
-            <p v-if="selectedReference" class="reference-note">{{ selectedReference?.comment }}</p>
-            <div v-if="selectedReference" class="reference-links">
-              <a
-                v-for="url in selectedReference?.urls ?? []"
-                :key="url"
-                :href="url"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <ExternalLink :size="15" />
-                {{ url }}
-              </a>
-            </div>
-            <code v-for="file in selectedStep.files" :key="file">{{ file }}</code>
-          </article>
-
-          <section class="status-panel">
-            <span>進捗</span>
-            <div class="status-actions">
-              <button
-                class="status-button"
-                :class="{ active: getStatus(selectedStep.id) === 'todo' }"
-                type="button"
-                @click="setStatus(selectedStep.id, 'todo')"
-              >
-                <Circle :size="17" />
-                未着手
-              </button>
-              <button
-                class="status-button"
-                :class="{ active: getStatus(selectedStep.id) === 'doing' }"
-                type="button"
-                @click="setStatus(selectedStep.id, 'doing')"
-              >
-                <ListChecks :size="17" />
-                学習中
-              </button>
-              <button
-                class="status-button"
-                :class="{ active: getStatus(selectedStep.id) === 'done' }"
-                type="button"
-                @click="setStatus(selectedStep.id, 'done')"
-              >
-                <CheckCircle2 :size="17" />
-                完了
-              </button>
-            </div>
-            <small>現在: {{ statusLabel(getStatus(selectedStep.id)) }}</small>
-          </section>
-
-          <section v-if="nextStep" class="next-step">
-            <span>次のStep</span>
-            <button type="button" @click="selectStep(nextStep)">
-              {{ stepNumber(nextStep.id) }}. {{ nextStep.title }}
+        <section v-if="!isLightMode" class="collapse-stack">
+          <article class="collapsible-panel">
+            <button type="button" class="collapse-toggle" @click="isReferenceOpen = !isReferenceOpen">
+              参照リソース / 対象ファイル
+              <span>{{ isReferenceOpen ? "閉じる" : "開く" }}</span>
             </button>
-          </section>
-        </aside>
+            <StudyRail
+              v-if="isReferenceOpen"
+              :reference="selectedReference"
+              :should-show-mongo="shouldShowMongo"
+              :step="selectedStep"
+            />
+          </article>
+
+          <article class="collapsible-panel">
+            <button type="button" class="collapse-toggle" @click="isLabOpen = !isLabOpen">
+              実務ラボ / 比較 / メモ / RAG
+              <span>{{ isLabOpen ? "閉じる" : "開く" }}</span>
+            </button>
+            <MasteryLab
+              v-if="isLabOpen"
+              :all-steps="steps"
+              :done-count="doneCount"
+              :doing-count="doingCount"
+              :get-status="getStatus"
+              :inspected-file="inspectedFile"
+              :run-result="runResult"
+              :should-show-mongo="shouldShowMongo"
+              :step="selectedStep"
+              :steps-length="steps.length"
+            />
+          </article>
+        </section>
+
+        <article v-else class="light-focus-card" aria-label="軽量モード">
+          <strong>軽量モード</strong>
+          <p>今は問題、書き方、注意点、実行結果だけに絞っています。</p>
+          <button type="button" @click="toggleLightMode">通常表示に戻す</button>
+        </article>
       </section>
     </main>
+
+    <OnboardingModal :open="isOnboardingOpen" @close="closeOnboarding" />
+    <CommandCenter :open="isSearchOpen" :steps="steps" @close="isSearchOpen = false" @select-step="selectStep" />
+    <SessionSummaryModal :open="isSessionSummaryOpen" :summary="latestSession" @close="isSessionSummaryOpen = false" />
   </div>
 </template>

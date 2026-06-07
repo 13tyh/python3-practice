@@ -1,4 +1,9 @@
-from exercises.basics_repetition.round_45 import active_users, count_active, find_user_name, user_names
+from exercises.basics_repetition.round_45 import (
+    active_users,
+    count_active,
+    find_user_name,
+    user_names,
+)
 
 
 def test_round_45() -> None:
@@ -11,4 +16,3 @@ def test_round_45() -> None:
     assert count_active(users) == 1
     assert find_user_name(users, "u1") == "Aki"
     assert find_user_name(users, "missing") is None
-

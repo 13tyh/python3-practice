@@ -19,4 +19,3 @@ def invert(data: dict[str, str]) -> dict[str, str]:
 def filter_scores(scores: dict[str, int], min_score: int) -> dict[str, int]:
     # TODO
     raise NotImplementedError
-

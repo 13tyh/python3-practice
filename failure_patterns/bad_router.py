@@ -11,4 +11,3 @@ def review(payload: dict[str, str]) -> dict[str, object]:
     prompt = "review this code: " + payload["code"]
     result = {"text": "ok", "api_key": api_key, "prompt": prompt}
     return result
-

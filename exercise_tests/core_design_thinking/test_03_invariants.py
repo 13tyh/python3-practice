@@ -13,4 +13,3 @@ def test_invariants() -> None:
     with pytest.raises(ValueError):
         target.withdraw(100, 200)
     assert target.transfer(100, 50, 30) == (70, 80)
-

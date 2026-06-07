@@ -1,4 +1,4 @@
-# 12 Google AI
+# 44 Google AI
 
 目的: Gemini API、Vertex AI、Google Gen AI SDK の違いを理解する。
 

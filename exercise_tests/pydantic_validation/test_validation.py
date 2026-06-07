@@ -15,4 +15,3 @@ def test_pydantic_validation() -> None:
     assert target.create_user_label(user) == "Aki <aki@example.com> admin"
     with pytest.raises(ValidationError):
         target.CreateUser(email="invalid", role="member", profile={"display_name": "Ren"})
-

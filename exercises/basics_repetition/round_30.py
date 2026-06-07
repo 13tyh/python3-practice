@@ -15,4 +15,3 @@ def to_query_string(params: dict[str, str]) -> str:
 def merge_params(base: dict[str, str], extra: dict[str, str | None]) -> dict[str, str]:
     # TODO
     raise NotImplementedError
-

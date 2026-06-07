@@ -1,0 +1,443 @@
+body {
+  color: #e5edf7;
+  background:
+    linear-gradient(90deg, rgb(125 211 252 / 8%) 1px, transparent 1px),
+    linear-gradient(180deg, rgb(45 212 191 / 7%) 1px, transparent 1px),
+    radial-gradient(circle at 18% 12%, rgb(59 130 246 / 24%), transparent 28%),
+    radial-gradient(circle at 88% 18%, rgb(20 184 166 / 22%), transparent 24%),
+    linear-gradient(135deg, #08111f 0, #0f172a 52%, #111827 100%);
+  background-size:
+    46px 46px,
+    46px 46px,
+    auto,
+    auto,
+    auto;
+}
+
+.mentor-nav {
+  color: #e5edf7;
+  border-right: 1px solid #1f2a3a;
+  background: linear-gradient(180deg, #060b13 0, #0b1220 52%, #111827 100%);
+  box-shadow: 8px 0 24px rgb(0 0 0 / 22%);
+}
+
+.mentor-brand h1,
+.sidebar-metrics strong,
+.mentor-step-list strong {
+  color: #f8fafc;
+}
+
+.mentor-brand p,
+.sidebar-metrics span,
+.mentor-step-list small,
+.mentor-kicker,
+.lesson-chip span,
+.mission-card span,
+.run-card span {
+  color: #94a3b8;
+}
+
+.brand-mark {
+  color: #06110f;
+  background: #2dd4bf;
+}
+
+.sidebar-toggle,
+.sidebar-home-link,
+.sidebar-filter select,
+.mentor-step-list button,
+.sidebar-metrics > div,
+.mentor-search {
+  border-color: #253244;
+  color: #dbeafe;
+  background: #111827;
+}
+
+.sidebar-toggle {
+  color: #67e8f9;
+}
+
+.mentor-search input {
+  color: #f8fafc;
+}
+
+.mentor-search input::placeholder {
+  color: #64748b;
+}
+
+.mentor-step-list button.active {
+  border-color: #2dd4bf;
+  color: #ccfbf1;
+  background: #102b2b;
+}
+
+.mentor-step-list button.active {
+  box-shadow: inset 4px 0 0 #2dd4bf;
+}
+
+.sidebar-home-link.active {
+  border-color: #2dd4bf;
+  color: #ccfbf1;
+  background: #102b2b;
+  box-shadow: inset 4px 0 0 #2dd4bf;
+}
+
+.mentor-step-list button:hover,
+.sidebar-home-link:hover,
+.sidebar-filter select:hover,
+.sidebar-toggle:hover {
+  border-color: #38bdf8;
+  background: #172033;
+}
+
+.progress-track {
+  background: #1e293b;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #2dd4bf, #38bdf8, #a78bfa);
+}
+
+.mentor-header,
+.lesson-chip,
+.learning-toolbar,
+.run-card,
+.work-card,
+.result-card,
+.rail-card {
+  color: #e5edf7;
+  border-color: #253244;
+  background: rgb(15 23 42 / 86%);
+  box-shadow: 0 14px 34px rgb(0 0 0 / 22%);
+}
+
+.mentor-header {
+  background: linear-gradient(135deg, rgb(15 23 42 / 92%) 0, rgb(17 24 39 / 90%) 54%, rgb(8 47 73 / 82%) 100%);
+}
+
+.mentor-header::before {
+  background: linear-gradient(90deg, #2dd4bf 0, #38bdf8 46%, #a78bfa 78%, #f472b6 100%);
+}
+
+.mentor-header h2,
+.lesson-chip strong,
+.work-title h3,
+.rail-card h3 {
+  color: #f8fafc;
+}
+
+.mentor-header p,
+.mentor-header small,
+.rail-card li,
+.rail-card p,
+.result-card p,
+.step-guide li {
+  color: #cbd5e1;
+}
+
+.mentor-arrows button,
+.mini-runner button,
+.learning-toolbar button,
+.modal-panel button {
+  color: #dbeafe;
+  border-color: #253244;
+  background: #111827;
+}
+
+.mentor-arrows button:hover,
+.mini-runner button:hover,
+.learning-toolbar button:hover,
+.modal-panel button:hover {
+  border-color: #38bdf8;
+  background: #172033;
+}
+
+.learning-toolbar button.active {
+  border-color: #2dd4bf;
+  color: #06111f;
+  background: #2dd4bf;
+}
+
+.lesson-chip:nth-child(1)::after {
+  background: #2dd4bf;
+}
+
+.lesson-chip:nth-child(2)::after {
+  background: #38bdf8;
+}
+
+.lesson-chip:nth-child(3)::after {
+  background: #a78bfa;
+}
+
+.lesson-chip:nth-child(4)::after {
+  background: #f472b6;
+}
+
+.mission-card {
+  color: #f8fafc;
+  border-color: #164e63;
+  background: linear-gradient(135deg, #06111f 0, #0f172a 48%, #0f3b45 100%);
+}
+
+.mission-card span,
+.mission-card p {
+  color: #a8c0d6;
+}
+
+.mission-card h3 {
+  color: #f8fafc;
+}
+
+.learning-route div {
+  border-color: rgb(45 212 191 / 24%);
+  background: rgb(15 23 42 / 70%);
+}
+
+.learning-route strong {
+  color: #06111f;
+  background: #2dd4bf;
+}
+
+.learning-route span {
+  color: #e2e8f0;
+}
+
+.run-card {
+  border-color: #115e59;
+  background: linear-gradient(180deg, rgb(4 47 46 / 92%) 0, rgb(15 23 42 / 88%) 100%);
+}
+
+.run-card code,
+code {
+  color: #99f6e4;
+  border-color: #1f3b46;
+  background: #07111d;
+}
+
+.run-card button {
+  border-color: #2dd4bf;
+  color: #06111f;
+  background: #2dd4bf;
+  box-shadow: 0 10px 20px rgb(45 212 191 / 20%);
+}
+
+.run-card button:not(:disabled):hover {
+  background: #5eead4;
+}
+
+.run-card button:disabled {
+  color: #64748b;
+  border-color: #334155;
+  background: #1e293b;
+}
+
+.work-card::before {
+  background: #38bdf8;
+}
+
+.work-card.warning {
+  background: rgb(30 27 18 / 86%);
+}
+
+.work-card.warning::before {
+  background: #f59e0b;
+}
+
+.result-card {
+  background: rgb(6 32 30 / 86%);
+}
+
+.result-card::before {
+  background: #2dd4bf;
+}
+
+.work-title svg {
+  color: #38bdf8;
+}
+
+.warning .work-title svg {
+  color: #fbbf24;
+}
+
+.result-card .work-title svg {
+  color: #2dd4bf;
+}
+
+.step-guide li {
+  border-color: #263445;
+  background: rgb(15 23 42 / 76%);
+}
+
+.step-guide li::before {
+  color: #06111f;
+  background: #38bdf8;
+}
+
+.warning .step-guide li::before {
+  color: #111827;
+  background: #fbbf24;
+}
+
+.rail-card:nth-child(1)::before {
+  background: #38bdf8;
+}
+
+.rail-card:nth-child(2)::before {
+  background: #a78bfa;
+}
+
+.rail-card:nth-child(3)::before {
+  background: #2dd4bf;
+}
+
+.reference-links a {
+  color: #67e8f9;
+}
+
+.reference-links a {
+  border-top-color: #253244;
+}
+
+.run-summary {
+  color: #fecaca;
+  border-color: #7f1d1d;
+  background: rgb(69 10 10 / 60%);
+}
+
+.run-summary.success {
+  color: #bbf7d0;
+  border-color: #14532d;
+  background: rgb(5 46 22 / 60%);
+}
+
+.run-highlights {
+  color: #fde68a;
+  border-color: #854d0e;
+  background: rgb(69 42 9 / 60%);
+}
+
+.run-highlights code {
+  color: #fef3c7;
+  border-color: #854d0e;
+  background: rgb(30 20 8 / 72%);
+}
+
+.run-hint {
+  color: #bfdbfe !important;
+  border-color: #1d4ed8;
+  background: rgb(30 58 138 / 42%);
+}
+
+.file-candidates-toggle {
+  color: #67e8f9;
+  border-color: #253244;
+  background: #111827;
+}
+
+.file-candidates-toggle:hover {
+  border-color: #38bdf8;
+  background: #172033;
+}
+
+.lab-header,
+.lab-panel {
+  color: #e5edf7;
+  border-color: #253244;
+  background: rgb(15 23 42 / 86%);
+  box-shadow: 0 14px 34px rgb(0 0 0 / 18%);
+}
+
+.lab-header h3,
+.lab-panel .work-title h3,
+.compare-grid strong,
+.lab-panel > strong {
+  color: #f8fafc;
+}
+
+.lab-header span,
+.lab-panel > p,
+.lab-panel label,
+.lab-panel li {
+  color: #cbd5e1;
+}
+
+.lab-panel label {
+  border-color: #263445;
+  background: rgb(15 23 42 / 76%);
+}
+
+.memo-summary {
+  border-color: #263445;
+  background: rgb(15 23 42 / 76%);
+}
+
+.memo-summary p {
+  color: #cbd5e1;
+}
+
+.lab-panel input,
+.lab-panel select,
+.lab-panel textarea {
+  color: #e5edf7;
+  border-color: #253244;
+  background: #111827;
+}
+
+.lab-panel button,
+.file-candidate-button {
+  color: #67e8f9;
+  border-color: #253244;
+  background: #111827;
+}
+
+.lab-panel button:hover,
+.file-candidate-button:hover {
+  border-color: #38bdf8;
+  background: #172033;
+}
+
+.lab-panel a {
+  color: #67e8f9;
+  border-color: #253244;
+  background: #111827;
+}
+
+.lab-panel a:hover {
+  border-color: #38bdf8;
+  background: #172033;
+}
+
+.modal-panel {
+  color: #e5edf7;
+  border-color: #253244;
+  background: #0f172a;
+}
+
+.modal-panel h2 {
+  color: #f8fafc;
+}
+
+.modal-panel span,
+.modal-panel li,
+.modal-panel small {
+  color: #cbd5e1;
+}
+
+.command-search {
+  border-color: #253244;
+  background: #111827;
+}
+
+.command-search input {
+  color: #e5edf7;
+}
+
+.code-preview {
+  border-color: #253244;
+  background: #07111d;
+}
+
+.code-preview code.changed {
+  background: rgb(245 158 11 / 18%);
+}

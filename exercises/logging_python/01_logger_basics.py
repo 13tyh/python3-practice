@@ -33,4 +33,3 @@ def log_success(logger: logging.Logger, action: str, user_id: str) -> None:
     """成功ログを INFO で出す。"""
     # TODO
     raise NotImplementedError
-

@@ -1,4 +1,4 @@
-# 15 LangGraph
+# 46 Langgraph
 
 対象: `src/mastery/langgraph_practice.py`
 

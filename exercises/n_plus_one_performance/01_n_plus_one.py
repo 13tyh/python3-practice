@@ -53,4 +53,3 @@ def list_order_rows_good(repo: FakeRepository) -> list[dict[str, str | int | Non
 def user_map(users: list[User]) -> dict[str, User]:
     # TODO
     raise NotImplementedError
-

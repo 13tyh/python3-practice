@@ -8,4 +8,3 @@ def test_citations() -> None:
     assert target.extract_sources(context) == ["a.md", "b.md"]
     assert target.append_citations("answer", ["a.md", "b.md"]) == "answer\n\nSources: a.md, b.md"
     assert target.citation_coverage("answer [source: a.md]", {"a.md", "b.md"}) == 0.5
-

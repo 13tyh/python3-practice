@@ -16,4 +16,3 @@ def running_total(numbers: list[int]) -> list[int]:
 def take_until_negative(numbers: list[int]) -> list[int]:
     # TODO
     raise NotImplementedError
-

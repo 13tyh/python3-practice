@@ -1,7 +1,10 @@
 """RAG advanced の練習。"""
 
 
-def metadata_filter(chunks: list[dict[str, object]], metadata: dict[str, str]) -> list[dict[str, object]]:
+def metadata_filter(
+    chunks: list[dict[str, object]],
+    metadata: dict[str, str],
+) -> list[dict[str, object]]:
     # TODO
     raise NotImplementedError
 
@@ -19,4 +22,3 @@ def rerank(results: list[dict[str, object]]) -> list[dict[str, object]]:
 def is_grounded(answer: str, context: str) -> bool:
     # TODO
     raise NotImplementedError
-

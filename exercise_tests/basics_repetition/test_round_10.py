@@ -9,4 +9,3 @@ def test_round_10() -> None:
     assert active_titles(todos) == ["a"]
     assert completion_rate(todos) == 0.5
     assert completion_rate([]) == 0.0
-

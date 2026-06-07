@@ -1,4 +1,4 @@
-# 46 Datetime Timezone
+# 04 Datetime Timezone
 
 UTC、JST、aware / naive datetime、ISO8601。
 

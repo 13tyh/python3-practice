@@ -18,4 +18,3 @@ def test_jsonl(tmp_path: Path) -> None:
     path = tmp_path / "input.jsonl"
     target.write_jsonl(path, records)
     assert target.read_jsonl(path) == records
-

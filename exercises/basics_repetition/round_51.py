@@ -19,4 +19,3 @@ def multiplication_table(n: int) -> list[list[int]]:
 def all_tags(articles: list[dict[str, list[str]]]) -> list[str]:
     # TODO
     raise NotImplementedError
-

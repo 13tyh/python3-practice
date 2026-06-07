@@ -10,4 +10,3 @@ def find_user_email(users: list[dict[str, str]], user_id: str) -> str:
 
 def load_count() -> int:
     return "10"  # type: ignore[return-value]
-

@@ -17,4 +17,3 @@ def test_round_06() -> None:
     assert has_duplicate(["a", "b", "a"])
     assert not has_duplicate(["a", "b"])
     assert pick_fields({"id": "1", "name": "Aki"}, ["name"]) == {"name": "Aki"}
-

@@ -1,4 +1,4 @@
-# 41 API Client
+# 23 API Client
 
 timeout、retry、backoff、rate limit、response schema を扱う。
 

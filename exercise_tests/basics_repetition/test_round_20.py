@@ -9,4 +9,3 @@ def test_round_20() -> None:
     assert counter_label(counter) == "count=5"
     reset(counter)
     assert counter.value == 0
-

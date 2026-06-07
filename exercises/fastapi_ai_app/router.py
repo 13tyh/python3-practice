@@ -5,7 +5,7 @@ from __future__ import annotations
 from fastapi import APIRouter
 
 from .schema import ChatRequest, ChatResponse, CodeReviewRequest, CodeReviewResponse
-from .service import TextGenerator, chat, review_code
+from .service import TextGenerator
 
 
 def create_router(generator: TextGenerator) -> APIRouter:
@@ -22,4 +22,3 @@ def create_router(generator: TextGenerator) -> APIRouter:
         raise NotImplementedError
 
     return router
-

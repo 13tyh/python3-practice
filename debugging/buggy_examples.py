@@ -11,4 +11,3 @@ def get_first_name(user: dict[str, str]) -> str:
 
 def parse_port(value: str) -> int:
     return int(value)
-

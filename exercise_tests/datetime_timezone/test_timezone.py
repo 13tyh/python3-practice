@@ -11,4 +11,3 @@ def test_timezone() -> None:
     assert target.is_aware(value)
     assert not target.is_aware(datetime(2026, 1, 1))
     assert target.now_utc().tzinfo == UTC
-

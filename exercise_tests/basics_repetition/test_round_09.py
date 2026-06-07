@@ -10,4 +10,3 @@ def test_round_09(tmp_path: Path) -> None:
     assert user == {"id": "u1", "name": "Aki"}
     assert user_summary(user) == "u1:Aki"
     assert safe_load_user(tmp_path / "missing.json") == {}
-

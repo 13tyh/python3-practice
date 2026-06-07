@@ -15,4 +15,3 @@ def test_find_required() -> None:
     assert target.find_required({"id": "1"}, "id") == "1"
     with pytest.raises(target.NotFoundError):
         target.find_required({}, "id")
-

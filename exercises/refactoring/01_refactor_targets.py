@@ -19,4 +19,3 @@ def apply_discount(amount: int, discount_rate: float) -> int:
 def calculate_tax(amount: int, tax_rate: float = 0.1) -> int:
     # TODO
     raise NotImplementedError
-

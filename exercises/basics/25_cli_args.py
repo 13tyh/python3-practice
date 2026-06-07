@@ -16,4 +16,3 @@ def parse_name(args: list[str]) -> str:
 def parse_count(args: list[str]) -> int:
     # TODO
     raise NotImplementedError
-

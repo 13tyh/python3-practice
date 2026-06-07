@@ -15,4 +15,3 @@ def test_protocol_generic() -> None:
     assert target.greet_named(User("Aki")) == "Hello, Aki"
     assert target.is_str_list(["a", "b"])
     assert not target.is_str_list(["a", 1])
-

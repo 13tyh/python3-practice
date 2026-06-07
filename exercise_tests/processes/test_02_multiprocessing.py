@@ -20,4 +20,3 @@ def test_worker_put_square() -> None:
 
 def test_split_chunks() -> None:
     assert target.split_chunks([1, 2, 3, 4, 5], 2) == [[1, 2], [3, 4], [5]]
-

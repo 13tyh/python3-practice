@@ -16,4 +16,3 @@ def write_report(path: Path, text: str) -> None:
 def create_report(path: Path, rows: list[dict[str, str]]) -> None:
     # TODO
     raise NotImplementedError
-

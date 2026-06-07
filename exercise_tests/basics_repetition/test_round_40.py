@@ -1,4 +1,10 @@
-from exercises.basics_repetition.round_40 import get_name, get_or_guest, has_key, keys_list, set_role
+from exercises.basics_repetition.round_40 import (
+    get_name,
+    get_or_guest,
+    has_key,
+    keys_list,
+    set_role,
+)
 
 
 def test_round_40() -> None:
@@ -10,4 +16,3 @@ def test_round_40() -> None:
     assert user == {"name": "Aki"}
     assert has_key({"a": "1"}, "a")
     assert keys_list({"b": "2", "a": "1"}) == ["a", "b"]
-

@@ -12,4 +12,3 @@ def test_nested_tasks() -> None:
     assert target.collect_tags(articles) == ["python", "api", "db"]
     users = [{"name": "Aki", "role": "admin"}, {"name": "Ren", "role": "member"}]
     assert target.group_names_by_role(users) == {"admin": ["Aki"], "member": ["Ren"]}
-

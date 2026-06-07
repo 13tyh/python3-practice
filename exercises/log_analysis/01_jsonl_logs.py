@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from typing import Any
 
@@ -25,4 +24,3 @@ def average_elapsed_ms(logs: list[dict[str, Any]]) -> float:
 def count_by_action(logs: list[dict[str, Any]]) -> dict[str, int]:
     # TODO
     raise NotImplementedError
-

@@ -12,4 +12,3 @@ def test_async_patterns() -> None:
         return [token async for token in target.stream_tokens("a b")]
 
     assert asyncio.run(collect()) == ["a", "b"]
-

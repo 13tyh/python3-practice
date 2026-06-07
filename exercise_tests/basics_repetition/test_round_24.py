@@ -9,4 +9,3 @@ def test_round_24() -> None:
     assert grade(50) == "C"
     assert average_grade([90, 80]) == "A"
     assert average_grade([]) == "C"
-

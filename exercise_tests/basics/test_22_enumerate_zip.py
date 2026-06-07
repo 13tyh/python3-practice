@@ -12,4 +12,3 @@ def test_enumerate_zip_tasks() -> None:
     assert target.find_index(["a", "b"], "b") == 1
     assert target.find_index(["a", "b"], "x") is None
     assert target.merge_keys_values(["a", "b"], [1, 2]) == {"a": 1, "b": 2}
-

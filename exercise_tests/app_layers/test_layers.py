@@ -52,4 +52,3 @@ def test_create_log_endpoint() -> None:
 
 def test_next_action_endpoint() -> None:
     assert next_action_endpoint([]) == {"next_action": "まずはPython基本を30分"}
-

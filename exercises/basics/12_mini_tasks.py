@@ -17,4 +17,3 @@ def calculate_cart(items: list[dict[str, int]]) -> dict[str, int]:
     """subtotal, tax, total を返す。税率10%。"""
     # TODO
     raise NotImplementedError
-

@@ -14,4 +14,3 @@ def has_too_many_args(arg_count: int) -> bool:
 def suggest_refactor(smell: str) -> str:
     # TODO
     raise NotImplementedError
-

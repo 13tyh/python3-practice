@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TypedDict
 
-from langgraph.graph import END, StateGraph
-
 
 class StudyState(TypedDict):
     topic: str
@@ -17,10 +15,19 @@ def advise(state: StudyState) -> StudyState:
     return {**state, "advice": advice}
 
 
+class _FallbackStudyGraph:
+    def invoke(self, state: StudyState) -> StudyState:
+        return advise(state)
+
+
 def build_study_graph() -> object:
+    try:
+        from langgraph.graph import END, StateGraph
+    except (ImportError, TypeError):
+        return _FallbackStudyGraph()
+
     graph = StateGraph(StudyState)
     graph.add_node("advise", advise)
     graph.set_entry_point("advise")
     graph.add_edge("advise", END)
     return graph.compile()
-

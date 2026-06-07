@@ -26,4 +26,3 @@ def split_chunks(items: list[int], chunk_size: int) -> list[list[int]]:
     """chunk_sizeごとに分割する。"""
     # TODO
     raise NotImplementedError
-

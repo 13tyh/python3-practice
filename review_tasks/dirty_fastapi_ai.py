@@ -14,4 +14,3 @@ def review(data: dict):
     db.logs.insert_one({"code": code, "key": key, "result": result})
     print("reviewed", data)
     return {"result": result}
-

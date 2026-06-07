@@ -32,4 +32,3 @@ def count_statuses(statuses: list[Status]) -> dict[Status, int]:
 def user_label(user: UserDict) -> str:
     # TODO
     raise NotImplementedError
-

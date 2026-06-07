@@ -15,4 +15,3 @@ def count_log_levels(lines: list[str]) -> dict[str, int]:
 def error_messages(lines: list[str]) -> list[str]:
     # TODO
     raise NotImplementedError
-

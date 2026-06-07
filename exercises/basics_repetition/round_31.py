@@ -17,4 +17,3 @@ def read_or_default(path: Path, default: str) -> str:
 def write_lines_numbered(path: Path, lines: list[str]) -> None:
     # TODO
     raise NotImplementedError
-

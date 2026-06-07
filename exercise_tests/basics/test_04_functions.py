@@ -20,4 +20,3 @@ def test_apply_discount() -> None:
 def test_summarize_scores() -> None:
     assert target.summarize_scores([10, 30, 20]) == {"max": 30, "min": 10, "total": 60}
     assert target.summarize_scores([]) == {"max": 0, "min": 0, "total": 0}
-

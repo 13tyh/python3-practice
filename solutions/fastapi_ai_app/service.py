@@ -1,6 +1,11 @@
 """解答例: exercises/fastapi_ai_app/service.py."""
 
-from exercises.fastapi_ai_app.schema import ChatRequest, ChatResponse, CodeReviewRequest, CodeReviewResponse
+from exercises.fastapi_ai_app.schema import (
+    ChatRequest,
+    ChatResponse,
+    CodeReviewRequest,
+    CodeReviewResponse,
+)
 from exercises.fastapi_ai_app.service import TextGenerator
 
 
@@ -21,4 +26,3 @@ def review_code(generator: TextGenerator, request: CodeReviewRequest) -> CodeRev
 
 def chat(generator: TextGenerator, request: ChatRequest) -> ChatResponse:
     return ChatResponse(reply=generator.invoke(request.message))
-

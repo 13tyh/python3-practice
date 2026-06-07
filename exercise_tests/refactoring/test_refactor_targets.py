@@ -14,4 +14,3 @@ def test_refactoring() -> None:
         "tax": 27,
         "total": 297,
     }
-

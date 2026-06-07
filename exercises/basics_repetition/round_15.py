@@ -19,4 +19,3 @@ def order_status_label(status: str) -> str:
 def build_order_response(order: dict[str, object]) -> dict[str, object]:
     # TODO
     raise NotImplementedError
-

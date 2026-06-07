@@ -10,4 +10,3 @@ def test_checkout_with_fake() -> None:
 
     assert target.checkout("u2", 1000, target.FakePaymentClient(False)) == "failed"
     assert target.build_param_cases() == [(0, "invalid"), (100, "paid")]
-

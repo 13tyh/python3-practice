@@ -14,4 +14,3 @@ def pass_fail(score: int) -> str:
 def summarize_results(scores: list[int]) -> dict[str, int]:
     # TODO
     raise NotImplementedError
-

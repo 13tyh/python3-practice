@@ -19,4 +19,3 @@ def test_run_with_timeout() -> None:
 
 def test_collect_in_order() -> None:
     assert asyncio.run(target.collect_in_order(["a", "b"])) == ["a", "b"]
-

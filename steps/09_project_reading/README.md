@@ -1,4 +1,4 @@
-# 03 Project Reading
+# 09 Project Reading
 
 対象: `src/mastery/order_service.py`
 

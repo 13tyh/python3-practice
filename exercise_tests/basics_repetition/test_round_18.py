@@ -11,4 +11,3 @@ def test_round_18(tmp_path: Path) -> None:
     dst = tmp_path / "copy.txt"
     copy_text(path, dst)
     assert dst.read_text(encoding="utf-8") == "hello world"
-

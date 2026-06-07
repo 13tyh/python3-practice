@@ -12,4 +12,3 @@ def test_math_tasks() -> None:
     assert target.percentage(25, 100) == 25.0
     assert target.percentage(1, 0) == 0.0
     assert target.round_price(12.6) == 13
-

@@ -19,4 +19,3 @@ def count_long_words(words: list[str], min_length: int) -> int:
 def join_with_comma(words: list[str]) -> str:
     # TODO
     raise NotImplementedError
-

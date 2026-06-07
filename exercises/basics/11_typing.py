@@ -23,4 +23,3 @@ def expensive_products(products: list[Product], min_price: int) -> list[Product]
 def index_by_id(products: list[Product]) -> dict[str, Product]:
     # TODO
     raise NotImplementedError
-

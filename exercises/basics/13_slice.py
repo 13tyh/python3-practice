@@ -24,4 +24,3 @@ def reverse_text(text: str) -> str:
 def every_second(items: list[int]) -> list[int]:
     # TODO
     raise NotImplementedError
-

@@ -19,4 +19,3 @@ def sort_by_count(descending: bool = True) -> dict[str, object]:
 def build_status_count_pipeline(status: str, group_field: str) -> list[dict[str, object]]:
     # TODO
     raise NotImplementedError
-

@@ -15,4 +15,3 @@ def test_round_07() -> None:
     assert is_weekend_name("Saturday")
     assert is_weekend_name("日曜日")
     assert not is_weekend_name("Monday")
-

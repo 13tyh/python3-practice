@@ -13,4 +13,3 @@ def test_round_13(monkeypatch) -> None:
     monkeypatch.setenv("LIMIT", "0")
     with pytest.raises(ValueError):
         require_positive_env("LIMIT")
-

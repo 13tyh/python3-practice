@@ -1,6 +1,10 @@
 from pathlib import Path
 
-from exercises.basics_repetition.round_31 import next_available_path, read_or_default, write_lines_numbered
+from exercises.basics_repetition.round_31 import (
+    next_available_path,
+    read_or_default,
+    write_lines_numbered,
+)
 
 
 def test_round_31(tmp_path: Path) -> None:
@@ -12,4 +16,3 @@ def test_round_31(tmp_path: Path) -> None:
     out = tmp_path / "lines.txt"
     write_lines_numbered(out, ["a", "b"])
     assert out.read_text(encoding="utf-8") == "1. a\n2. b\n"
-

@@ -26,4 +26,3 @@ def ensure_directory(path: Path) -> None:
 def list_py_files(path: Path) -> list[Path]:
     # TODO
     raise NotImplementedError
-

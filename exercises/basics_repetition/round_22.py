@@ -14,4 +14,3 @@ def startswith_any(text: str, prefixes: list[str]) -> bool:
 def highlight_keyword(text: str, keyword: str) -> str:
     # TODO
     raise NotImplementedError
-

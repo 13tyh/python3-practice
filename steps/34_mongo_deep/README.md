@@ -1,4 +1,4 @@
-# 52 Mongo Deep
+# 34 Mongo Deep
 
 index、compound index、upsert、explain の読み方。
 

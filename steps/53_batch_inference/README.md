@@ -1,4 +1,4 @@
-# 16 Batch Inference
+# 53 Batch Inference
 
 目的: 大量のプロンプトをまとめて推論する「バッチ推論」の考え方を理解する。
 

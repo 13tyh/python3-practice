@@ -24,4 +24,3 @@ def has_duplicate(values: list[str]) -> bool:
 def pick_fields(data: dict[str, str], fields: list[str]) -> dict[str, str]:
     # TODO
     raise NotImplementedError
-

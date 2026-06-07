@@ -20,4 +20,3 @@ def total_by_category(df: pd.DataFrame) -> pd.DataFrame:
 def export_excel(path: Path, sheets: dict[str, pd.DataFrame]) -> None:
     # TODO
     raise NotImplementedError
-

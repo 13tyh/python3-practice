@@ -33,4 +33,3 @@ def most_expensive(products: list[Product]) -> Product | None:
 def discount(product: Product, rate: float) -> Product:
     # TODO
     raise NotImplementedError
-

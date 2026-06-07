@@ -17,4 +17,3 @@ def test_round_05() -> None:
     assert most_expensive([pen, book]) == book
     assert most_expensive([]) is None
     assert discount(book, 0.25) == Product("Book", 900, 0)
-

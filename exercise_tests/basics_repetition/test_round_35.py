@@ -8,4 +8,3 @@ def test_round_35() -> None:
     assert pass_fail(60) == "pass"
     assert pass_fail(59) == "fail"
     assert summarize_results([60, 40, 80]) == {"pass": 2, "fail": 1}
-

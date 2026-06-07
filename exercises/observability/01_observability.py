@@ -23,4 +23,3 @@ def metric_name(service: str, action: str, metric: str) -> str:
 def trace_parent(child_span: str, parent_span: str | None) -> dict[str, str]:
     # TODO
     raise NotImplementedError
-

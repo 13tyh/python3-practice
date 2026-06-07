@@ -10,4 +10,3 @@ def test_monkeypatch_env(monkeypatch) -> None:
     assert target.load_feature_flag()
     assert target.choose_endpoint() == "https://api.example.com"
     assert target.build_headers_from_env() == {"Authorization": "Bearer secret"}
-

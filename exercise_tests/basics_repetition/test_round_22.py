@@ -6,4 +6,3 @@ def test_round_22() -> None:
     assert startswith_any("python", ["py", "js"])
     assert not startswith_any("python", ["go"])
     assert highlight_keyword("hello python", "python") == "hello **python**"
-

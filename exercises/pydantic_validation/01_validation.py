@@ -29,4 +29,3 @@ class CreateUser(BaseModel):
 def create_user_label(user: CreateUser) -> str:
     # TODO
     raise NotImplementedError
-

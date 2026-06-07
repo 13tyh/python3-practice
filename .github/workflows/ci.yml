@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker images
+        run: docker compose build app frontend
+
+      - name: Python quality gate
+        run: docker compose run --rm --no-deps app poetry run build
+
+      - name: Frontend tests
+        run: docker compose run --rm --no-deps frontend pnpm test
+
+      - name: Frontend e2e flow
+        run: docker compose run --rm --no-deps frontend pnpm test:e2e
+
+      - name: Frontend build
+        run: docker compose run --rm --no-deps frontend pnpm build

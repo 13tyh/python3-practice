@@ -14,4 +14,3 @@ def append_citations(answer: str, sources: list[str]) -> str:
 def citation_coverage(answer: str, required_sources: set[str]) -> float:
     # TODO
     raise NotImplementedError
-

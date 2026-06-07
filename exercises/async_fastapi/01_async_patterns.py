@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 from collections.abc import AsyncIterator
 
 
@@ -19,4 +18,3 @@ async def fetch_all(values: list[str]) -> list[str]:
 async def stream_tokens(text: str) -> AsyncIterator[str]:
     # TODO
     raise NotImplementedError
-

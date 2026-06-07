@@ -20,4 +20,3 @@ def retrieve(query: str, documents: list[str], top_k: int) -> list[str]:
 def chunk_text(text: str, max_chars: int) -> list[str]:
     # TODO
     raise NotImplementedError
-

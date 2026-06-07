@@ -14,4 +14,3 @@ def require_allowed(value: str, allowed: set[str]) -> str:
 def parse_positive_int(text: str) -> int:
     # TODO
     raise NotImplementedError
-

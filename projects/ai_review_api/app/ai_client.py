@@ -9,4 +9,3 @@ class AIClient(Protocol):
 class FakeAIClient:
     def review(self, code: str, focus: str) -> str:
         return f"{focus}: check error handling\nadd tests"
-

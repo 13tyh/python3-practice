@@ -12,4 +12,3 @@ def test_round_55() -> None:
     assert for_to_comprehension_dict(items) == {"u1": "Aki", "u2": "Ren"}
     assert nested_filter([[1, -1], [0, 2]]) == [1, 2]
     assert clean_and_filter([" A ", "", " b "]) == ["a", "b"]
-

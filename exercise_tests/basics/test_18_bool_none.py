@@ -15,4 +15,3 @@ def test_bool_none_tasks() -> None:
     assert target.all_present(["a", "b"])
     assert not target.all_present(["a", None])
     assert target.any_empty(["a", ""])
-

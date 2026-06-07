@@ -19,4 +19,3 @@ def transpose_2x2(matrix: list[list[int]]) -> list[list[int]]:
 def find_largest_row(matrix: list[list[int]]) -> list[int]:
     # TODO
     raise NotImplementedError
-

@@ -27,4 +27,3 @@ def test_extract_items() -> None:
 
 def test_safe_error_message() -> None:
     assert target.safe_error_message(404, "not found") == "HTTP 404: not found"
-

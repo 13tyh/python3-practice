@@ -1,4 +1,4 @@
-# 34 SQL
+# 30 SQL
 
 SQLite の CRUD、transaction、SQL の読み方を学ぶ。
 

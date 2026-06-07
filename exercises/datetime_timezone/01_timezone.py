@@ -1,6 +1,6 @@
 """datetime timezone の練習。"""
 
-from datetime import UTC, datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 
 JST = timezone(timedelta(hours=9))
 
@@ -23,4 +23,3 @@ def parse_iso8601(text: str) -> datetime:
 def is_aware(value: datetime) -> bool:
     # TODO
     raise NotImplementedError
-

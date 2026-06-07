@@ -17,4 +17,3 @@ def test_build_projection() -> None:
 def test_build_sort() -> None:
     assert build_sort("created_at") == [("created_at", 1)]
     assert build_sort("created_at", descending=True) == [("created_at", -1)]
-

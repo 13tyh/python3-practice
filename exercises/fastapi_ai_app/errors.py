@@ -21,4 +21,3 @@ def error_to_response(error: AIAppError) -> dict[str, int | str]:
 def is_retryable(error: Exception) -> bool:
     # TODO
     raise NotImplementedError
-

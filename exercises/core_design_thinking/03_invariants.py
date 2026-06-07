@@ -16,4 +16,3 @@ def withdraw(balance: int, amount: int) -> int:
 def transfer(from_balance: int, to_balance: int, amount: int) -> tuple[int, int]:
     # TODO
     raise NotImplementedError
-

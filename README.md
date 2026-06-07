@@ -22,6 +22,28 @@ docker compose up -d --build
 Vue と実行APIは hot reload 対応です。`frontend/`、`tools/`、`docs/` の変更は保存後に反映されます。
 画面の `実行` ボタンから、許可された `pytest` / `poetry run ...` コマンドを実行できます。
 実行APIは `http://localhost:8000` で起動します。
+アプリ本体とローカルRAG可視化は API キーなしで動きます。
+
+## 画面でできること
+
+![Python Master app overview](docs/assets/app-overview.png)
+
+- Stepごとの問題、学ぶこと、対象ファイル、参考URLの確認
+- UIから許可済みテストコマンドを実行
+- 失敗ログ、対象ファイル候補、解答例 `solutions/` の比較
+- 実務ラボでレビュー練習、弱点分析、RAG可視化、Mongoコマンド確認
+- 学習レポートをMarkdownで出力
+- 進捗とメモをJSONでバックアップ/復元
+- 初回ガイド、専用Step検索、進捗リセット
+
+ショートカット:
+
+- `j`: 次のStep
+- `k`: 前のStep
+- `r`: 現在Stepの主コマンドを実行
+- `/`: Step検索を開く
+- `s`: サイドバー開閉
+- `Esc`: モーダルを閉じる
 
 コンテナ内で使う基本コマンド:
 
@@ -38,6 +60,14 @@ MongoDB に入る:
 ```bash
 docker compose exec mongo mongosh
 ```
+
+MongoDBをブラウザで見たい時だけ、tools profileを使います。
+
+```bash
+docker compose --profile tools up -d mongo-express
+```
+
+`http://localhost:8081` を開きます。
 
 初回起動時は `docker/mongo-init/01_seed.js` が自動実行され、`python_master` DB に練習用データが入ります。
 既存の `mongo_data` volume がある場合は自動実行されないため、再投入したい時は次を実行します。
@@ -60,6 +90,32 @@ poetry run build
 ```
 
 基本は Docker 内で作業すれば、Windows/Mac の差をほぼ気にせず進められます。
+
+## CI / リリース確認
+
+GitHub Actions は `.github/workflows/ci.yml` で次を実行します。
+
+- `docker compose build app frontend`
+- `docker compose run --rm --no-deps app poetry run build`
+- `docker compose run --rm --no-deps frontend pnpm test`
+- `docker compose run --rm --no-deps frontend pnpm build`
+
+ローカルで同じ確認をするなら:
+
+```bash
+docker compose exec app poetry run build
+docker compose exec frontend pnpm test
+docker compose exec frontend pnpm test:e2e
+docker compose exec frontend pnpm build
+```
+
+## トラブルシュート
+
+- 画面が開かない: `docker compose ps` で `frontend` と `api` が起動しているか確認
+- UI実行が失敗する: `docker compose logs -f api` でAPIログを確認
+- Mongo初期データがない: `docker compose exec mongo mongosh /docker-entrypoint-initdb.d/01_seed.js`
+- 依存が壊れた: `docker compose down` 後に `docker compose up -d --build`
+- 進捗をやり直す: 画面上部の `リセット` を使う
 
 ## 進め方
 
@@ -205,3 +261,87 @@ pytest exercise_tests/basics_repetition -q
 - `56_fastapi_ai`: FastAPI で AI service を API 化
 - `57_ai_review`: AI 出力を疑い、テストと観点で判断する
 - `58_capstone`: 小さな実務風プロジェクト
+- `59_cli_tools`: argparse、CLI引数、dry-run
+- `60_static_typing_practice`: TypedDict、union型、型の絞り込み
+- `61_domain_modeling`: dataclass、自治体subscription、業務ルール
+- `62_api_pagination_deep`: cursor pagination、limit、next_cursor
+- `63_etl_pipeline`: stream処理、extract/transform/load
+- `64_resilience_patterns`: retry、backoff、失敗分類
+- `65_webhooks_events`: HMAC署名、event冪等性
+- `66_ci_debugging`: GitHub Actionsログ、pytest失敗行
+- `67_docker_ops`: healthcheck、env、degraded状態
+- `68_vector_search_basics`: cosine similarity、top-k検索
+- `69_ai_cost_control`: token budget、model limit、model選択
+- `70_schema_evolution`: backfill、migration、schema互換性
+- `71_git_workflow`: git status、ahead/behind、差分確認
+- `72_review_comments`: severity、問題、修正案
+- `73_feature_flags`: rollout、段階リリース、緊急停止
+- `74_settings_secrets`: 必須設定、secret mask、公開設定
+- `75_rate_limiting`: fixed window、429、retry after
+- `76_background_tasks`: job状態、idempotency key
+- `77_scheduler_cron`: due判定、定期実行、再実行安全性
+- `78_data_contracts`: required fields、schema version、互換性
+- `79_openapi_contract`: OpenAPI、method/path/status
+- `80_mocking_external_services`: fake client、呼び出し履歴
+- `81_property_based_thinking`: 冪等性、正規化、不変条件
+- `82_memory_profiling`: chunk size、メモリ上限
+- `83_streaming_files_large`: 巨大ファイル、line stream
+- `84_debugging_deep`: traceback、例外名、file/line
+- `85_architecture_decision_records`: ADR、設計判断メモ
+- `86_boolean_logic`: bool条件、truthy/falsy
+- `87_string_formatting_parsing`: f-string、split、strip、join
+- `88_sequence_unpacking`: tuple unpacking、*rest
+- `89_function_arguments`: default、keyword-only、option
+- `90_scope_modules`: scope、module定数、public関数
+- `91_list_methods`: append、extend、非破壊更新
+- `92_dict_methods`: get、count、merge
+- `93_set_operations`: unique、intersection、difference
+- `94_comprehension_deep`: list/dict/set内包表記
+- `95_iterable_generator_basics`: iterable、generator、yield
+- `96_pathlib_glob`: Path、suffix、ファイル名
+- `97_custom_exceptions`: 独自例外、validation
+- `98_prompt_templates`: prompt template、必須変数、message分割
+- `99_prompt_injection_defense`: prompt injection検出、untrusted context
+- `100_structured_output_parsing`: AI JSON出力、required fields
+- `101_tool_calling_contracts`: tool allowlist、arguments検証
+- `102_conversation_memory`: 会話履歴trim、system保持
+- `103_embedding_chunk_metadata`: chunk id、metadata、source
+- `104_vector_db_index_design`: dimension、metric、filter fields
+- `105_rag_query_rewriting`: query正規化、synonym、metadata filter
+- `106_rag_citation_verification`: citation検証、answerable判定
+- `107_ai_safety_filters`: PII mask、unsafe intent
+- `108_model_fallback_routing`: task別model、fallback判断
+- `109_ai_observability_traces`: request_id、latency、token/cost
+- `110_ai_regression_dataset`: 回帰評価dataset、model別正解率
+- `111_domain_ai_requirements`: 特化型AIの対象業務、利用者、成功条件、対象外
+- `112_domain_knowledge_taxonomy`: 業務知識の分類、用語、ルール、例外
+- `113_domain_dataset_curation`: 専門データの収集、重複除去、PII除外、分割
+- `114_domain_evaluation_rubric`: 専門家目線の評価軸、重み、合格条件
+- `115_expert_feedback_loop`: 専門家レビュー、修正理由、再学習候補
+- `116_domain_rag_blueprint`: 特化型RAGのsource、chunk、metadata、citation設計
+- `117_finetuning_dataset_prep`: fine-tuning用JSONL、役割、禁則、検証
+- `118_domain_guardrails_policy`: 業務特化AIの回答制限、確認質問、拒否条件
+- `119_specialized_ai_api_design`: 特化型AI APIのrequest/response、trace、評価情報
+- `120_domain_ai_release_checklist`: 評価、ログ、安全性、fallback、監視のリリース判定
+- `121_collections_deep`: Counter、defaultdict、deque
+- `122_itertools_functools`: groupby、partial、lru_cache
+- `123_dataclass_deep`: frozen、default_factory、値オブジェクト
+- `124_context_manager_deep`: with、__enter__、__exit__、contextmanager
+- `125_typing_extras`: Literal、Final、TypeAlias、NewType、cast
+- `126_import_module_deep`: public/private、__all__、循環import
+- `127_regex_practical`: validation、extract、replaceの正規表現
+- `128_algorithm_complexity`: 探索、重複除去、sort key、計算量
+- `129_error_design_deep`: retryable/permanent error、validation、例外分類
+- `130_fastapi_middleware_lifespan`: middleware、CORS、lifespan
+- `131_fastapi_files_websocket`: file upload、path traversal対策、WebSocket
+- `132_auth_jwt_rbac`: Bearer token、JWT claim、RBAC
+- `133_mongo_ops_schema`: compound index、schema validation、slow query
+- `134_worker_dead_letter`: worker retry、backoff、dead letter queue
+- `135_data_analysis_stats`: 平均、中央値、IQR外れ値検出
+- `136_ai_dataset_versioning`: dataset fingerprint、annotation、label分布
+- `137_ai_ab_drift`: A/B test、conversion率、drift検知
+- `138_rag_ops_quality`: reindex、search quality log、回答不能判定
+- `139_security_scanning`: secret mask、脆弱性、権限漏れ
+- `140_observability_slo`: error rate、burn rate、latency alert
+- `141_deploy_release_strategy`: canary、blue/green、rollback
+- `142_api_compatibility_design`: field削除、required追加、deprecation

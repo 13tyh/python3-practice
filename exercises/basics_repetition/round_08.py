@@ -20,4 +20,3 @@ def is_postal_code(text: str) -> bool:
     """例: 123-4567。"""
     # TODO
     raise NotImplementedError
-

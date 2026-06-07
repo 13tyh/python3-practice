@@ -24,4 +24,3 @@ def greet_user(user_id: str, repository: UserRepository) -> str:
 def create_repository(users: dict[str, str]) -> UserRepository:
     # TODO
     raise NotImplementedError
-

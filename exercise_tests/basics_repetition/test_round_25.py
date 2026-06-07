@@ -7,4 +7,3 @@ def test_round_25() -> None:
     assert validate_response({"ok": True, "data": {}})
     assert validate_response({"ok": False, "error": {"code": "x", "message": "ng"}})
     assert not validate_response({"data": {}})
-

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass
 
 
@@ -21,4 +20,3 @@ def load_ai_settings() -> AISettings:
 def validate_ai_settings(settings: AISettings) -> list[str]:
     # TODO
     raise NotImplementedError
-

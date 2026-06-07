@@ -19,4 +19,3 @@ def all_positive(numbers: list[int]) -> bool:
 def joined_upper(words: list[str]) -> str:
     # TODO
     raise NotImplementedError
-

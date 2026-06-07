@@ -10,4 +10,3 @@ def test_idempotency() -> None:
     assert target.mark_processed(record) == {"id": "1", "processed": True}
     assert record == {"id": "1"}
     assert target.idempotency_key("post", "/reviews", "abc") == "POST:/reviews:abc"
-

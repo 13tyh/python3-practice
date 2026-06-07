@@ -15,4 +15,3 @@ def minutes_to_seconds(minutes: int) -> int:
 
 def add_tax(price: int, tax_rate: float) -> int:
     return round(price * (1 + tax_rate))
-

@@ -9,4 +9,3 @@ def test_rag_evaluation() -> None:
     assert not target.has_citation("answer only")
     assert target.should_answer(1)
     assert not target.should_answer(0)
-

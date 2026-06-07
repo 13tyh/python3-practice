@@ -23,4 +23,3 @@ def slugify(title: str) -> str:
     """小文字化し、空白をハイフンにする。"""
     # TODO
     raise NotImplementedError
-

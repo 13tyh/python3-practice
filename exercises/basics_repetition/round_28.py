@@ -14,4 +14,3 @@ def low_stock_names(items: list[dict[str, int | str]], threshold: int) -> list[s
 def restock(item: dict[str, int | str], quantity: int) -> dict[str, int | str]:
     # TODO
     raise NotImplementedError
-

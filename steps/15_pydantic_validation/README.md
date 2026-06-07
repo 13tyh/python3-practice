@@ -1,4 +1,4 @@
-# 43 Pydantic Validation
+# 15 Pydantic Validation
 
 validator、enum、nested schema、custom validation。
 

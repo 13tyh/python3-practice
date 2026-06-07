@@ -1,4 +1,4 @@
-# 38 RAG Practice
+# 50 RAG Practice
 
 answerable / unanswerable、citation、rerank、chunk size 比較を扱う。
 

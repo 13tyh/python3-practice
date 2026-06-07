@@ -14,4 +14,3 @@ def grade(score: int) -> str:
 def average_grade(scores: list[int]) -> str:
     # TODO
     raise NotImplementedError
-

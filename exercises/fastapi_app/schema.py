@@ -15,4 +15,3 @@ class TaskResponse(BaseModel):
     title: str
     minutes: int
     done: bool
-

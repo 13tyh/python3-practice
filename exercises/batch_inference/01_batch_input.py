@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 
@@ -28,4 +27,3 @@ def read_jsonl(path: Path) -> list[dict[str, object]]:
     """JSONL を読む。"""
     # TODO
     raise NotImplementedError
-

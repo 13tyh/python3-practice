@@ -14,4 +14,3 @@ def test_pagination() -> None:
         "has_next": True,
         "has_prev": True,
     }
-

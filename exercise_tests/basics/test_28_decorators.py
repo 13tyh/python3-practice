@@ -21,4 +21,3 @@ def test_decorator_tasks() -> None:
         raise RuntimeError("boom")
 
     assert fail() == "fallback"
-

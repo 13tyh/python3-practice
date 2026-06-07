@@ -1,5 +1,5 @@
 import { flushPromises, mount } from "@vue/test-utils";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import App from "./App.vue";
 
 function mockFetch(runResult?: { exit_code: number }) {
@@ -31,6 +31,12 @@ function mockFetch(runResult?: { exit_code: number }) {
 }
 
 describe("Python Master app", () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    window.location.hash = "";
+    vi.restoreAllMocks();
+  });
+
   it("hashのStepを表示し、主要パネルを出す", async () => {
     window.location.hash = "#03_files";
     mockFetch();
@@ -52,9 +58,24 @@ describe("Python Master app", () => {
 
     await wrapper.find(".sidebar-filter select").setValue("basic");
 
+    await wrapper.find(".phase-toggle").trigger("click");
+
     expect(wrapper.text()).toContain("基本文法");
     expect(wrapper.text()).toContain("型ヒント");
     expect(wrapper.text()).not.toContain("logger");
+  });
+
+  it("URL hashの変更に追従してStepを切り替える", async () => {
+    window.location.hash = "#02_typing_deep";
+    mockFetch();
+    const wrapper = mount(App);
+    await flushPromises();
+
+    window.location.hash = "#59_cli_tools";
+    window.dispatchEvent(new Event("hashchange"));
+    await flushPromises();
+
+    expect(wrapper.text()).toContain("CLI Tools");
   });
 
   it("サイドバーを開閉できる", async () => {
@@ -65,6 +86,47 @@ describe("Python Master app", () => {
     expect(wrapper.find(".mentor-shell").classes()).not.toContain("sidebar-collapsed");
     await wrapper.find(".sidebar-toggle").trigger("click");
     expect(wrapper.find(".mentor-shell").classes()).toContain("sidebar-collapsed");
+  });
+
+  it("効率ルートはホーム画面だけに表示する", async () => {
+    window.location.hash = "#00_environment";
+    mockFetch();
+    const wrapper = mount(App);
+    await flushPromises();
+
+    expect(wrapper.text()).toContain("今回のゴール");
+    expect(wrapper.find(".mentor-main").text()).not.toContain("効率ルート");
+
+    const homeButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("ホーム"));
+    await homeButton?.trigger("click");
+
+    expect(wrapper.text()).toContain("次の1手だけ決める");
+    expect(wrapper.find(".home-dashboard").text()).toContain("効率ルート");
+    expect(wrapper.text()).not.toContain("今回のゴール");
+    expect(homeButton?.classes()).toContain("active");
+    expect(wrapper.find(".sidebar-home-link").classes()).toContain("active");
+    expect(wrapper.find(".mentor-shell").classes()).not.toContain("sidebar-collapsed");
+    expect(wrapper.find(".mentor-step-list button.active").exists()).toBe(false);
+  });
+
+  it("軽量モードで参照パネルと実務ラボを畳める", async () => {
+    mockFetch();
+    const wrapper = mount(App);
+    await flushPromises();
+
+    expect(wrapper.find(".mastery-lab").exists()).toBe(false);
+    const labToggle = wrapper.findAll(".collapse-toggle").find((button) => button.text().includes("実務ラボ"));
+    await labToggle?.trigger("click");
+    expect(wrapper.find(".mastery-lab").exists()).toBe(true);
+
+    const lightButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("軽量"));
+    expect(lightButton).toBeDefined();
+    await lightButton?.trigger("click");
+
+    expect(wrapper.find(".mentor-shell").classes()).toContain("light-mode");
+    expect(wrapper.text()).toContain("軽量モード");
+    expect(wrapper.find(".mastery-lab").exists()).toBe(false);
+    expect(window.localStorage.getItem("python-master-light-mode")).toBe("true");
   });
 
   it("保存済みdoneでもテスト成功記録がなければ完了扱いにしない", async () => {
@@ -88,8 +150,8 @@ describe("Python Master app", () => {
     await failedWrapper.find(".run-card button").trigger("click");
     await flushPromises();
 
-    expect(failedWrapper.text()).toContain("失敗");
-    expect(failedWrapper.text()).not.toContain("成功");
+    expect(failedWrapper.find(".run-summary").text()).toContain("失敗");
+    expect(failedWrapper.find(".run-summary").text()).not.toContain("成功");
 
     window.localStorage.clear();
     mockFetch({ exit_code: 0 });

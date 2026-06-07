@@ -23,4 +23,3 @@ class SavingsAccount(BankAccount):
     def add_interest(self, rate: float) -> None:
         # TODO
         raise NotImplementedError
-

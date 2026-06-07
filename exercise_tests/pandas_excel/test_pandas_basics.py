@@ -1,5 +1,5 @@
-from pathlib import Path
 from importlib import import_module
+from pathlib import Path
 
 target = import_module("exercises.pandas_excel.01_pandas_basics")
 

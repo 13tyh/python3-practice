@@ -27,4 +27,3 @@ def suggest_next_action(logs: list[StudyLog]) -> str:
     """合計時間に応じて次の行動を返す。"""
     # TODO
     raise NotImplementedError
-

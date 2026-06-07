@@ -22,4 +22,3 @@ def percentage(part: int, total: int) -> float:
 def round_price(price: float) -> int:
     # TODO
     raise NotImplementedError
-

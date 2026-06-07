@@ -1,5 +1,5 @@
-from importlib import import_module
 import json
+from importlib import import_module
 
 target = import_module("exercises.model_mapping.02_config_loader")
 
@@ -29,4 +29,3 @@ def test_validate_unique_deployment_names() -> None:
         deployment("b", "m3", "vertex", "prod"),
     ]
     assert target.validate_unique_deployment_names(items) == ["duplicate deployment_name: a"]
-

@@ -13,4 +13,3 @@ def test_round_19() -> None:
     assert get_index(["a"], 0) == "a"
     with pytest.raises(IndexError):
         get_index(["a"], 1)
-

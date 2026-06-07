@@ -6,4 +6,3 @@ def test_round_32() -> None:
     assert admin_users(users) == [users[0]]
     assert user_map(users) == {"u1": users[0], "u2": users[1]}
     assert rename_user(users[0], "Mio") == User("u1", "Mio", "admin")
-

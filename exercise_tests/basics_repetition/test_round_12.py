@@ -7,4 +7,3 @@ def test_round_12() -> None:
     assert prefixer("1") == "user:1"
     assert fallback(lambda: "ok", "ng") == "ok"
     assert fallback(lambda: (_ for _ in ()).throw(RuntimeError()), "ng") == "ng"
-

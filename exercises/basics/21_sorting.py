@@ -21,4 +21,3 @@ def top_scores(scores: dict[str, int], limit: int) -> list[tuple[str, int]]:
 def sort_users_by_age(users: list[dict[str, int | str]]) -> list[dict[str, int | str]]:
     # TODO
     raise NotImplementedError
-

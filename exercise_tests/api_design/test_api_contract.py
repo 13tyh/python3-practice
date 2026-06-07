@@ -19,4 +19,3 @@ def test_api_contract() -> None:
         "status_code": 404,
     }
     assert target.idempotency_cache_key("POST", "/reviews", "abc") == "POST:/reviews:abc"
-

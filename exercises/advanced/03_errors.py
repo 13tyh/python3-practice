@@ -21,4 +21,3 @@ def require_non_empty(value: str, field_name: str) -> str:
 def find_required(data: dict[str, str], key: str) -> str:
     # TODO
     raise NotImplementedError
-

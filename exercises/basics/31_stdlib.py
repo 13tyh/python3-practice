@@ -1,7 +1,6 @@
 """よく使う標準ライブラリの練習。"""
 
-from collections import Counter, defaultdict
-from itertools import chain
+from collections import Counter
 
 
 def count_words(words: list[str]) -> Counter[str]:
@@ -22,4 +21,3 @@ def flatten_with_chain(items: list[list[int]]) -> list[int]:
 def most_common_word(words: list[str]) -> str | None:
     # TODO
     raise NotImplementedError
-

@@ -19,4 +19,3 @@ def even_set(numbers: list[int]) -> set[int]:
 def duplicate_values(values: list[str]) -> set[str]:
     # TODO
     raise NotImplementedError
-

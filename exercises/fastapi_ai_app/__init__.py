@@ -1,2 +1,1 @@
 """FastAPI + AI practice app."""
-

@@ -31,4 +31,3 @@ def create_review(
     )
     repository.save(review)
     return review
-

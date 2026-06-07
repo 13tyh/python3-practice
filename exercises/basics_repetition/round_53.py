@@ -19,4 +19,3 @@ def indexed_map(items: list[str]) -> dict[int, str]:
 def pair_sums(a: list[int], b: list[int]) -> list[int]:
     # TODO
     raise NotImplementedError
-

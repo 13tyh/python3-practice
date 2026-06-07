@@ -19,4 +19,3 @@ def max_or_none(numbers: list[int]) -> int | None:
 def remove_none(values: list[str | None]) -> list[str]:
     # TODO
     raise NotImplementedError
-

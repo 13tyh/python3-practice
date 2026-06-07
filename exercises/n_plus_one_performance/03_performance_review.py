@@ -16,4 +16,3 @@ def estimate_n_plus_one_queries(parent_count: int) -> int:
 def is_better_query_count(before: int, after: int) -> bool:
     # TODO
     raise NotImplementedError
-

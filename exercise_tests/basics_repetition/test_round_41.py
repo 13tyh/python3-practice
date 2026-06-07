@@ -1,4 +1,9 @@
-from exercises.basics_repetition.round_41 import count_long_words, double_numbers, join_with_comma, total
+from exercises.basics_repetition.round_41 import (
+    count_long_words,
+    double_numbers,
+    join_with_comma,
+    total,
+)
 
 
 def test_round_41() -> None:
@@ -6,4 +11,3 @@ def test_round_41() -> None:
     assert total([1, 2, 3]) == 6
     assert count_long_words(["a", "python", "go"], 3) == 1
     assert join_with_comma(["a", "b", "c"]) == "a,b,c"
-

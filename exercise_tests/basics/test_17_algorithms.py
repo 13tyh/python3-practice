@@ -10,4 +10,3 @@ def test_algorithm_tasks() -> None:
     assert target.count_chars("aba") == {"a": 2, "b": 1}
     assert target.is_palindrome("level")
     assert not target.is_palindrome("python")
-

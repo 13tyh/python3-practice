@@ -24,4 +24,3 @@ def test_retry_call() -> None:
 
     with pytest.raises(RuntimeError):
         target.retry_call(lambda: (_ for _ in ()).throw(RuntimeError("ng")), retries=1)
-

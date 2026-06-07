@@ -19,4 +19,3 @@ def count_active(users: list[dict[str, object]]) -> int:
 def find_user_name(users: list[dict[str, object]], user_id: str) -> str | None:
     # TODO
     raise NotImplementedError
-

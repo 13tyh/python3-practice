@@ -11,4 +11,3 @@ def test_state_transition() -> None:
     assert target.transition("submitted", "approved") == "approved"
     with pytest.raises(ValueError):
         target.transition("published", "draft")
-

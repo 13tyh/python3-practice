@@ -11,4 +11,3 @@ def test_rag_advanced() -> None:
     assert target.rerank(results) == [{"id": "b", "score": 0.9}, {"id": "a", "score": 0.1}]
     assert target.is_grounded("Python FastAPI", "FastAPI is a Python framework")
     assert not target.is_grounded("Django", "FastAPI is a Python framework")
-

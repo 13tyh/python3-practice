@@ -19,4 +19,3 @@ def role_labels(users: list[dict[str, str]]) -> list[str]:
 def score_rows(scores: dict[str, int]) -> list[dict[str, int | str]]:
     # TODO
     raise NotImplementedError
-

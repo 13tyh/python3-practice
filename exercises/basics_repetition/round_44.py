@@ -19,4 +19,3 @@ def total_price(price: int, quantity: int) -> int:
 def receipt_line(name: str, price: int, quantity: int) -> str:
     # TODO
     raise NotImplementedError
-

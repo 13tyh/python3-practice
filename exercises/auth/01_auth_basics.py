@@ -21,4 +21,3 @@ def has_permission(user_roles: list[str], required_role: str) -> bool:
 def mask_token(token: str | None) -> str:
     # TODO
     raise NotImplementedError
-

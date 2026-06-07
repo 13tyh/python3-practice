@@ -1,4 +1,4 @@
-# 07 AI Review
+# 57 AI Review
 
 AI が出したコードを見る時のチェックリスト。
 

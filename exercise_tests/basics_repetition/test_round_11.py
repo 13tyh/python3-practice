@@ -5,4 +5,3 @@ def test_round_11() -> None:
     assert list(repeat_text("x", 3)) == ["x", "x", "x"]
     assert running_total([1, 2, 3]) == [1, 3, 6]
     assert take_until_negative([1, 2, -1, 3]) == [1, 2]
-

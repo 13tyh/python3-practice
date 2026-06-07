@@ -21,4 +21,3 @@ def test_model_registry() -> None:
         "provider": "azure",
         "environment": "prod",
     }
-

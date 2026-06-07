@@ -23,4 +23,3 @@ def clean_and_filter(words: list[str]) -> list[str]:
     """strip + lower して、空文字を除く。"""
     # TODO
     raise NotImplementedError
-

@@ -15,4 +15,3 @@ def count_fail_reasons(rows: list[dict[str, str]]) -> dict[str, int]:
 def compare_prompt_accuracy(rows: list[dict[str, str]]) -> dict[str, float]:
     # TODO
     raise NotImplementedError
-

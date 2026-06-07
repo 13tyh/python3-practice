@@ -19,4 +19,3 @@ def adult_ages(ages: list[int]) -> list[int]:
 def short_words(words: list[str], max_length: int) -> list[str]:
     # TODO
     raise NotImplementedError
-

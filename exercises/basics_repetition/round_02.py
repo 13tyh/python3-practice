@@ -24,4 +24,3 @@ def merge_unique(a: list[str], b: list[str]) -> list[str]:
 def require_key(data: dict[str, str], key: str) -> str:
     # TODO
     raise NotImplementedError
-

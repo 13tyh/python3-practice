@@ -20,4 +20,3 @@ def find_index(items: list[str], target: str) -> int | None:
 def merge_keys_values(keys: list[str], values: list[int]) -> dict[str, int]:
     # TODO
     raise NotImplementedError
-

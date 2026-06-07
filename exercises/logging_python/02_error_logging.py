@@ -22,4 +22,3 @@ def safe_log_message(message: str) -> str:
     """改行を空白にしてログ注入っぽい崩れを避ける。"""
     # TODO
     raise NotImplementedError
-

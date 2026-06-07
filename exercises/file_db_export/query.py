@@ -18,4 +18,3 @@ def build_projection(fields: list[str]) -> dict[str, int]:
 def build_sort(field: str, descending: bool = False) -> list[tuple[str, int]]:
     # TODO
     raise NotImplementedError
-

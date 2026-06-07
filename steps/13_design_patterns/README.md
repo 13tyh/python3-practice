@@ -1,4 +1,4 @@
-# 45 Design Patterns
+# 13 Design Patterns
 
 factory、strategy、adapter、facade を小さく練習する。
 

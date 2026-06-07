@@ -1,4 +1,9 @@
-from exercises.basics_repetition.round_54 import active_user_ids, role_labels, score_rows, user_names
+from exercises.basics_repetition.round_54 import (
+    active_user_ids,
+    role_labels,
+    score_rows,
+    user_names,
+)
 
 
 def test_round_54() -> None:
@@ -10,4 +15,3 @@ def test_round_54() -> None:
     assert active_user_ids(users) == ["u1"]
     assert role_labels(users) == ["Aki(admin)", "Ren(member)"]
     assert score_rows({"Aki": 90}) == [{"name": "Aki", "score": 90}]
-

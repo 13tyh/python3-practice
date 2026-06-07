@@ -27,4 +27,3 @@ def test_merge_stock() -> None:
     result = target.merge_stock(current, {"pen": 2, "book": 1})
     assert result == {"pen": 5, "book": 1}
     assert current == {"pen": 3}
-

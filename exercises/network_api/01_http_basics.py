@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any
-from urllib.parse import urlencode
 
 
 @dataclass(frozen=True)
@@ -41,4 +40,3 @@ def safe_error_message(status_code: int, message: str) -> str:
     """ログ用に短いエラーメッセージを作る。"""
     # TODO
     raise NotImplementedError
-

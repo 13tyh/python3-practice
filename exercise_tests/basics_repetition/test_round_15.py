@@ -18,4 +18,3 @@ def test_round_15() -> None:
         "total": 200,
         "status_label": "支払い済み",
     }
-

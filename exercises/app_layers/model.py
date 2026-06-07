@@ -25,4 +25,3 @@ class StudyLogResponse:
     id: str
     title: str
     minutes: int
-

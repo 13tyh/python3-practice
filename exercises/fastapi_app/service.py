@@ -30,4 +30,3 @@ def list_tasks(store: TaskStore) -> list[TaskResponse]:
 def mark_done(store: TaskStore, task_id: str) -> TaskResponse | None:
     # TODO
     raise NotImplementedError
-

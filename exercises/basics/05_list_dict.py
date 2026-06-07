@@ -20,4 +20,3 @@ def merge_stock(current: dict[str, int], incoming: dict[str, int]) -> dict[str, 
     """在庫数を合算する。元の辞書は変更しない。"""
     # TODO
     raise NotImplementedError
-

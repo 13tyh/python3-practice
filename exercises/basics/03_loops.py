@@ -23,4 +23,3 @@ def fizzbuzz(n: int) -> list[str]:
     """1からnまでのFizzBuzzを返す。"""
     # TODO
     raise NotImplementedError
-

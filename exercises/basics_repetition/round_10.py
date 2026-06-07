@@ -22,4 +22,3 @@ def active_titles(todos: list[Todo]) -> list[str]:
 def completion_rate(todos: list[Todo]) -> float:
     # TODO
     raise NotImplementedError
-

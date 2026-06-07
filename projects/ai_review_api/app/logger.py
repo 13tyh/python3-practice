@@ -11,4 +11,3 @@ def mask_secret(value: str | None) -> str:
     if len(value) <= 4:
         return "***"
     return f"{value[:2]}...{value[-2:]}"
-

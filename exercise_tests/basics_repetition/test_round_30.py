@@ -8,4 +8,3 @@ def test_round_30() -> None:
         "q": "python",
         "page": "1",
     }
-

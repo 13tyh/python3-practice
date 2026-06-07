@@ -27,4 +27,3 @@ def create_router(ai_client: AIClient, repository: ReviewRepository) -> APIRoute
         return {"jsonl": build_jsonl(request.items)}
 
     return router
-

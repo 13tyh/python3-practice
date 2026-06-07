@@ -19,4 +19,3 @@ def name_to_length(names: list[str]) -> dict[str, int]:
 def unique_sorted(numbers: list[int]) -> list[int]:
     # TODO
     raise NotImplementedError
-

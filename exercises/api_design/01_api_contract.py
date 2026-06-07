@@ -20,4 +20,3 @@ def error_response(code: str, message: str, status_code: int) -> dict[str, objec
 def idempotency_cache_key(method: str, path: str, key: str) -> str:
     # TODO
     raise NotImplementedError
-

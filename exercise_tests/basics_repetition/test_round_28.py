@@ -10,4 +10,3 @@ def test_round_28() -> None:
     assert low_stock_names(items, 1) == ["Book"]
     assert restock(items[1], 5) == {"name": "Book", "price": 1200, "stock": 5}
     assert items[1]["stock"] == 0
-

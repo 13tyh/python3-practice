@@ -14,4 +14,3 @@ class ReviewResponse(BaseModel):
 
 class BatchReviewRequest(BaseModel):
     items: list[CreateReviewRequest]
-

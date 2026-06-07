@@ -14,4 +14,3 @@ def test_counter() -> None:
     counter.increment()
     counter.increment()
     assert counter.get() == 2
-

@@ -15,4 +15,3 @@ def test_env_tasks(monkeypatch) -> None:
         target.require_env("MISSING")
     assert target.get_int_env("PORT", 3000) == 8000
     assert target.get_int_env("MISSING_PORT", 3000) == 3000
-

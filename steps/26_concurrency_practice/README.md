@@ -1,4 +1,4 @@
-# 48 Concurrency Practice
+# 26 Concurrency Practice
 
 asyncio semaphore、rate limit、concurrent API calls、cancellation。
 

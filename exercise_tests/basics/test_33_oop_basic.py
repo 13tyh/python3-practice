@@ -17,4 +17,3 @@ def test_oop_basic_tasks() -> None:
     savings = target.SavingsAccount("Ren", 1000)
     savings.add_interest(0.1)
     assert savings.get_balance() == 1100
-

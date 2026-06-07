@@ -26,4 +26,3 @@ def read_non_empty_lines(path: Path) -> list[str]:
 def mask_token(token: str) -> str:
     # TODO
     raise NotImplementedError
-

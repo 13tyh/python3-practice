@@ -14,4 +14,3 @@ def ok_response(data: dict[str, object]) -> dict[str, object]:
 def validate_response(response: dict[str, object]) -> bool:
     # TODO
     raise NotImplementedError
-

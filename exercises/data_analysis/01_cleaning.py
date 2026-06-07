@@ -19,4 +19,3 @@ def deduplicate_by_key(rows: list[dict[str, str]], key: str) -> list[dict[str, s
 def to_int(value: str | None, default: int = 0) -> int:
     # TODO
     raise NotImplementedError
-

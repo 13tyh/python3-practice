@@ -39,4 +39,3 @@ def to_vertex_batch_predict_kwargs(config: BatchJobConfig) -> dict[str, object]:
     """aiplatform.Model.batch_predict に渡す kwargs を作る。"""
     # TODO
     raise NotImplementedError
-

@@ -1,4 +1,4 @@
-# 17 Typing Deep
+# 02 Typing Deep
 
 目的: Python の型ヒントを読める・書ける・AI の型ミスを見抜けるようにする。
 

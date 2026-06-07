@@ -27,4 +27,3 @@ def any_empty(values: list[str | None]) -> bool:
     """None または空文字が1つでもあれば True。"""
     # TODO
     raise NotImplementedError
-

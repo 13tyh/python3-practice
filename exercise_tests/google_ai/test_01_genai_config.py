@@ -16,8 +16,12 @@ def test_load_settings(monkeypatch) -> None:
 
 def test_choose_auth_mode() -> None:
     assert target.choose_auth_mode(target.GenAISettings("m", None, True, "p", "global")) == "vertex"
-    assert target.choose_auth_mode(target.GenAISettings("m", "k", False, None, "global")) == "api_key"
-    assert target.choose_auth_mode(target.GenAISettings("m", None, False, None, "global")) == "missing"
+    assert (
+        target.choose_auth_mode(target.GenAISettings("m", "k", False, None, "global")) == "api_key"
+    )
+    assert (
+        target.choose_auth_mode(target.GenAISettings("m", None, False, None, "global")) == "missing"
+    )
 
 
 def test_build_prompt() -> None:
@@ -35,4 +39,3 @@ def test_mask_secret() -> None:
     assert target.mask_secret(None) == ""
     assert target.mask_secret("abc") == "***"
     assert target.mask_secret("123456789") == "1234...6789"
-

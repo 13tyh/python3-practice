@@ -15,4 +15,3 @@ def test_queue() -> None:
     assert target.should_retry(job, 3)
     job.attempts = 3
     assert not target.should_retry(job, 3)
-

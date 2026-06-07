@@ -18,4 +18,3 @@ def contains_prompt_injection(text: str) -> bool:
 def redact_secrets(text: str) -> str:
     # TODO
     raise NotImplementedError
-

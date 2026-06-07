@@ -9,4 +9,3 @@ def test_code_smells() -> None:
     assert target.has_too_many_args(6)
     assert target.suggest_refactor("long_function") == "extract smaller functions"
     assert target.suggest_refactor("unknown") == "write characterization tests first"
-

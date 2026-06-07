@@ -24,4 +24,3 @@ def validate_positive(number: int) -> int:
 def build_query(params: dict[str, str | None]) -> dict[str, str]:
     # TODO
     raise NotImplementedError
-

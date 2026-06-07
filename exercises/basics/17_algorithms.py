@@ -21,4 +21,3 @@ def count_chars(text: str) -> dict[str, int]:
 def is_palindrome(text: str) -> bool:
     # TODO
     raise NotImplementedError
-

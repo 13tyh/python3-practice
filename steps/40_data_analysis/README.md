@@ -1,4 +1,4 @@
-# 22 Data Analysis
+# 40 Data Analysis
 
 目的: CSV や list/dict から、欠損・重複・集計を扱えるようにする。
 

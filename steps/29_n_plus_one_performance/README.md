@@ -1,4 +1,4 @@
-# 56 N Plus One Performance
+# 29 N Plus One Performance
 
 目的: N+1 問題や無駄なループを見つけ、まとめて取得・変換する書き方を身につける。
 

@@ -23,4 +23,3 @@ def test_password_strength() -> None:
     assert target.password_strength("abc") == "weak"
     assert target.password_strength("abcdefgh") == "normal"
     assert target.password_strength("abc12345") == "strong"
-

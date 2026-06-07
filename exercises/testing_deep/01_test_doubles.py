@@ -26,4 +26,3 @@ def checkout(user_id: str, amount: int, client: PaymentClient) -> str:
 def build_param_cases() -> list[tuple[int, str]]:
     # TODO
     raise NotImplementedError
-

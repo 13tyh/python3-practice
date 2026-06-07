@@ -7,4 +7,3 @@ def test_streaming() -> None:
     assert target.split_tokens("hello world") == ["hello", "world"]
     assert list(target.stream_text("hello world")) == ["hello", "world"]
     assert target.to_sse_event("hello") == "data: hello\n\n"
-

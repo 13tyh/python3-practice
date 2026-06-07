@@ -15,4 +15,3 @@ def test_fail_fast() -> None:
     assert target.parse_positive_int("10") == 10
     with pytest.raises(ValueError):
         target.parse_positive_int("0")
-

@@ -14,4 +14,3 @@ def test_csv_tasks(tmp_path: Path) -> None:
     path = tmp_path / "users.csv"
     target.write_csv_rows(path, [{"name": "Aki"}, {"name": "Ren"}])
     assert target.read_csv_names(path) == ["Aki", "Ren"]
-

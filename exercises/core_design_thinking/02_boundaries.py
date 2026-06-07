@@ -16,4 +16,3 @@ def clamp_page(page: int) -> int:
 def safe_ratio(part: int, total: int) -> float:
     # TODO
     raise NotImplementedError
-

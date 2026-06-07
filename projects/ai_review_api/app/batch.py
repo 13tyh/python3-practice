@@ -13,4 +13,3 @@ def build_jsonl(items: list[CreateReviewRequest]) -> str:
 
 def write_jsonl(path: Path, items: list[CreateReviewRequest]) -> None:
     path.write_text(build_jsonl(items), encoding="utf-8")
-

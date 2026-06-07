@@ -1,4 +1,4 @@
-# 02 Files
+# 03 Files
 
 対象: `src/mastery/file_practice.py`
 

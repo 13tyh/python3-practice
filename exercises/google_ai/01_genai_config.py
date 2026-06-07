@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass
 
 
@@ -43,4 +42,3 @@ def mask_secret(value: str | None) -> str:
     """ログ表示用に secret を隠す。"""
     # TODO
     raise NotImplementedError
-

@@ -10,4 +10,3 @@ def test_auth_basics() -> None:
     assert not target.is_valid_api_key(None, {"k1"})
     assert target.has_permission(["admin"], "admin")
     assert target.mask_token("1234567890") == "1234...7890"
-

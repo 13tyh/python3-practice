@@ -23,4 +23,3 @@ def password_strength(password: str) -> str:
     """8文字未満 weak、数字を含めば strong、それ以外 normal。"""
     # TODO
     raise NotImplementedError
-

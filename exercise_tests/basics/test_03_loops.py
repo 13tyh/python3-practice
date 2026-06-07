@@ -18,4 +18,3 @@ def test_collect_short_words() -> None:
 def test_fizzbuzz() -> None:
     assert target.fizzbuzz(5) == ["1", "2", "Fizz", "4", "Buzz"]
     assert target.fizzbuzz(15)[-1] == "FizzBuzz"
-

@@ -19,4 +19,3 @@ def collect_tags(articles: list[dict[str, object]]) -> list[str]:
 def group_names_by_role(users: list[dict[str, str]]) -> dict[str, list[str]]:
     # TODO
     raise NotImplementedError
-

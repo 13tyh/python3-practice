@@ -17,4 +17,3 @@ def test_name_to_length() -> None:
 
 def test_unique_sorted() -> None:
     assert target.unique_sorted([3, 1, 3, 2]) == [1, 2, 3]
-

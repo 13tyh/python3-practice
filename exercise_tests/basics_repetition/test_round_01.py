@@ -16,4 +16,3 @@ def test_round_01() -> None:
     items = [{"id": "a", "name": "Aki"}]
     assert find_by_id(items, "a") == {"id": "a", "name": "Aki"}
     assert find_by_id(items, "x") is None
-

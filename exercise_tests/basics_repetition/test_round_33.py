@@ -10,4 +10,3 @@ def test_round_33() -> None:
     assert create_resource({"name": "Aki"}, "r1") == {"id": "r1", "name": "Aki"}
     assert response_status({"ok": True}) == "ok"
     assert response_status({"ok": False}) == "error"
-

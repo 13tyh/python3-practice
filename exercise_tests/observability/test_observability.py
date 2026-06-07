@@ -14,4 +14,3 @@ def test_observability() -> None:
     }
     assert target.metric_name("ai_review", "create", "count") == "ai_review.create.count"
     assert target.trace_parent("child", "parent") == {"span": "child", "parent_span": "parent"}
-

@@ -14,4 +14,3 @@ def test_context_manager_tasks(tmp_path: Path) -> None:
     with resource as opened:
         assert opened.opened
     assert not resource.opened
-

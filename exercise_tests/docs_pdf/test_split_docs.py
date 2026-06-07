@@ -1,4 +1,9 @@
-from exercises.docs_pdf.split_docs import DocChunk, safe_filename, split_markdown_by_heading, split_text_by_chars
+from exercises.docs_pdf.split_docs import (
+    DocChunk,
+    safe_filename,
+    split_markdown_by_heading,
+    split_text_by_chars,
+)
 
 
 def test_split_markdown_by_heading() -> None:
@@ -15,4 +20,3 @@ def test_split_text_by_chars() -> None:
 
 def test_safe_filename() -> None:
     assert safe_filename("A/B:C*D?") == "A_B_C_D_"
-

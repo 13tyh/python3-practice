@@ -21,4 +21,3 @@ def avoid_full_scan_lookup(rows: list[dict[str, str]], key: str) -> dict[str, di
     """毎回 list scan しないため key -> row の辞書を作る。"""
     # TODO
     raise NotImplementedError
-

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from dataclasses import dataclass
 
 
@@ -21,4 +20,3 @@ def load_config() -> AppConfig:
 def is_production(config: AppConfig) -> bool:
     # TODO
     raise NotImplementedError
-

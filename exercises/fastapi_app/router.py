@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, status
 
 from .schema import CreateTaskRequest, TaskResponse
-from .service import TaskStore, create_task, list_tasks, mark_done
+from .service import TaskStore
 
 
 def create_router(store: TaskStore) -> APIRouter:
@@ -27,4 +27,3 @@ def create_router(store: TaskStore) -> APIRouter:
         raise NotImplementedError
 
     return router
-

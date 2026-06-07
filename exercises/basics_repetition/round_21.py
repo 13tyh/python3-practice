@@ -14,4 +14,3 @@ def is_debug(settings: dict[str, str | int | bool]) -> bool:
 def database_url(settings: dict[str, str | int | bool]) -> str:
     # TODO
     raise NotImplementedError
-

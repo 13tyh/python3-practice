@@ -16,4 +16,3 @@ def make_prefixer(prefix: str) -> Callable[[str], str]:
 def fallback(func: Callable[[], str], default: str) -> str:
     # TODO
     raise NotImplementedError
-

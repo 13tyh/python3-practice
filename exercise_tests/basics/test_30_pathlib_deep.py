@@ -14,4 +14,3 @@ def test_pathlib_deep_tasks(tmp_path: Path) -> None:
     (tmp_path / "a.py").write_text("", encoding="utf-8")
     (tmp_path / "b.txt").write_text("", encoding="utf-8")
     assert target.list_py_files(tmp_path) == [tmp_path / "a.py"]
-

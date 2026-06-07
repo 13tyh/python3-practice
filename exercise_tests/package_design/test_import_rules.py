@@ -10,4 +10,3 @@ def test_import_rules() -> None:
     assert target.is_allowed_import("router", "service")
     assert target.is_allowed_import("service", "repository")
     assert not target.is_allowed_import("repository", "router")
-

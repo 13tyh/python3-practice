@@ -11,4 +11,3 @@ def test_round_39() -> None:
     assert items == ["a"]
     assert count_items(["a", "b"]) == 2
     assert contains_item(["a"], "a")
-

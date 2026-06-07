@@ -17,4 +17,3 @@ def count_words_in_file(path: Path) -> int:
 def copy_text(src: Path, dst: Path) -> None:
     # TODO
     raise NotImplementedError
-

@@ -17,4 +17,3 @@ def load_settings() -> Settings:
         ai_provider=os.getenv("AI_PROVIDER", "fake"),
         ai_model=os.getenv("AI_MODEL", "fake-reviewer"),
     )
-

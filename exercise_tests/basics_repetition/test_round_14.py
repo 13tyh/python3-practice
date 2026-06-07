@@ -1,6 +1,10 @@
 from pathlib import Path
 
-from exercises.basics_repetition.round_14 import ensure_parent, list_files_by_suffix, make_report_path
+from exercises.basics_repetition.round_14 import (
+    ensure_parent,
+    list_files_by_suffix,
+    make_report_path,
+)
 
 
 def test_round_14(tmp_path: Path) -> None:
@@ -11,4 +15,3 @@ def test_round_14(tmp_path: Path) -> None:
     (tmp_path / "a.py").write_text("", encoding="utf-8")
     (tmp_path / "b.txt").write_text("", encoding="utf-8")
     assert list_files_by_suffix(tmp_path, ".py") == [tmp_path / "a.py"]
-

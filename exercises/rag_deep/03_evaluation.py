@@ -17,4 +17,3 @@ def has_citation(answer: str) -> bool:
 def should_answer(results_count: int, min_results: int = 1) -> bool:
     # TODO
     raise NotImplementedError
-

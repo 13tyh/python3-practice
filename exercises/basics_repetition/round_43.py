@@ -19,4 +19,3 @@ def list_or_empty(items: list[str] | None) -> list[str]:
 def is_missing(value: object | None) -> bool:
     # TODO
     raise NotImplementedError
-

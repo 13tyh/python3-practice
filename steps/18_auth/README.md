@@ -1,4 +1,4 @@
-# 30 Auth
+# 18 Auth
 
 API key、Bearer token、role / permission を扱う。
 

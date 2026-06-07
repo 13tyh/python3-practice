@@ -11,4 +11,3 @@ def test_can_free_ship() -> None:
     assert can_free_ship(5000, "東京")
     assert not can_free_ship(5000, "北海道")
     assert can_free_ship(8000, "沖縄")
-

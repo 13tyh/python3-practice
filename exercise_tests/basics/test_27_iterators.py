@@ -8,4 +8,3 @@ def test_iterator_tasks() -> None:
     assert list(target.take_even([1, 2, 3, 4])) == [2, 4]
     assert target.flatten([["a"], ["b", "c"]]) == ["a", "b", "c"]
     assert list(target.chunked([1, 2, 3, 4, 5], 2)) == [[1, 2], [3, 4], [5]]
-

@@ -9,4 +9,3 @@ def test_performance() -> None:
     result, elapsed = target.measure_elapsed(lambda: "ok")
     assert result == "ok"
     assert elapsed >= 0
-

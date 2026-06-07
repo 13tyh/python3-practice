@@ -13,4 +13,3 @@ def test_boundaries() -> None:
     assert target.clamp_page(3) == 3
     assert target.safe_ratio(1, 0) == 0.0
     assert target.safe_ratio(1, 4) == 0.25
-

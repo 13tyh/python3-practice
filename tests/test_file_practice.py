@@ -15,4 +15,3 @@ def test_file_operations(tmp_path: Path) -> None:
     csv_path = tmp_path / "sales.csv"
     csv_path.write_text("name,amount\nbook,1200\npen,300\n", encoding="utf-8")
     assert sum_csv_amounts(csv_path) == 1500
-

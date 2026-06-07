@@ -27,4 +27,3 @@ def test_fastapi_ai_flow() -> None:
     chat = client.post("/ai/chat", json={"message": "hello"})
     assert chat.status_code == 200
     assert chat.json()["reply"]
-

@@ -7,4 +7,3 @@ def test_round_49() -> None:
     assert index_by_id(items) == {"u1": items[0], "u2": items[1]}
     assert invert({"a": "1", "b": "2"}) == {"1": "a", "2": "b"}
     assert filter_scores({"Aki": 90, "Ren": 70}, 80) == {"Aki": 90}
-

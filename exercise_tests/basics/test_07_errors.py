@@ -26,4 +26,3 @@ def test_get_required() -> None:
     assert target.get_required({"name": "Aki"}, "name") == "Aki"
     with pytest.raises(KeyError):
         target.get_required({}, "name")
-

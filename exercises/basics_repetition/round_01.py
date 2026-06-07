@@ -24,4 +24,3 @@ def only_even(numbers: list[int]) -> list[int]:
 def find_by_id(items: list[dict[str, str]], item_id: str) -> dict[str, str] | None:
     # TODO
     raise NotImplementedError
-

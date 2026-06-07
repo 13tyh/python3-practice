@@ -1,7 +1,5 @@
 """monkeypatch / env testing の練習。"""
 
-import os
-
 
 def load_feature_flag() -> bool:
     # TODO
@@ -16,4 +14,3 @@ def choose_endpoint() -> str:
 def build_headers_from_env() -> dict[str, str]:
     # TODO
     raise NotImplementedError
-

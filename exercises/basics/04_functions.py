@@ -22,4 +22,3 @@ def summarize_scores(scores: list[int]) -> dict[str, int]:
     """max, min, total を持つ辞書を返す。空なら全部0。"""
     # TODO
     raise NotImplementedError
-

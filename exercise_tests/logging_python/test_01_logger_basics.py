@@ -1,5 +1,5 @@
-from importlib import import_module
 import logging
+from importlib import import_module
 
 target = import_module("exercises.logging_python.01_logger_basics")
 
@@ -34,4 +34,3 @@ def test_log_success(caplog) -> None:
     with caplog.at_level(logging.INFO, logger="test.log_success"):
         target.log_success(logger, "login", "u1")
     assert "action=login user_id=u1 status=ok" in caplog.text
-

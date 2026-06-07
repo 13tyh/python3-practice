@@ -1,4 +1,4 @@
-# 13 App Layers
+# 12 App Layers
 
 目的: 実務でよく見る `model.py`、`service.py`、`router.py` の分け方を理解する。
 

@@ -30,4 +30,3 @@ def add_tag(customer: Customer, tag: str) -> None:
 def move_customer(customer: Customer, address: Address) -> Customer:
     # TODO
     raise NotImplementedError
-

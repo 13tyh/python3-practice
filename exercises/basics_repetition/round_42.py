@@ -15,4 +15,3 @@ def sum_until(limit: int) -> int:
     """1からlimitまで足す。"""
     # TODO
     raise NotImplementedError
-

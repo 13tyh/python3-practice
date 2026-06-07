@@ -1,4 +1,9 @@
-from exercises.basics_repetition.round_43 import is_missing, list_or_empty, name_or_guest, value_or_default
+from exercises.basics_repetition.round_43 import (
+    is_missing,
+    list_or_empty,
+    name_or_guest,
+    value_or_default,
+)
 
 
 def test_round_43() -> None:
@@ -11,4 +16,3 @@ def test_round_43() -> None:
     assert list_or_empty(["a"]) == ["a"]
     assert is_missing(None)
     assert not is_missing("")
-

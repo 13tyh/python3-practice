@@ -9,4 +9,3 @@ def test_ttl_cache() -> None:
     target.set_cached(cache, "k", "v", now=10, ttl=5)
     assert target.get_cached(cache, "k", now=12) == "v"
     assert target.get_cached(cache, "k", now=16) is None
-

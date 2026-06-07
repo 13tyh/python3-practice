@@ -6,4 +6,3 @@ def test_round_42() -> None:
     assert countdown(0) == []
     assert repeat_until_length("ab", 5) == "ababa"
     assert sum_until(4) == 10
-

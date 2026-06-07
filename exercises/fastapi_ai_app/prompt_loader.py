@@ -17,4 +17,3 @@ def render_prompt(template: str, values: dict[str, str]) -> str:
 
 def default_review_prompt_path() -> Path:
     return Path(__file__).parent / "prompts" / "review_prompt.md"
-

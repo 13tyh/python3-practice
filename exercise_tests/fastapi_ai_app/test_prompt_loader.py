@@ -19,4 +19,3 @@ def test_render_prompt() -> None:
 
 def test_default_review_prompt_path() -> None:
     assert default_review_prompt_path().name == "review_prompt.md"
-

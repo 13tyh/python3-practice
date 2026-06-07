@@ -20,4 +20,3 @@ def password_strength(password: str) -> str:
     if any(char.isdigit() for char in password):
         return "strong"
     return "normal"
-

@@ -10,4 +10,3 @@ def test_api_client() -> None:
     assert target.should_retry_status(500)
     assert not target.should_retry_status(400)
     assert target.backoff_seconds(3) == 4
-

@@ -16,4 +16,3 @@ def test_find_user_email() -> None:
     assert find_user_email(users, "u1") == "u1@example.com"
     with pytest.raises(ValueError):
         find_user_email(users, "missing")
-

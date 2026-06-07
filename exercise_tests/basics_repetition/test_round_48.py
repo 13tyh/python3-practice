@@ -6,4 +6,3 @@ def test_round_48() -> None:
     assert pass_fail([80, 59, 60]) == ["pass", "fail", "pass"]
     assert mask_empty(["a", "", "b"]) == ["a", "(empty)", "b"]
     assert normalize_numbers([-1, 0, 2]) == [0, 0, 2]
-

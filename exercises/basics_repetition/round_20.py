@@ -21,4 +21,3 @@ def reset(counter: Counter) -> None:
 def counter_label(counter: Counter) -> str:
     # TODO
     raise NotImplementedError
-

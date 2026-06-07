@@ -1,4 +1,4 @@
-# 32 Async FastAPI
+# 25 Async FastAPI
 
 `async def`、background task、streaming の前段を学ぶ。
 

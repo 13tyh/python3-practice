@@ -15,4 +15,3 @@ def answer_from_context(question: str, context: str) -> str:
     """context が空なら回答拒否メッセージ。"""
     # TODO
     raise NotImplementedError
-

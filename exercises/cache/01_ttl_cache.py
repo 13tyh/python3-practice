@@ -24,4 +24,3 @@ def get_cached(cache: dict[str, CacheItem], key: str, now: int) -> str | None:
 def set_cached(cache: dict[str, CacheItem], key: str, value: str, now: int, ttl: int) -> None:
     # TODO
     raise NotImplementedError
-

@@ -23,4 +23,3 @@ def add_tax(price: int, tax_rate: float) -> int:
     """税込金額を四捨五入して返す。"""
     # TODO
     raise NotImplementedError
-

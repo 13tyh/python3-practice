@@ -19,4 +19,3 @@ def build_upsert_update(data: dict[str, object]) -> dict[str, dict[str, object]]
 def explain_uses_index(explain: dict[str, object]) -> bool:
     # TODO
     raise NotImplementedError
-

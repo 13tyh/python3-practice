@@ -38,4 +38,3 @@ def review_code(generator: TextGenerator, request: CodeReviewRequest) -> CodeRev
 def chat(generator: TextGenerator, request: ChatRequest) -> ChatResponse:
     # TODO
     raise NotImplementedError
-

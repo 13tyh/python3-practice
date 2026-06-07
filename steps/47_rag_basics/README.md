@@ -1,4 +1,4 @@
-# 27 RAG Basics
+# 47 RAG Basics
 
 目的: 文書分割、embedding の考え方、類似検索、検索結果評価を理解する。
 

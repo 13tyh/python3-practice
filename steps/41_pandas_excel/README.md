@@ -1,4 +1,4 @@
-# 23 Pandas Excel
+# 41 Pandas Excel
 
 目的: pandas で CSV / Excel を読み書きし、集計結果を出力する。
 

@@ -36,4 +36,3 @@ def group_by_provider(deployments: list[ModelDeployment]) -> dict[str, list[str]
 def build_model_log_context(deployment: ModelDeployment) -> dict[str, str]:
     # TODO
     raise NotImplementedError
-

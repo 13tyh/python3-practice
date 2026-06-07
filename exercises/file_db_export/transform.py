@@ -19,4 +19,3 @@ def document_to_row(document: dict[str, Any], fields: list[str]) -> dict[str, st
 def documents_to_rows(documents: list[dict[str, Any]], fields: list[str]) -> list[dict[str, str]]:
     # TODO
     raise NotImplementedError
-

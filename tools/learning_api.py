@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import shlex
 import subprocess
 import time
@@ -9,9 +10,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-
 WORKSPACE = Path("/workspace")
 MAX_OUTPUT = 12_000
+MAX_FILE_PREVIEW = 16_000
 TIMEOUT_SECONDS = 90
 
 ALLOWED_EXACT = {
@@ -44,6 +45,14 @@ class StepReference(BaseModel):
     urls: list[str]
 
 
+class FileCompare(BaseModel):
+    exercise_path: str
+    solution_path: str
+    exercise: str
+    solution: str
+    has_solution: bool
+
+
 app = FastAPI(title="Python Master Learning API")
 
 app.add_middleware(
@@ -62,10 +71,32 @@ def health() -> dict[str, str]:
 
 @app.get("/api/step-references", response_model=list[StepReference])
 def step_references() -> list[StepReference]:
+    json_path = WORKSPACE / "docs" / "step_references.json"
+    if json_path.exists():
+        return [
+            StepReference.model_validate(item)
+            for item in json.loads(json_path.read_text(encoding="utf-8"))
+        ]
     path = WORKSPACE / "docs" / "STEP_REFERENCES.md"
     if not path.exists():
         raise HTTPException(status_code=404, detail="STEP_REFERENCES.md が見つかりません")
     return _parse_step_references(path.read_text(encoding="utf-8"))
+
+
+@app.get("/api/solution-compare", response_model=FileCompare)
+def solution_compare(exercise_path: str) -> FileCompare:
+    exercise_file = _safe_workspace_path(exercise_path)
+    solution_path = _solution_path_for(exercise_path)
+    solution_file = _safe_workspace_path(solution_path)
+    if not exercise_file.exists():
+        raise HTTPException(status_code=404, detail="対象ファイルが見つかりません")
+    return FileCompare(
+        exercise_path=exercise_path,
+        solution_path=solution_path,
+        exercise=_read_preview(exercise_file),
+        solution=_read_preview(solution_file) if solution_file.exists() else "",
+        has_solution=solution_file.exists(),
+    )
 
 
 @app.post("/api/run", response_model=RunResponse)
@@ -124,6 +155,42 @@ def _trim(value: str) -> str:
     if len(value) <= MAX_OUTPUT:
         return value
     return value[:MAX_OUTPUT] + "\n... output truncated ..."
+
+
+def _safe_workspace_path(value: str) -> Path:
+    if Path(value).is_absolute():
+        raise HTTPException(status_code=400, detail="絶対パスは指定できません")
+    normalized = Path(value)
+    if ".." in normalized.parts:
+        raise HTTPException(status_code=400, detail="親ディレクトリ参照は指定できません")
+    if normalized.parts[:1] not in {
+        ("exercises",),
+        ("exercise_tests",),
+        ("tests",),
+        ("src",),
+        ("solutions",),
+        ("projects",),
+        ("review_tasks",),
+        ("failure_patterns",),
+    }:
+        raise HTTPException(status_code=400, detail="このパスはプレビューできません")
+    path = (WORKSPACE / normalized).resolve()
+    if not path.is_relative_to(WORKSPACE.resolve()):
+        raise HTTPException(status_code=400, detail="workspace外は読めません")
+    return path
+
+
+def _solution_path_for(exercise_path: str) -> str:
+    if exercise_path.startswith("exercises/"):
+        return "solutions/" + exercise_path.removeprefix("exercises/")
+    return "solutions/" + Path(exercise_path).name
+
+
+def _read_preview(path: Path) -> str:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    if len(text) <= MAX_FILE_PREVIEW:
+        return text
+    return text[:MAX_FILE_PREVIEW] + "\n... file truncated ..."
 
 
 def _parse_step_references(text: str) -> list[StepReference]:

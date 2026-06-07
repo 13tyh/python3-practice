@@ -11,4 +11,3 @@ def test_load_config(monkeypatch) -> None:
     assert config.env == "production"
     assert not config.debug
     assert target.is_production(config)
-

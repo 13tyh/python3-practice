@@ -21,4 +21,3 @@ def write_text_pdf(path: Path, title: str, lines: list[str]) -> None:
 def build_output_paths(output_dir: Path, chunks: list[DocChunk]) -> list[Path]:
     # TODO
     raise NotImplementedError
-

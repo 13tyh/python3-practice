@@ -14,4 +14,3 @@ def test_repository() -> None:
     assert repo.mark_done("1") == target.Task("1", "learn python", True)
     with pytest.raises(KeyError):
         repo.mark_done("missing")
-

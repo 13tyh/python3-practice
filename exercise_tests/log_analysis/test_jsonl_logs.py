@@ -1,6 +1,6 @@
 import json
-from pathlib import Path
 from importlib import import_module
+from pathlib import Path
 
 target = import_module("exercises.log_analysis.01_jsonl_logs")
 

@@ -23,4 +23,3 @@ def estimate_cost_usd(usage: TokenUsage, price_per_1k_tokens: float) -> float:
 def usage_log_context(usage: TokenUsage) -> dict[str, str]:
     # TODO
     raise NotImplementedError
-

@@ -1,4 +1,4 @@
-# 04 Mongo
+# 31 Mongo
 
 対象: `src/mastery/mongo_practice.py`
 

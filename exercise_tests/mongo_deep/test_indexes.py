@@ -9,4 +9,3 @@ def test_mongo_deep() -> None:
     assert target.build_upsert_update({"name": "Aki"}) == {"$set": {"name": "Aki"}}
     assert target.explain_uses_index({"queryPlanner": {"winningPlan": {"stage": "IXSCAN"}}})
     assert not target.explain_uses_index({"queryPlanner": {"winningPlan": {"stage": "COLLSCAN"}}})
-

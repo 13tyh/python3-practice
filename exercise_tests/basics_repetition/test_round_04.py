@@ -19,4 +19,3 @@ def test_round_04() -> None:
     with pytest.raises(ValueError):
         validate_positive(0)
     assert build_query({"name": "Aki", "role": "", "area": None}) == {"name": "Aki"}
-

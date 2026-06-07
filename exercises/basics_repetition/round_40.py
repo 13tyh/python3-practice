@@ -24,4 +24,3 @@ def has_key(data: dict[str, str], key: str) -> bool:
 def keys_list(data: dict[str, str]) -> list[str]:
     # TODO
     raise NotImplementedError
-

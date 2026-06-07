@@ -13,7 +13,10 @@ from exercises.fastapi_ai_app.usage import (
 
 
 def test_errors() -> None:
-    assert error_to_response(AIOutputError("bad json")) == {"status_code": 422, "detail": "bad json"}
+    assert error_to_response(AIOutputError("bad json")) == {
+        "status_code": 422,
+        "detail": "bad json",
+    }
     assert is_retryable(AIUnavailableError("timeout"))
     assert not is_retryable(AIOutputError("bad output"))
 
@@ -28,4 +31,3 @@ def test_usage() -> None:
         "total_tokens": "1500",
         "model_name": "gpt-4.1-mini",
     }
-

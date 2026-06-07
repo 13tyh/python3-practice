@@ -24,4 +24,3 @@ def divide_floor(a: int, b: int) -> int:
 def remainder(a: int, b: int) -> int:
     # TODO
     raise NotImplementedError
-

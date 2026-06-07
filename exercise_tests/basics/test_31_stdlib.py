@@ -12,4 +12,3 @@ def test_stdlib_tasks() -> None:
     assert target.flatten_with_chain([[1, 2], [3]]) == [1, 2, 3]
     assert target.most_common_word(["a", "b", "a"]) == "a"
     assert target.most_common_word([]) is None
-

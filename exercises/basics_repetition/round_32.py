@@ -23,4 +23,3 @@ def user_map(users: list[User]) -> dict[str, User]:
 def rename_user(user: User, name: str) -> User:
     # TODO
     raise NotImplementedError
-

@@ -1,4 +1,4 @@
-# 08 FastAPI AI
+# 56 FastAPI AI
 
 目的: FastAPI の `router/schema/service` 分割で、LangChain などの AI 処理を API 化する。
 

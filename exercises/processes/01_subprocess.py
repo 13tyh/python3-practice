@@ -27,4 +27,3 @@ def explain_result(result: subprocess.CompletedProcess[str]) -> str:
     """成功ならok、失敗ならfailed: <returncode>。"""
     # TODO
     raise NotImplementedError
-

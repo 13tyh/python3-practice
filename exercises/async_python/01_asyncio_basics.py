@@ -31,4 +31,3 @@ async def collect_in_order(values: list[str]) -> list[str]:
 async def _sleep_and_return(value: str) -> str:
     await asyncio.sleep(0)
     return value
-

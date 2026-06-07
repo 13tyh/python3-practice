@@ -14,4 +14,3 @@ def page_count(total: int, per_page: int) -> int:
 def has_next_page(total: int, page: int, per_page: int) -> bool:
     # TODO
     raise NotImplementedError
-

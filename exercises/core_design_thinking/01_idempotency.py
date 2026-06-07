@@ -16,4 +16,3 @@ def mark_processed(record: dict[str, object]) -> dict[str, object]:
 def idempotency_key(method: str, path: str, body_hash: str) -> str:
     # TODO
     raise NotImplementedError
-

@@ -18,4 +18,3 @@ def test_expensive_products() -> None:
 
 def test_index_by_id() -> None:
     assert target.index_by_id(products)["p2"]["name"] == "Book"
-

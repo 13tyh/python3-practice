@@ -19,4 +19,3 @@ def user_initials(full_name: str) -> str:
 def remove_empty_strings(values: list[str]) -> list[str]:
     # TODO
     raise NotImplementedError
-

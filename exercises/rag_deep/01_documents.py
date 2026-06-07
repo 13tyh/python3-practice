@@ -29,4 +29,3 @@ def split_with_overlap(text: str, chunk_size: int, overlap: int) -> list[str]:
 def chunk_document(document: Document, chunk_size: int, overlap: int) -> list[Chunk]:
     # TODO
     raise NotImplementedError
-

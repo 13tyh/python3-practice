@@ -11,4 +11,3 @@ def test_migration() -> None:
     ]
     assert target.rename_field({"old": 1}, "old", "new") == {"new": 1}
     assert target.migration_update_many_filter("role") == {"role": {"$exists": False}}
-

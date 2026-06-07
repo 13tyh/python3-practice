@@ -6,4 +6,3 @@ def test_round_46() -> None:
     assert upper_words(["a", "Py"]) == ["A", "PY"]
     assert lengths(["a", "python"]) == [1, 6]
     assert strip_all([" a ", " b"]) == ["a", "b"]
-

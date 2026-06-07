@@ -11,4 +11,3 @@ def test_file_tasks(tmp_path: Path) -> None:
     target.append_log(path, "c")
     assert target.read_lines(path) == ["a", "b", "c"]
     assert target.count_lines(path) == 3
-

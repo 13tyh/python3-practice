@@ -18,4 +18,3 @@ def stream_text(text: str) -> Iterator[str]:
 def to_sse_event(token: str) -> str:
     # TODO
     raise NotImplementedError
-

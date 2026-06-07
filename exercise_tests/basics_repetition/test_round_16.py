@@ -1,4 +1,9 @@
-from exercises.basics_repetition.round_16 import max_or_none, parse_csv_line, remove_none, strip_or_none
+from exercises.basics_repetition.round_16 import (
+    max_or_none,
+    parse_csv_line,
+    remove_none,
+    strip_or_none,
+)
 
 
 def test_round_16() -> None:
@@ -9,4 +14,3 @@ def test_round_16() -> None:
     assert max_or_none([1, 3, 2]) == 3
     assert max_or_none([]) is None
     assert remove_none(["a", None, "b"]) == ["a", "b"]
-

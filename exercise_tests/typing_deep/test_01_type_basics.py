@@ -13,4 +13,3 @@ def test_type_basics() -> None:
         "deleted": 1,
     }
     assert target.user_label({"id": "u1", "name": "Aki", "age": 20}) == "u1:Aki(20)"
-
