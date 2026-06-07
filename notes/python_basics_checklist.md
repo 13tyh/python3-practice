@@ -1,0 +1,123 @@
+# Python Basics Checklist
+
+自分で説明できたらチェックする。
+
+- 変数と代入
+- `str`, `int`, `float`, `bool`
+- `if`, `elif`, `else`
+- `for`
+- `while`
+- `list`
+- `dict`
+- 関数の引数と戻り値
+- `None`
+- 例外
+- `Path`
+- JSON / CSV
+- class
+- dataclass
+- 型ヒント
+- bool / None
+- tuple / set
+- 数値計算
+- sort / sorted
+- enumerate / zip
+- 正規表現
+- copy / deepcopy
+- argparse
+- with
+- context manager
+- iterator / generator
+- decorator
+- pathlib 深め
+- Counter / defaultdict / itertools
+- 環境変数
+- OOP
+- subprocess
+- multiprocessing
+- HTTP / API
+- asyncio
+- Gemini API
+- Vertex AI
+- Google Gen AI SDK
+- model / service / router の責務分け
+- 設定読み込み
+- Repository パターン
+- 独自例外
+- ページング
+- キャッシュ
+- リトライ
+- logging
+- logger.exception
+- JSONL
+- バッチ推論
+- Vertex AI BatchPredictionJob
+- TypedDict
+- Literal
+- Protocol
+- Generic
+- TypeGuard
+- FastAPI
+- Pydantic schema
+- APIRouter
+- FastAPI AI service
+- settings
+- prompt template
+- fake AI client
+- dependency injection
+- DB export
+- CSV export
+- document split
+- PDF export
+- pandas
+- Excel export
+- log analysis
+- Mongo aggregation
+- AI evaluation
+- RAG
+- deployment_name / model_name mapping
+- chunk overlap
+- retriever
+- recall@k
+- auth
+- domain error
+- async FastAPI
+- job queue
+- SQL
+- TTL cache
+- prompt injection
+- SSE streaming
+- rerank
+- dependency injection
+- transaction
+- API client
+- observability
+- Pydantic validator
+- package design
+- design patterns
+- timezone
+- performance
+- concurrency control
+- LLM ops
+- test doubles
+- API contract
+- Mongo index
+- hybrid search
+- AI agent
+- refactoring
+- N+1 problem
+- bulk query
+- chunk processing
+- query count
+- idempotency
+- boundary values
+- invariant
+- state transition
+- normalization
+- fail fast
+- pure function
+- pytest の失敗ログ
+- AI が出したコードの危ない点
+- mongosh
+- MongoDB explain
+- MongoDB aggregation

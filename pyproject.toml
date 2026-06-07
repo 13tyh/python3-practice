@@ -1,0 +1,64 @@
+[tool.poetry]
+name = "python-master"
+version = "0.1.0"
+description = "Python mastery workspace with Docker, MongoDB, LangChain, and LangGraph."
+authors = ["Python Master Learner <learner@example.com>"]
+readme = "README.md"
+packages = [
+    { include = "mastery", from = "src" },
+    { include = "tools" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ipython = "9.3.0"
+pydantic = "2.11.5"
+python-dotenv = "1.1.0"
+pymongo = "4.13.1"
+langchain = "0.3.25"
+langchain-core = "0.3.65"
+langchain-openai = "0.3.22"
+langgraph = "0.4.8"
+google-genai = "*"
+google-cloud-aiplatform = "*"
+httpx = "*"
+fastapi = "*"
+uvicorn = { extras = ["standard"], version = "*" }
+reportlab = "*"
+pypdf = "*"
+python-docx = "*"
+pandas = "*"
+openpyxl = "*"
+matplotlib = "*"
+scikit-learn = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "8.4.0"
+ruff = "0.11.13"
+mypy = "1.16.0"
+black = "25.1.0"
+
+[tool.poetry.scripts]
+lint = "tools.dev_commands:lint"
+fmt = "tools.dev_commands:fmt"
+build = "tools.dev_commands:build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"

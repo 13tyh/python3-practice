@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.env
+.venv/
+*.pyc
+
+frontend/node_modules/
+frontend/dist/
+frontend/.pnpm-store/
+frontend/.vite/
+frontend/vite.config.ts.timestamp-*.mjs
