@@ -49,7 +49,13 @@ Docker Desktop では次の固定名で表示されます。
 
 ## 画面でできること
 
-![Python Master app overview](docs/assets/app-overview.png)
+### Home dashboard
+
+![Home dashboard](docs/assets/home-dashboard.png)
+
+### Step workflow
+
+![Step workflow](docs/assets/step-workflow.png)
 
 - ホーム: 効率ルート、苦手カテゴリ、今日の候補、学習状況を見る
 - Step画面: 読む、書く、実行、振り返りをタブで切り替える
