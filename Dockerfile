@@ -13,7 +13,7 @@ RUN apt-get update \
 
 RUN pip install --no-cache-dir "poetry==$POETRY_VERSION"
 
-COPY README.md pyproject.toml poetry.lock ./
+COPY README.md pyproject.toml ./
 COPY src ./src
 COPY tools ./tools
 RUN poetry install --no-interaction --no-ansi
