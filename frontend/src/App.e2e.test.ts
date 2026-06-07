@@ -71,6 +71,8 @@ describe("app e2e flow", () => {
     const wrapper = mount(App);
     await flushPromises();
 
+    const reviewTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("振り返り"));
+    await reviewTab?.trigger("click");
     const labToggle = wrapper.findAll(".collapse-toggle").find((button) => button.text().includes("実務ラボ"));
     await labToggle?.trigger("click");
     const memoTab = wrapper.findAll(".lab-tabs button").find((button) => button.text().includes("メモ"));

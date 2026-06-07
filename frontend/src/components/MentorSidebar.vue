@@ -72,6 +72,14 @@ function isPhaseCollapsed(id: string) {
   return collapsedPhases.value.has(id);
 }
 
+function phaseDoneCount(phase: PhaseGroup) {
+  return phase.steps.filter((step) => props.getStatus(step.id) === "done").length;
+}
+
+function phaseCategorySummary(phase: PhaseGroup) {
+  return [...new Set(phase.steps.map((step) => categoryLabel(step.category)))].slice(0, 3).join(" / ");
+}
+
 function updateCategory(event: Event) {
   emit("update:selectedCategory", (event.target as HTMLSelectElement).value);
 }
@@ -150,8 +158,11 @@ function updateCategory(event: Event) {
           @click="togglePhase(phase.id)"
         >
           <span>{{ isPhaseCollapsed(phase.id) ? "+" : "-" }}</span>
-          <strong>{{ phase.title }}</strong>
-          <small>{{ phase.steps.length }}</small>
+          <strong>
+            {{ phase.title }}
+            <em>{{ phaseCategorySummary(phase) }}</em>
+          </strong>
+          <small>{{ phaseDoneCount(phase) }}/{{ phase.steps.length }}</small>
         </button>
         <div v-if="!isPhaseCollapsed(phase.id)" class="phase-step-list">
           <button

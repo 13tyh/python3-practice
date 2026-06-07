@@ -43,6 +43,14 @@ const isLabOpen = ref(false);
 const inspectedFile = ref("");
 const latestSession = ref<SessionSummary | null>(null);
 const stepReferences = ref<StepReference[]>([]);
+type LessonTab = "read" | "write" | "run" | "review";
+const activeLessonTab = ref<LessonTab>("read");
+const lessonTabs: Array<{ id: LessonTab; label: string }> = [
+  { id: "read", label: "読む" },
+  { id: "write", label: "書く" },
+  { id: "run", label: "実行" },
+  { id: "review", label: "振り返り" },
+];
 const {
   getStatus,
   markTestFailed,
@@ -80,7 +88,7 @@ const { runCommand, runError, runningCommand, runResult } = useStepRunner(select
   setStatus,
 }, { recordRun });
 const learningAnalysis = computed(() => analyzeLearningLog(steps, getStatus, learningEvents.value));
-const todayStepIds = computed(() => new Set(learningAnalysis.value.focusQueue.map((item) => item.stepId)));
+const todayStepIds = computed(() => new Set(learningAnalysis.value.todayTop3.map((item) => item.stepId)));
 const visibleSteps = computed(() => {
   let result = isTodayOnly.value ? steps.filter((step) => todayStepIds.value.has(step.id)) : steps;
   if (hideDone.value) result = result.filter((step) => getStatus(step.id) !== "done");
@@ -106,6 +114,14 @@ const currentPhase = computed(() => getPhase(selectedNumber.value));
 const runnableCommands = computed(() => selectedStep.value.commands.filter((command) => isRunnable(command)));
 const additionalCommands = computed(() => selectedStep.value.commands.slice(1));
 const primaryCommand = computed(() => selectedStep.value.commands[0] ?? "");
+const runCommands = computed(() => [primaryCommand.value, ...additionalCommands.value].filter(Boolean));
+const acceptanceChecklist = computed(() =>
+  [
+    `${primaryCommand.value || "pytest"} が成功する`,
+    ...selectedStep.value.goals.slice(0, 2).map((goal) => `${goal} を説明できる`),
+    "失敗時に原因ファイルと修正理由を1文で残せる",
+  ].slice(0, 4),
+);
 const shouldShowMongo = computed(
   () => selectedStep.value.category === "db" || selectedStep.value.id.includes("mongo"),
 );
@@ -123,6 +139,12 @@ type SessionSummary = {
 
 watch(hideDone, (value) => window.localStorage.setItem("python-master-hide-done", String(value)));
 watch(isTodayOnly, (value) => window.localStorage.setItem("python-master-today-only", String(value)));
+watch(
+  () => selectedStep.value.id,
+  () => {
+    activeLessonTab.value = "read";
+  },
+);
 
 function stepNumber(id: string) {
   return stepNumberOf(steps, id);
@@ -157,6 +179,7 @@ function move(offset: number) {
 
 function inspectFile(file: string) {
   inspectedFile.value = file;
+  activeLessonTab.value = "review";
   isLabOpen.value = true;
 }
 
@@ -177,7 +200,7 @@ function handleShortcut(event: KeyboardEvent) {
   }
   if (event.key === "r") {
     event.preventDefault();
-    runCommand(primaryCommand.value);
+    runAndShowResult(primaryCommand.value);
   }
   if (event.key === "/") {
     event.preventDefault();
@@ -236,16 +259,33 @@ function startBasicReview() {
   if (firstBasic) selectStep(firstBasic);
 }
 
+function startRandomBasicDrill() {
+  const unfinishedBasics = steps.filter((step) => step.level === "基礎" && getStatus(step.id) !== "done");
+  const basics = unfinishedBasics.length > 0 ? unfinishedBasics : steps.filter((step) => step.level === "基礎");
+  const step = basics[Math.floor(Math.random() * basics.length)];
+  if (step) {
+    selectStep(step);
+    window.setTimeout(() => {
+      activeLessonTab.value = "write";
+    }, 0);
+  }
+}
+
 function selectFirstFocusStep() {
   const first = steps.find((step) => step.id === learningAnalysis.value.focusQueue[0]?.stepId);
   if (first) selectStep(first);
+}
+
+function runAndShowResult(command: string) {
+  activeLessonTab.value = "run";
+  runCommand(command);
 }
 
 function finishSession() {
   const summary: SessionSummary = {
     at: new Date().toISOString(),
     failedRuns: learningEvents.value.filter((event) => !event.ok).length,
-    nextItems: learningAnalysis.value.focusQueue.map((item) => `${item.label}: ${item.title}`),
+    nextItems: learningAnalysis.value.todayTop3.map((item) => `${item.label}: ${item.title}`),
     totalRuns: learningEvents.value.length,
   };
   latestSession.value = summary;
@@ -302,6 +342,7 @@ function toggleLightMode() {
         @open-search="isSearchOpen = true"
         @reset-progress="resetAllProgress"
         @start-basic-review="startBasicReview"
+        @start-random-basic="startRandomBasicDrill"
         @toggle-hide-done="toggleHideDone"
         @toggle-light-mode="toggleLightMode"
         @toggle-today-only="toggleTodayOnly"
@@ -315,6 +356,7 @@ function toggleLightMode() {
           <div class="home-actions">
             <button type="button" @click="toggleTodayOnly">今日だけ表示</button>
             <button type="button" @click="startBasicReview">基礎復習</button>
+            <button type="button" @click="startRandomBasicDrill">ランダム基礎</button>
             <button type="button" @click="finishSession">学習終了</button>
           </div>
         </article>
@@ -342,17 +384,39 @@ function toggleLightMode() {
         </div>
       </section>
 
+      <nav v-if="!isHomeView" class="lesson-tabs" aria-label="Step作業タブ">
+        <button
+          v-for="tab in lessonTabs"
+          :key="tab.id"
+          type="button"
+          :class="{ active: activeLessonTab === tab.id }"
+          @click="activeLessonTab = tab.id"
+        >
+          {{ tab.label }}
+        </button>
+      </nav>
+
       <MissionBoard
-        v-if="!isHomeView"
+        v-if="!isHomeView && activeLessonTab === 'read'"
         :primary-command="primaryCommand"
         :running-command="runningCommand"
         :step="selectedStep"
-        @run="runCommand"
+        @run="runAndShowResult"
       />
 
-      <section v-if="!isHomeView" class="mentor-workspace">
+      <article v-if="!isHomeView && activeLessonTab === 'read'" class="work-card acceptance-card">
+        <div class="work-title">
+          <PencilLine :size="20" />
+          <h3>最短合格条件</h3>
+        </div>
+        <ul class="step-guide">
+          <li v-for="item in acceptanceChecklist" :key="item">{{ item }}</li>
+        </ul>
+      </article>
+
+      <section v-if="!isHomeView && activeLessonTab !== 'read'" class="mentor-workspace">
         <div class="work-lane">
-          <article class="work-card">
+          <article v-if="activeLessonTab === 'write'" class="work-card">
             <div class="work-title">
               <PencilLine :size="20" />
               <h3>書き方</h3>
@@ -362,7 +426,7 @@ function toggleLightMode() {
             </ol>
           </article>
 
-          <article class="work-card warning">
+          <article v-if="activeLessonTab === 'write'" class="work-card warning">
             <div class="work-title">
               <AlertTriangle :size="20" />
               <h3>注意点</h3>
@@ -373,16 +437,22 @@ function toggleLightMode() {
           </article>
 
           <RunResultCard
+            v-if="activeLessonTab === 'run'"
             :run-error="runError"
             :run-result="runResult"
             :running-command="runningCommand"
             @inspect-file="inspectFile"
           />
 
-          <CommandList :commands="additionalCommands" :running-command="runningCommand" @run="runCommand" />
+          <CommandList
+            v-if="activeLessonTab === 'run'"
+            :commands="runCommands"
+            :running-command="runningCommand"
+            @run="runAndShowResult"
+          />
         </div>
 
-        <section v-if="!isLightMode" class="collapse-stack">
+        <section v-if="activeLessonTab === 'review' && !isLightMode" class="collapse-stack">
           <article class="collapsible-panel">
             <button type="button" class="collapse-toggle" @click="isReferenceOpen = !isReferenceOpen">
               参照リソース / 対象ファイル
@@ -416,7 +486,7 @@ function toggleLightMode() {
           </article>
         </section>
 
-        <article v-else class="light-focus-card" aria-label="軽量モード">
+        <article v-else-if="activeLessonTab === 'review'" class="light-focus-card" aria-label="軽量モード">
           <strong>軽量モード</strong>
           <p>今は問題、書き方、注意点、実行結果だけに絞っています。</p>
           <button type="button" @click="toggleLightMode">通常表示に戻す</button>

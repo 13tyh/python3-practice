@@ -133,6 +133,47 @@
   overflow-wrap: anywhere;
 }
 
+.lesson-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid #253244;
+  border-radius: 8px;
+  padding: 8px;
+  background: rgb(15 23 42 / 74%);
+}
+
+.lesson-tabs button {
+  min-height: 42px;
+  border: 1px solid #253244;
+  border-radius: 8px;
+  color: #cbd5e1;
+  background: #111827;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.lesson-tabs button:hover {
+  border-color: #38bdf8;
+  background: #172033;
+}
+
+.lesson-tabs button.active {
+  border-color: #2dd4bf;
+  color: #06111f;
+  background: #2dd4bf;
+}
+
+.acceptance-card {
+  display: grid;
+  gap: 12px;
+}
+
+.acceptance-card::before {
+  background: #2dd4bf;
+}
+
 .mission-board {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -716,6 +757,62 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.today-focus {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  border: 1px solid rgb(45 212 191 / 34%);
+  border-radius: 8px;
+  padding: 12px;
+  background: linear-gradient(135deg, rgb(20 184 166 / 18%), rgb(15 23 42 / 78%));
+}
+
+.today-focus > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.today-focus span:first-child {
+  color: #2dd4bf;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.today-focus a {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  border: 1px solid rgb(148 163 184 / 22%);
+  border-radius: 8px;
+  padding: 10px;
+  color: #cbd5e1;
+  background: rgb(2 6 23 / 35%);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.today-focus a:hover {
+  border-color: #38bdf8;
+  background: rgb(15 23 42 / 80%);
+}
+
+.today-focus a strong {
+  color: #99f6e4;
+  font-size: 12px;
+}
+
+.today-focus a span {
+  color: #f8fafc;
+  font-weight: 900;
+}
+
+.today-focus a small {
+  color: #94a3b8;
 }
 
 .log-metrics span,

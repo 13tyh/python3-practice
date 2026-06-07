@@ -47,7 +47,7 @@ describe("analyzeLearningLog", () => {
   it("失敗Step、苦手カテゴリ、未復習の基礎を出す", () => {
     const status = (id: string): StepStatus => (id === "56_fastapi_ai" ? "doing" : "todo");
 
-    const result = analyzeLearningLog(steps, status, events);
+    const result = analyzeLearningLog(steps, status, events, new Date("2026-01-03T00:00:00.000Z"));
 
     expect(result.totalRuns).toBe(1);
     expect(result.failureHotspots[0].title).toBe("FastAPI AI");
@@ -56,5 +56,8 @@ describe("analyzeLearningLog", () => {
     expect(result.focusQueue.map((item) => item.stepId)).toEqual(["01_syntax"]);
     expect(result.focusQueue.map((item) => item.title)).not.toContain("FastAPI AI");
     expect(result.nextActions.join(" ")).toContain("失敗ログ");
+    expect(result.dueReviews[0]).toMatchObject({ due: true, stepId: "56_fastapi_ai" });
+    expect(result.basicDrill[0].stepId).toBe("01_syntax");
+    expect(result.todayTop3.map((item) => item.stepId)).toContain("56_fastapi_ai");
   });
 });

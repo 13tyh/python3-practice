@@ -309,6 +309,21 @@
   font-weight: 800;
 }
 
+.phase-toggle strong {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.phase-toggle em {
+  color: #64748b;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
 .phase-step-list {
   display: grid;
   gap: 6px;

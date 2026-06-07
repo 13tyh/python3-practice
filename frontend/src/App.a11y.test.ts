@@ -48,6 +48,6 @@ describe("app accessibility", () => {
 
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "l" }));
     await flushPromises();
-    expect(wrapper.text()).toContain("軽量モード");
+    expect(wrapper.find(".mentor-shell").classes()).toContain("light-mode");
   });
 });

@@ -21,12 +21,13 @@ import type { Step, StepStatus } from "../data/stepTypes";
 
 type LabState = {
   answer: string;
+  aiOutput: string;
   checked: Record<string, boolean>;
   ragDocs: string;
   ragQuestion: string;
   review: string;
 };
-type LabTab = "compare" | "memo" | "rag" | "mongo" | "review";
+type LabTab = "compare" | "memo" | "rag" | "mongo" | "review" | "ai";
 
 const props = defineProps<{
   allSteps: Step[];
@@ -46,6 +47,7 @@ defineEmits<{
 
 const defaultState = (): LabState => ({
   answer: "",
+  aiOutput: "",
   checked: {},
   ragDocs: "",
   ragQuestion: "",
@@ -64,6 +66,7 @@ const labTabs: Array<{ key: LabTab; label: string }> = [
   { key: "compare", label: "比較" },
   { key: "memo", label: "メモ" },
   { key: "rag", label: "RAG" },
+  { key: "ai", label: "AI実験" },
   { key: "mongo", label: "Mongo" },
   { key: "review", label: "レビュー" },
 ];
@@ -126,6 +129,34 @@ const pseudoEmbeddingTerms = computed(() =>
 const promptPreview = computed(
   () => `Context:\n${ragMatches.value.join("\n")}\n\nQuestion:\n${labState.value.ragQuestion || "このStepで重要な判断は？"}`,
 );
+const chunkSizeExperiments = computed(() =>
+  [80, 140, 220].map((size) => ({
+    chunks: chunkBySize(ragSource.value, size).slice(0, 4),
+    label: `${size} chars`,
+    size,
+  })),
+);
+const layerComparison = [
+  { layer: "router.py", ok: "HTTP入出力、Depends、status code", ng: "DB検索、prompt生成、重い業務判断" },
+  { layer: "service.py", ok: "業務ルール、AI/RAGの組み立て、例外分類", ng: "Request/Response専用schemaへ依存" },
+  { layer: "model.py", ok: "Pydantic/dataclass、値の制約", ng: "外部API呼び出し、ログ出力" },
+  { layer: "repository.py", ok: "Mongo query、projection、index前提", ng: "HTTPException、画面都合の整形" },
+];
+const suspiciousAiOutput = computed(
+  () =>
+    labState.value.aiOutput.trim() ||
+    "router.pyにMongo検索、prompt生成、例外握りつぶしを全部書けば早いです。型はdictで十分です。",
+);
+const aiOutputFindings = computed(() => [
+  { label: "router肥大化", ok: /router.*(全部|Mongo|prompt|DB)|全部書/.test(suspiciousAiOutput.value) },
+  { label: "型が弱い", ok: /dict|Any|型.*十分/.test(suspiciousAiOutput.value) },
+  { label: "例外が危険", ok: /握りつぶ|except|例外/.test(suspiciousAiOutput.value) },
+  { label: "テスト不足", ok: !/test|pytest|テスト/.test(suspiciousAiOutput.value) },
+]);
+const pseudoLlmAnswer = computed(() => {
+  const citations = ragMatches.value.map((chunk, index) => `[${index + 1}] ${chunk}`).join(" ");
+  return `${props.step.title}では、${props.step.goals[0] ?? "目的"}を先に満たす。根拠: ${citations || props.step.summary}`;
+});
 const reviewScore = computed(() => {
   const checkScore = Object.values(labState.value.checked).filter(Boolean).length;
   const textScore = labState.value.review.trim().length >= 40 ? 2 : labState.value.review.trim().length >= 10 ? 1 : 0;
@@ -189,6 +220,12 @@ const prReviewChecklist = [
   "1コメント1論点で書く",
   "危険な理由と修正案をセットで書く",
   "好みではなく仕様、型、テスト、性能で判断する",
+];
+const bugFixMiniTasks = [
+  "mutable default引数で前回の結果が混ざる",
+  "router内でMongoとAI呼び出しを直書きしている",
+  "for文の中で1件ずつDB/APIを呼ぶN+1",
+  "AI JSON出力をschema検証せず信じている",
 ];
 const opsChecklist = [
   "healthcheckがある",
@@ -274,6 +311,16 @@ function stateHasMemo(state: LabState) {
 
 function toNumberedLines(text: string) {
   return text.split(/\r?\n/).map((line, index) => ({ number: index + 1, text: line }));
+}
+
+function chunkBySize(text: string, size: number) {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  if (!normalized) return [];
+  const chunks: string[] = [];
+  for (let index = 0; index < normalized.length; index += size) {
+    chunks.push(normalized.slice(index, index + size));
+  }
+  return chunks;
 }
 </script>
 
@@ -397,6 +444,15 @@ function toNumberedLines(text: string) {
 
     <article v-if="activeLabTab === 'review'" class="lab-panel">
       <div class="work-title">
+        <Bug :size="20" />
+        <h3>バグ修正ミニ課題</h3>
+      </div>
+      <p>原因、修正案、追加テストを1セットで書く。</p>
+      <code v-for="item in bugFixMiniTasks" :key="item">{{ item }}</code>
+    </article>
+
+    <article v-if="activeLabTab === 'review'" class="lab-panel">
+      <div class="work-title">
         <ClipboardCheck :size="20" />
         <h3>PRレビュー練習</h3>
       </div>
@@ -437,6 +493,52 @@ function toNumberedLines(text: string) {
         <div>
           <strong>prompt preview</strong>
           <code>{{ promptPreview }}</code>
+        </div>
+      </div>
+    </article>
+
+    <article v-if="activeLabTab === 'ai'" class="lab-panel lab-wide">
+      <div class="work-title">
+        <Bot :size="20" />
+        <h3>APIキー不要AI実験</h3>
+      </div>
+      <p>外部AIなしで、特化型AIの設計、RAG、採点をローカルで練習します。</p>
+      <textarea v-model="labState.aiOutput" aria-label="AI出力採点対象" placeholder="AIが出した回答を貼る"></textarea>
+      <div class="compare-grid">
+        <div>
+          <strong>疑似LLM回答</strong>
+          <code>{{ pseudoLlmAnswer }}</code>
+        </div>
+        <div>
+          <strong>AI出力の危険判定</strong>
+          <code v-for="item in aiOutputFindings" :key="item.label">{{ item.ok ? "注意" : "OK" }}: {{ item.label }}</code>
+        </div>
+      </div>
+    </article>
+
+    <article v-if="activeLabTab === 'ai'" class="lab-panel lab-wide">
+      <div class="work-title">
+        <GitCompareArrows :size="20" />
+        <h3>FastAPI AI責務分割</h3>
+      </div>
+      <div class="layer-grid">
+        <div v-for="item in layerComparison" :key="item.layer">
+          <strong>{{ item.layer }}</strong>
+          <code>OK: {{ item.ok }}</code>
+          <code>NG: {{ item.ng }}</code>
+        </div>
+      </div>
+    </article>
+
+    <article v-if="activeLabTab === 'ai'" class="lab-panel lab-wide">
+      <div class="work-title">
+        <FileSearch :size="20" />
+        <h3>RAG chunkサイズ比較</h3>
+      </div>
+      <div class="compare-grid">
+        <div v-for="item in chunkSizeExperiments" :key="item.size">
+          <strong>{{ item.label }}</strong>
+          <code v-for="chunk in item.chunks" :key="chunk">{{ chunk }}</code>
         </div>
       </div>
     </article>

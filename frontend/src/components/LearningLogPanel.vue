@@ -34,6 +34,18 @@ function formatDate(value: string) {
       </div>
     </div>
 
+    <section class="today-focus" aria-label="今日やる3問">
+      <div>
+        <span>Today</span>
+        <h4>今日やる3問</h4>
+      </div>
+      <a v-for="item in analysis.todayTop3" :key="item.stepId" :href="`#${item.stepId}`">
+        <strong>{{ item.label }}</strong>
+        <span>{{ item.title }}</span>
+        <small>{{ item.reason }}</small>
+      </a>
+    </section>
+
     <ol class="focus-list">
       <li v-for="item in analysis.focusQueue" :key="item.stepId">
         <a class="focus-link" :href="`#${item.stepId}`">
@@ -73,6 +85,17 @@ function formatDate(value: string) {
         </summary>
         <code v-for="item in analysis.staleBasics" :key="item.stepId">
           {{ item.title }} / {{ formatDate(item.lastAt) }}
+        </code>
+      </details>
+
+      <details class="log-details">
+        <summary>
+          <History :size="17" />
+          翌日復習
+        </summary>
+        <code v-if="analysis.dueReviews.length === 0">失敗したStepは翌日にここへ出ます</code>
+        <code v-for="item in analysis.dueReviews" :key="item.stepId">
+          {{ item.due ? "復習日" : "次回" }}: {{ item.title }} / {{ formatDate(item.nextReviewAt) }}
         </code>
       </details>
 

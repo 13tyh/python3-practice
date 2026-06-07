@@ -367,6 +367,11 @@ code {
   background: rgb(15 23 42 / 76%);
 }
 
+.layer-grid > div {
+  border-color: #263445;
+  background: rgb(15 23 42 / 76%);
+}
+
 .memo-summary {
   border-color: #263445;
   background: rgb(15 23 42 / 76%);

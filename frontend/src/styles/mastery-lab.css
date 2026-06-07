@@ -163,6 +163,23 @@
   min-width: 0;
 }
 
+.layer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+
+.layer-grid > div {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+  background: #f8fafc;
+}
+
 .compare-grid strong,
 .lab-panel > strong {
   color: #111827;

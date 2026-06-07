@@ -3,12 +3,15 @@ import { categoryLabel } from "./learningUi";
 import type { Step, StepStatus } from "./stepTypes";
 
 export type LearningLogAnalysis = {
+  basicDrill: Array<{ reason: string; stepId: string; title: string }>;
+  dueReviews: Array<{ due: boolean; nextReviewAt: string; stepId: string; title: string }>;
   failureHotspots: Array<{ failures: number; stepId: string; title: string }>;
   focusQueue: Array<{ label: string; reason: string; stepId: string; title: string }>;
   latestEvents: LearningEvent[];
   nextActions: string[];
   staleBasics: Array<{ lastAt: string; stepId: string; title: string }>;
   successRate: number;
+  todayTop3: Array<{ label: string; reason: string; stepId: string; title: string }>;
   totalRuns: number;
   weakCategories: Array<{ category: string; done: number; failures: number; label: string; total: number }>;
 };
@@ -17,6 +20,7 @@ export function analyzeLearningLog(
   steps: Step[],
   getStatus: (id: string) => StepStatus,
   events: LearningEvent[],
+  now = new Date(),
 ): LearningLogAnalysis {
   const latestByStep = new Map<string, LearningEvent>();
   const failuresByStep = new Map<string, number>();
@@ -70,14 +74,20 @@ export function analyzeLearningLog(
     weakCategories[0] ? `${weakCategories[0].label} を1Step進める` : "",
   ].filter(Boolean);
   const focusQueue = buildFocusQueue(steps, getStatus, failureHotspots, staleBasics, weakCategories);
+  const dueReviews = buildDueReviews(steps, getStatus, latestByStep, now);
+  const basicDrill = buildBasicDrill(steps, getStatus, now);
+  const todayTop3 = buildTodayTop3(focusQueue, dueReviews, staleBasics, basicDrill);
 
   return {
+    basicDrill,
+    dueReviews,
     failureHotspots,
     focusQueue,
     latestEvents: [...events].sort((a, b) => b.at.localeCompare(a.at)).slice(0, 6),
     nextActions: nextActions.length > 0 ? nextActions : ["テストを1回実行して学習ログを作る"],
     staleBasics,
     successRate: events.length === 0 ? 0 : Math.round((events.filter((event) => event.ok).length / events.length) * 100),
+    todayTop3,
     totalRuns: events.length,
     weakCategories,
   };
@@ -124,4 +134,65 @@ function buildFocusQueue(
   }
 
   return queue.slice(0, 4);
+}
+
+function buildDueReviews(
+  steps: Step[],
+  getStatus: (id: string) => StepStatus,
+  latestByStep: Map<string, LearningEvent>,
+  now: Date,
+) {
+  return steps
+    .map((step) => {
+      const latest = latestByStep.get(step.id);
+      if (!latest || latest.ok || getStatus(step.id) === "done") return null;
+      const nextReviewAt = new Date(latest.at);
+      nextReviewAt.setDate(nextReviewAt.getDate() + 1);
+      return {
+        due: nextReviewAt.getTime() <= now.getTime(),
+        nextReviewAt: nextReviewAt.toISOString(),
+        stepId: step.id,
+        title: step.title,
+      };
+    })
+    .filter((item): item is { due: boolean; nextReviewAt: string; stepId: string; title: string } => Boolean(item))
+    .sort((a, b) => Number(b.due) - Number(a.due) || a.nextReviewAt.localeCompare(b.nextReviewAt))
+    .slice(0, 4);
+}
+
+function buildBasicDrill(steps: Step[], getStatus: (id: string) => StepStatus, now: Date) {
+  const basics = steps.filter((step) => step.level === "基礎" && getStatus(step.id) !== "done");
+  if (basics.length === 0) return [];
+  const seed = Math.floor(now.getTime() / 86_400_000) % basics.length;
+  return [...basics.slice(seed), ...basics.slice(0, seed)]
+    .slice(0, 3)
+    .map((step) => ({ reason: "基礎ランダム出題", stepId: step.id, title: step.title }));
+}
+
+function buildTodayTop3(
+  focusQueue: Array<{ label: string; reason: string; stepId: string; title: string }>,
+  dueReviews: Array<{ due: boolean; nextReviewAt: string; stepId: string; title: string }>,
+  staleBasics: Array<{ lastAt: string; stepId: string; title: string }>,
+  basicDrill: Array<{ reason: string; stepId: string; title: string }>,
+) {
+  const queue: Array<{ label: string; reason: string; stepId: string; title: string }> = [];
+  const used = new Set<string>();
+  const push = (item: { label: string; reason: string; stepId: string; title: string } | undefined) => {
+    if (!item || used.has(item.stepId)) return;
+    used.add(item.stepId);
+    queue.push(item);
+  };
+
+  for (const item of dueReviews.filter((review) => review.due)) {
+    push({ label: "昨日の失敗を復習", reason: "1日後にもう一度解く", stepId: item.stepId, title: item.title });
+  }
+  for (const item of staleBasics) {
+    push({ label: "基礎を戻す", reason: "序盤の穴を残さない", stepId: item.stepId, title: item.title });
+  }
+  for (const item of basicDrill) {
+    push({ label: "ランダム基礎", reason: item.reason, stepId: item.stepId, title: item.title });
+  }
+  for (const item of focusQueue) push(item);
+
+  return queue.slice(0, 3);
 }

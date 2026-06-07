@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookOpenCheck, Flag, Gauge, HelpCircle, Home, ListFilter, RotateCcw, Search } from "lucide-vue-next";
+import { BookOpenCheck, Flag, Gauge, HelpCircle, Home, ListFilter, RotateCcw, Search, Shuffle } from "lucide-vue-next";
 
 defineProps<{
   hideDone: boolean;
@@ -18,6 +18,7 @@ const emit = defineEmits<{
   toggleHideDone: [];
   toggleLightMode: [];
   toggleTodayOnly: [];
+  startRandomBasic: [];
 }>();
 </script>
 
@@ -56,6 +57,10 @@ const emit = defineEmits<{
     <button type="button" title="基礎の未完了だけ復習" @click="$emit('startBasicReview')">
       <BookOpenCheck :size="17" />
       基礎
+    </button>
+    <button type="button" title="基礎Stepをランダムに出す" @click="$emit('startRandomBasic')">
+      <Shuffle :size="17" />
+      ランダム
     </button>
     <button
       type="button"

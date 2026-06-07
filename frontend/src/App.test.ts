@@ -59,9 +59,15 @@ describe("Python Master app", () => {
 
     expect(wrapper.text()).toContain("ファイル操作");
     expect(wrapper.text()).toContain("今回のゴール");
+    expect(wrapper.text()).toContain("最短合格条件");
+    expect(wrapper.text()).toContain("読む");
+    expect(wrapper.text()).toContain("書く");
+
+    const writeTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("書く"));
+    await writeTab?.trigger("click");
+
     expect(wrapper.text()).toContain("書き方");
     expect(wrapper.text()).toContain("注意点");
-    expect(wrapper.text()).toContain("対象ファイル");
   });
 
   it("基本カテゴリで基礎レベルのStepへ絞り込める", async () => {
@@ -130,7 +136,12 @@ describe("Python Master app", () => {
 
     expect(wrapper.find(".mastery-lab").exists()).toBe(false);
     const labToggle = wrapper.findAll(".collapse-toggle").find((button) => button.text().includes("実務ラボ"));
-    await labToggle?.trigger("click");
+    expect(labToggle).toBeUndefined();
+    const reviewTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("振り返り"));
+    await reviewTab?.trigger("click");
+    const openedLabToggle = wrapper.findAll(".collapse-toggle").find((button) => button.text().includes("実務ラボ"));
+    expect(openedLabToggle).toBeDefined();
+    await openedLabToggle?.trigger("click");
     expect(wrapper.find(".mastery-lab").exists()).toBe(true);
 
     const lightButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("軽量"));
@@ -141,6 +152,21 @@ describe("Python Master app", () => {
     expect(wrapper.text()).toContain("軽量モード");
     expect(wrapper.find(".mastery-lab").exists()).toBe(false);
     expect(window.localStorage.getItem("python-master-light-mode")).toBe("true");
+  });
+
+  it("ランダム基礎で基礎Stepの書くタブへ移動する", async () => {
+    mockFetch();
+    vi.spyOn(Math, "random").mockReturnValue(0);
+    const wrapper = mount(App);
+    await flushPromises();
+
+    const randomButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("ランダム"));
+    await randomButton?.trigger("click");
+    await new Promise((resolve) => window.setTimeout(resolve, 0));
+    await flushPromises();
+
+    expect(wrapper.text()).toContain("書き方");
+    expect(wrapper.find(".lesson-tabs button.active").text()).toContain("書く");
   });
 
   it("保存済みdoneでもテスト成功記録がなければ完了扱いにしない", async () => {
