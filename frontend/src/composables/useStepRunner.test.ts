@@ -4,7 +4,7 @@ import { useStepRunner } from "./useStepRunner";
 import type { Step } from "../data/stepTypes";
 
 const step: Step = {
-  id: "01_syntax",
+  id: "001_syntax",
   title: "基本文法",
   category: "python",
   level: "基礎",
@@ -42,8 +42,8 @@ describe("useStepRunner", () => {
 
     await runner.runCommand("pytest x -q");
 
-    expect(progress.markTestStarted).toHaveBeenCalledWith("01_syntax");
-    expect(progress.markTestPassed).toHaveBeenCalledWith("01_syntax");
+    expect(progress.markTestStarted).toHaveBeenCalledWith("001_syntax");
+    expect(progress.markTestPassed).toHaveBeenCalledWith("001_syntax");
     expect(runner.runResult.value?.exit_code).toBe(0);
   });
 
@@ -60,7 +60,7 @@ describe("useStepRunner", () => {
 
     await runner.runCommand("pytest x -q");
 
-    expect(progress.markTestFailed).toHaveBeenCalledWith("01_syntax");
+    expect(progress.markTestFailed).toHaveBeenCalledWith("001_syntax");
     expect(progress.markTestPassed).not.toHaveBeenCalled();
   });
 });

@@ -7,7 +7,7 @@ function mockFetch(runResult?: { exit_code: number }) {
     ok: true,
     json: async () => [
       {
-        step: "01_syntax",
+        step: "001_syntax",
         comment: "基本文法の参照",
         urls: ["https://docs.python.org/3/tutorial/"],
       },
@@ -16,7 +16,7 @@ function mockFetch(runResult?: { exit_code: number }) {
   const runResponse = {
     ok: true,
     json: async () => ({
-      command: "pytest steps/01_syntax/tests -q",
+      command: "pytest steps/001_syntax/tests -q",
       exit_code: runResult?.exit_code ?? 0,
       duration_ms: 12,
       stdout: runResult?.exit_code === 0 ? "passed" : "",
@@ -51,7 +51,7 @@ describe("Python Master app", () => {
   });
 
   it("hashのStepを表示し、主要パネルを出す", async () => {
-    window.location.hash = "#03_files";
+    window.location.hash = "#025_files";
     mockFetch();
 
     const wrapper = mount(App);
@@ -85,12 +85,12 @@ describe("Python Master app", () => {
   });
 
   it("URL hashの変更に追従してStepを切り替える", async () => {
-    window.location.hash = "#02_typing_deep";
+    window.location.hash = "#023_typing_deep";
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();
 
-    window.location.hash = "#59_cli_tools";
+    window.location.hash = "#135_cli_tools";
     window.dispatchEvent(new Event("hashchange"));
     await flushPromises();
 
@@ -108,7 +108,7 @@ describe("Python Master app", () => {
   });
 
   it("効率ルートはホーム画面だけに表示する", async () => {
-    window.location.hash = "#00_environment";
+    window.location.hash = "#000_environment";
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();
@@ -129,7 +129,7 @@ describe("Python Master app", () => {
   });
 
   it("軽量モードで参照パネルと実務ラボを畳める", async () => {
-    window.location.hash = "#00_environment";
+    window.location.hash = "#000_environment";
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();
@@ -170,8 +170,8 @@ describe("Python Master app", () => {
   });
 
   it("保存済みdoneでもテスト成功記録がなければ完了扱いにしない", async () => {
-    window.location.hash = "#01_syntax";
-    window.localStorage.setItem("python-master-step-status", JSON.stringify({ "01_syntax": "done" }));
+    window.location.hash = "#001_syntax";
+    window.localStorage.setItem("python-master-step-status", JSON.stringify({ "001_syntax": "done" }));
     mockFetch();
 
     const wrapper = mount(App);
@@ -182,7 +182,7 @@ describe("Python Master app", () => {
   });
 
   it("pytest失敗では完了にせず、pytest成功時だけ完了にする", async () => {
-    window.location.hash = "#01_syntax";
+    window.location.hash = "#001_syntax";
     mockFetch({ exit_code: 1 });
     const failedWrapper = mount(App);
     await flushPromises();
@@ -203,7 +203,7 @@ describe("Python Master app", () => {
 
     expect(passedWrapper.text()).toContain("成功");
     expect(JSON.parse(window.localStorage.getItem("python-master-passed-tests") ?? "{}")).toEqual({
-      "01_syntax": true,
+      "001_syntax": true,
     });
   });
 });

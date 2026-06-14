@@ -13,7 +13,7 @@ describe("app accessibility", () => {
   beforeEach(() => {
     window.localStorage.clear();
     window.localStorage.setItem("python-master-onboarding-seen", "true");
-    window.location.hash = "#00_environment";
+    window.location.hash = "#000_environment";
     vi.restoreAllMocks();
   });
 

@@ -15,14 +15,14 @@ import {
 import type { Step } from "./steps";
 
 const step: Step = {
-  id: "01_syntax",
+  id: "001_syntax",
   title: "基本文法",
   category: "python",
   level: "基礎",
   summary: "summary",
   goals: ["goal"],
-  files: ["steps/01_syntax/implementation/exercises/basics/01_values.py"],
-  commands: ["pytest steps/01_syntax/tests -q"],
+  files: ["steps/001_syntax/implementation/exercises/basics/01_values.py"],
+  commands: ["pytest steps/001_syntax/tests -q"],
   reviewPoints: ["境界値を見る"],
 };
 
@@ -39,9 +39,9 @@ describe("learningUi", () => {
   });
 
   it("実行可能コマンドとtestコマンドを判定する", () => {
-    expect(isRunnable("pytest steps/01_syntax/tests -q")).toBe(true);
+    expect(isRunnable("pytest steps/001_syntax/tests -q")).toBe(true);
     expect(isRunnable("rm -rf .")).toBe(false);
-    expect(isTestCommand("pytest steps/01_syntax/tests -q")).toBe(true);
+    expect(isTestCommand("pytest steps/001_syntax/tests -q")).toBe(true);
     expect(isTestCommand("uv run build")).toBe(false);
   });
 
@@ -54,17 +54,17 @@ describe("learningUi", () => {
 
   it("stepごとの作業ディレクトリを分類する", () => {
     expect(stepDirectoryPlan(step)).toEqual([
-      { label: "読む", directory: "steps/01_syntax", note: "READMEで目的を確認" },
-      { label: "書く", directory: "steps/01_syntax/implementation/exercises/basics", note: "TODOを実装" },
-      { label: "確認", directory: "steps/01_syntax/tests", note: "pytestで判定" },
+      { label: "読む", directory: "steps/001_syntax", note: "READMEで目的を確認" },
+      { label: "書く", directory: "steps/001_syntax/implementation/exercises/basics", note: "TODOを実装" },
+      { label: "確認", directory: "steps/001_syntax/tests", note: "pytestで判定" },
     ]);
   });
 
   it("実装ファイルごとのテストコマンドを返す", () => {
     expect(fileTestCommandsForStep(step)).toEqual([
       {
-        command: "pytest steps/01_syntax/tests/exercise_tests/basics/test_01_values.py -q",
-        file: "steps/01_syntax/implementation/exercises/basics/01_values.py",
+        command: "pytest steps/001_syntax/tests/exercise_tests/basics/test_01_values.py -q",
+        file: "steps/001_syntax/implementation/exercises/basics/01_values.py",
         label: "01_values.py",
       },
     ]);
@@ -102,13 +102,13 @@ describe("learningUi", () => {
       duration_ms: 1,
       exit_code: 1,
       stdout: "FAILED tests/test_sample.py",
-      stderr: "steps/01_syntax/implementation/exercises/sample.py:10: NotImplementedError",
+      stderr: "steps/001_syntax/implementation/exercises/sample.py:10: NotImplementedError",
     };
 
     expect(runFailureHint(result)).toContain("TODO未実装");
     expect(extractFileCandidates(result)).toEqual([
       "tests/test_sample.py",
-      "steps/01_syntax/implementation/exercises/sample.py",
+      "steps/001_syntax/implementation/exercises/sample.py",
     ]);
   });
 });

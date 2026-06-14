@@ -13,7 +13,7 @@ describe("RunResultCard", () => {
           duration_ms: 1,
           exit_code: 1,
           stdout: "FAILED tests/test_sample.py::test_x\nE NotImplementedError",
-          stderr: "steps/01_syntax/implementation/exercises/sample.py:10: NotImplementedError",
+          stderr: "steps/001_syntax/implementation/exercises/sample.py:10: NotImplementedError",
         },
       },
     });
@@ -22,6 +22,6 @@ describe("RunResultCard", () => {
     expect(wrapper.text()).toContain("TODO未実装");
 
     await wrapper.find(".file-candidates-toggle").trigger("click");
-    expect(wrapper.text()).toContain("steps/01_syntax/implementation/exercises/sample.py");
+    expect(wrapper.text()).toContain("steps/001_syntax/implementation/exercises/sample.py");
   });
 });

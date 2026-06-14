@@ -90,12 +90,13 @@ def solution_compare(exercise_path: str) -> FileCompare:
     solution_file = _safe_workspace_path(solution_path)
     if not exercise_file.exists():
         raise HTTPException(status_code=404, detail="対象ファイルが見つかりません")
+    has_solution = solution_file.exists()
     return FileCompare(
         exercise_path=exercise_path,
-        solution_path=solution_path,
+        solution_path=solution_path if has_solution else "",
         exercise=_read_preview(exercise_file),
-        solution=_read_preview(solution_file) if solution_file.exists() else "",
-        has_solution=solution_file.exists(),
+        solution=_read_preview(solution_file) if has_solution else "",
+        has_solution=has_solution,
     )
 
 

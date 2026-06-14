@@ -57,3 +57,15 @@ def test_step_reference_markdown_matches_json() -> None:
 
     assert set(markdown_ids) == set(json_ids)
     assert len(markdown_ids) == len(json_ids)
+
+
+def test_no_empty_optional_step_directories() -> None:
+    empty_dirs: list[str] = []
+    for step_dir in (ROOT / "steps").glob("[0-9][0-9][0-9]_*"):
+        for name in ("references", "solutions"):
+            optional_dir = step_dir / name
+            has_files = any(path.is_file() for path in optional_dir.rglob("*"))
+            if optional_dir.exists() and not has_files:
+                empty_dirs.append(str(optional_dir.relative_to(ROOT)).replace("\\", "/"))
+
+    assert empty_dirs == []

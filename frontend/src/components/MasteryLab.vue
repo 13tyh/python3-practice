@@ -374,7 +374,7 @@ function chunkBySize(text: string, size: number) {
         <option v-for="file in stepFiles" :key="file" :value="file">{{ file }}</option>
       </select>
       <button type="button" @click="loadCompare">
-        {{ isLoadingCompare ? "読込中" : "自分の答えとsolutionsを比較" }}
+        {{ isLoadingCompare ? "読込中" : "解答例がある場合だけ比較" }}
       </button>
       <p v-if="compareError" class="run-error">{{ compareError }}</p>
       <div v-if="compare" class="compare-grid">
@@ -387,13 +387,13 @@ function chunkBySize(text: string, size: number) {
           ><span>{{ line.number }}</span>{{ line.text }}</code></pre>
         </div>
         <div>
-          <strong>{{ compare.solution_path }}</strong>
+          <strong>{{ compare.has_solution ? compare.solution_path : "解答例なし" }}</strong>
           <pre v-if="compare.has_solution" class="code-preview"><code
             v-for="line in compareSolutionLines"
             :key="line.number"
             :class="{ changed: line.text.trim() && !exerciseLineSet.has(line.text.trim()) }"
           ><span>{{ line.number }}</span>{{ line.text }}</code></pre>
-          <code v-else>解答例はまだありません</code>
+          <code v-else>このStepにはまだ解答例ファイルを置いていません</code>
         </div>
       </div>
     </article>

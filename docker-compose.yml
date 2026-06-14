@@ -20,8 +20,7 @@ services:
 
   api:
     container_name: python-master-api
-    image: python-master-api:latest
-    build: .
+    image: python-master-app:latest
     working_dir: /workspace
     volumes:
       - .:/workspace

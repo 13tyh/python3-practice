@@ -13,6 +13,6 @@ describe("phaseConfig", () => {
   });
 
   it("step idからphase名を返す", () => {
-    expect(phaseTitleForStepId("142_api_compatibility_design")).toBe("Phase 6 / 統合・レビュー");
+    expect(phaseTitleForStepId("133_api_compatibility_design")).toBe("Phase 6 / 統合・レビュー");
   });
 });

@@ -7,12 +7,12 @@ function mockFetch() {
     .spyOn(globalThis, "fetch")
     .mockResolvedValueOnce({
       ok: true,
-      json: async () => [{ step: "00_environment", comment: "env", urls: ["https://example.com"] }],
+      json: async () => [{ step: "000_environment", comment: "env", urls: ["https://example.com"] }],
     } as Response)
     .mockResolvedValue({
       ok: true,
       json: async () => ({
-        command: "pytest steps/142_api_compatibility_design/tests -q",
+        command: "pytest steps/133_api_compatibility_design/tests -q",
         duration_ms: 10,
         exit_code: 0,
         stdout: "passed",
@@ -25,7 +25,7 @@ describe("app e2e flow", () => {
   beforeEach(() => {
     window.localStorage.clear();
     window.localStorage.setItem("python-master-onboarding-seen", "true");
-    window.location.hash = "#00_environment";
+    window.location.hash = "#000_environment";
     vi.restoreAllMocks();
   });
 
@@ -64,7 +64,7 @@ describe("app e2e flow", () => {
 
   it("学習メモ一覧を表示する", async () => {
     window.localStorage.setItem(
-      "python-master-lab:00_environment",
+      "python-master-lab:000_environment",
       JSON.stringify({ answer: "Dockerの役割を説明した", ragQuestion: "なぜDockerで統一する？", review: "envとログを確認" }),
     );
     mockFetch();

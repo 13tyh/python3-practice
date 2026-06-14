@@ -9,18 +9,18 @@ const Harness = defineComponent({
   },
   template: `
     <div>
-      <span class="status">{{ getStatus("01_syntax") }}</span>
-      <button class="pass" @click="markTestPassed('01_syntax')">pass</button>
-      <button class="fail" @click="markTestFailed('01_syntax')">fail</button>
-      <button class="done" @click="setStatus('01_syntax', 'done')">done</button>
+      <span class="status">{{ getStatus("001_syntax") }}</span>
+      <button class="pass" @click="markTestPassed('001_syntax')">pass</button>
+      <button class="fail" @click="markTestFailed('001_syntax')">fail</button>
+      <button class="done" @click="setStatus('001_syntax', 'done')">done</button>
     </div>
   `,
 });
 
 describe("useStepProgress", () => {
   it("localStorageから進捗を復元する", async () => {
-    localStorage.setItem("python-master-step-status", JSON.stringify({ "01_syntax": "done" }));
-    localStorage.setItem("python-master-passed-tests", JSON.stringify({ "01_syntax": true }));
+    localStorage.setItem("python-master-step-status", JSON.stringify({ "001_syntax": "done" }));
+    localStorage.setItem("python-master-passed-tests", JSON.stringify({ "001_syntax": true }));
 
     const wrapper = mount(Harness);
     await nextTick();
@@ -29,7 +29,7 @@ describe("useStepProgress", () => {
   });
 
   it("doneでもテスト成功記録がなければdoing扱いにする", async () => {
-    localStorage.setItem("python-master-step-status", JSON.stringify({ "01_syntax": "done" }));
+    localStorage.setItem("python-master-step-status", JSON.stringify({ "001_syntax": "done" }));
 
     const wrapper = mount(Harness);
     await nextTick();

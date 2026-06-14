@@ -1,6 +1,6 @@
 [
   {
-    "step": "00_environment",
+    "step": "000_environment",
     "comment": "Docker / uv / pytest / ruff / mypy の役割を分ける。",
     "urls": [
       "https://docs.astral.sh/uv/",
@@ -8,994 +8,994 @@
     ]
   },
   {
-    "step": "01_syntax",
+    "step": "001_syntax",
     "comment": "入力、処理、戻り値、例外で関数を読む。",
     "urls": [
       "https://docs.python.org/3/tutorial/"
     ]
   },
   {
-    "step": "86_boolean_logic",
+    "step": "002_boolean_logic",
     "comment": "複数条件はtruthy/falsyと優先順位を意識して読む。",
     "urls": [
       "https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not"
     ]
   },
   {
-    "step": "87_string_formatting_parsing",
+    "step": "003_string_formatting_parsing",
     "comment": "f-string、split、strip、joinは実務の文字列処理の土台。",
     "urls": [
       "https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals"
     ]
   },
   {
-    "step": "91_list_methods",
+    "step": "004_list_methods",
     "comment": "append/extendと破壊的変更の違いを確認する。",
     "urls": [
       "https://docs.python.org/3/tutorial/datastructures.html#more-on-lists"
     ]
   },
   {
-    "step": "92_dict_methods",
+    "step": "005_dict_methods",
     "comment": "get、更新、count処理でKeyErrorを避ける。",
     "urls": [
       "https://docs.python.org/3/tutorial/datastructures.html#dictionaries"
     ]
   },
   {
-    "step": "93_set_operations",
+    "step": "006_set_operations",
     "comment": "unique化、共通集合、差集合でtagや権限を比較する。",
     "urls": [
       "https://docs.python.org/3/tutorial/datastructures.html#sets"
     ]
   },
   {
-    "step": "88_sequence_unpacking",
+    "step": "007_sequence_unpacking",
     "comment": "tuple unpackingと`*rest`で戻り値やpairを読みやすく扱う。",
     "urls": [
       "https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences"
     ]
   },
   {
-    "step": "89_function_arguments",
+    "step": "008_function_arguments",
     "comment": "default、keyword-only、option dictで関数の入口を設計する。",
     "urls": [
       "https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions"
     ]
   },
   {
-    "step": "90_scope_modules",
+    "step": "009_scope_modules",
     "comment": "local変数、module定数、public関数の境界を意識する。",
     "urls": [
       "https://docs.python.org/3/tutorial/modules.html"
     ]
   },
   {
-    "step": "94_comprehension_deep",
+    "step": "010_comprehension_deep",
     "comment": "list/dict/set内包表記を読める粒度で使う。",
     "urls": [
       "https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions"
     ]
   },
   {
-    "step": "95_iterable_generator_basics",
+    "step": "011_iterable_generator_basics",
     "comment": "generatorとyieldで大量データを少しずつ扱う。",
     "urls": [
       "https://docs.python.org/3/howto/functional.html#generators"
     ]
   },
   {
-    "step": "96_pathlib_glob",
+    "step": "012_pathlib_glob",
     "comment": "Path、suffix、nameでファイルパスを安全に扱う。",
     "urls": [
       "https://docs.python.org/3/library/pathlib.html"
     ]
   },
   {
-    "step": "97_custom_exceptions",
+    "step": "013_custom_exceptions",
     "comment": "独自例外でvalidation失敗と内部エラーを分ける。",
     "urls": [
       "https://docs.python.org/3/tutorial/errors.html"
     ]
   },
   {
-    "step": "121_collections_deep",
+    "step": "014_collections_deep",
     "comment": "`Counter`、`defaultdict`、`deque`で集計とgroup化を簡潔に書く。",
     "urls": [
       "https://docs.python.org/3/library/collections.html"
     ]
   },
   {
-    "step": "122_itertools_functools",
+    "step": "015_itertools_functools",
     "comment": "iterable処理、関数の部分適用、cacheの使いどころを理解する。",
     "urls": [
       "https://docs.python.org/3/library/itertools.html"
     ]
   },
   {
-    "step": "123_dataclass_deep",
+    "step": "016_dataclass_deep",
     "comment": "`frozen`と`default_factory`で値とmutable defaultを正しく扱う。",
     "urls": [
       "https://docs.python.org/3/library/dataclasses.html"
     ]
   },
   {
-    "step": "124_context_manager_deep",
+    "step": "017_context_manager_deep",
     "comment": "`with`でresourceの開始・終了・復元を安全に扱う。",
     "urls": [
       "https://docs.python.org/3/library/contextlib.html"
     ]
   },
   {
-    "step": "125_typing_extras",
+    "step": "018_typing_extras",
     "comment": "`Literal`、`NewType`、`cast`で型の意図と限界を理解する。",
     "urls": [
       "https://docs.python.org/3/library/typing.html"
     ]
   },
   {
-    "step": "126_import_module_deep",
+    "step": "019_import_module_deep",
     "comment": "public/private、`__all__`、循環importを読めるようにする。",
     "urls": [
       "https://docs.python.org/3/tutorial/modules.html"
     ]
   },
   {
-    "step": "127_regex_practical",
+    "step": "020_regex_practical",
     "comment": "validation、extract、replaceの用途別に正規表現を書く。",
     "urls": [
       "https://docs.python.org/3/library/re.html"
     ]
   },
   {
-    "step": "128_algorithm_complexity",
+    "step": "021_algorithm_complexity",
     "comment": "探索、sort、set利用で計算量を意識した処理を書く。",
     "urls": [
       "https://docs.python.org/3/howto/sorting.html"
     ]
   },
   {
-    "step": "129_error_design_deep",
+    "step": "022_error_design_deep",
     "comment": "retryable/permanent errorを分け、握りつぶさない例外設計を学ぶ。",
     "urls": [
       "https://docs.python.org/3/tutorial/errors.html"
     ]
   },
   {
-    "step": "02_typing_deep",
+    "step": "023_typing_deep",
     "comment": "型は設計意図。`None` と `Protocol` を特に意識する。",
     "urls": [
       "https://docs.python.org/3/library/typing.html"
     ]
   },
   {
-    "step": "60_static_typing_practice",
+    "step": "024_static_typing_practice",
     "comment": "union型は処理前に絞り込み、型ヒントを実データと一致させる。",
     "urls": [
       "https://mypy.readthedocs.io/en/stable/type_narrowing.html"
     ]
   },
   {
-    "step": "03_files",
+    "step": "025_files",
     "comment": "encoding、path、上書き、存在しないファイルを見る。",
     "urls": [
       "https://docs.python.org/3/library/pathlib.html"
     ]
   },
   {
-    "step": "04_datetime_timezone",
+    "step": "026_datetime_timezone",
     "comment": "UTC保存、JST表示、aware/naive を混ぜない。",
     "urls": [
       "https://docs.python.org/3/library/datetime.html"
     ]
   },
   {
-    "step": "05_testing_deep",
+    "step": "027_testing_deep",
     "comment": "fixture、monkeypatch、fake client で外部依存を切る。",
     "urls": [
       "https://docs.pytest.org/en/stable/reference/fixtures.html"
     ]
   },
   {
-    "step": "80_mocking_external_services",
+    "step": "028_mocking_external_services",
     "comment": "外部APIはfake clientで置き換え、呼び出し履歴を検証する。",
     "urls": [
       "https://docs.pytest.org/en/stable/how-to/monkeypatch.html"
     ]
   },
   {
-    "step": "81_property_based_thinking",
+    "step": "029_property_based_thinking",
     "comment": "具体例だけでなく冪等性、正規化、順序安定を検証する。",
     "urls": [
       "https://hypothesis.readthedocs.io/en/latest/"
     ]
   },
   {
-    "step": "06_core_design_thinking",
+    "step": "030_core_design_thinking",
     "comment": "冪等性、境界値、不変条件、状態遷移、正規化、fail fast を処理で学ぶ。",
     "urls": [
       "https://martinfowler.com/bliki/TwoHardThings.html"
     ]
   },
   {
-    "step": "07_logging",
+    "step": "031_logging",
     "comment": "`print` ではなく logger。secret は出さない。",
     "urls": [
       "https://docs.python.org/3/library/logging.html"
     ]
   },
   {
-    "step": "08_observability",
+    "step": "032_observability",
     "comment": "request id、structured log、metrics を残す。",
     "urls": [
       "https://opentelemetry.io/docs/languages/python/"
     ]
   },
   {
-    "step": "84_debugging_deep",
+    "step": "033_debugging_deep",
     "comment": "tracebackから例外名、file、line、再現条件を整理する。",
     "urls": [
       "https://docs.python.org/3/library/traceback.html"
     ]
   },
   {
-    "step": "09_project_reading",
+    "step": "034_project_reading",
     "comment": "テスト、public関数、境界値、実装の順で読む。",
     "urls": [
       "https://docs.pytest.org/en/stable/"
     ]
   },
   {
-    "step": "10_refactoring",
+    "step": "035_refactoring",
     "comment": "仕様を変えず構造を変える。先にテストを書く。",
     "urls": [
       "https://refactoring.guru/refactoring"
     ]
   },
   {
-    "step": "11_package_design",
+    "step": "036_package_design",
     "comment": "import の向きと circular import を意識する。",
     "urls": [
       "https://docs.python.org/3/tutorial/modules.html"
     ]
   },
   {
-    "step": "61_domain_modeling",
+    "step": "037_domain_modeling",
     "comment": "業務ルールはdict処理に埋めず、domain modelへ寄せる。",
     "urls": [
       "https://docs.python.org/3/library/dataclasses.html"
     ]
   },
   {
-    "step": "12_app_layers",
+    "step": "038_app_layers",
     "comment": "model は形、service は業務ロジック、router は入出力。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/bigger-applications/"
     ]
   },
   {
-    "step": "13_design_patterns",
+    "step": "039_design_patterns",
     "comment": "差し替えポイントを作るために pattern を使う。",
     "urls": [
       "https://refactoring.guru/design-patterns/python"
     ]
   },
   {
-    "step": "14_advanced",
+    "step": "040_advanced",
     "comment": "設定、Repository、例外、ページング、cache、retry を読む。",
     "urls": [
       "https://docs.python.org/3/library/exceptions.html"
     ]
   },
   {
-    "step": "85_architecture_decision_records",
+    "step": "041_architecture_decision_records",
     "comment": "設計判断はContext、Decision、Consequencesで残す。",
     "urls": [
       "https://adr.github.io/"
     ]
   },
   {
-    "step": "15_pydantic_validation",
+    "step": "042_pydantic_validation",
     "comment": "API契約を schema と validator で守る。",
     "urls": [
       "https://docs.pydantic.dev/latest/"
     ]
   },
   {
-    "step": "16_fastapi",
+    "step": "043_fastapi",
     "comment": "型ヒントと Pydantic を中心に API を作る。",
     "urls": [
       "https://fastapi.tiangolo.com/"
     ]
   },
   {
-    "step": "17_dependency_injection",
+    "step": "044_dependency_injection",
     "comment": "repository / client を fake に差し替えられる設計にする。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/dependencies/"
     ]
   },
   {
-    "step": "18_auth",
+    "step": "045_auth",
     "comment": "認証は誰か、認可は何をしてよいか。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/security/"
     ]
   },
   {
-    "step": "74_settings_secrets",
+    "step": "046_settings_secrets",
     "comment": "必須設定、secret、公開可能な設定を分ける。",
     "urls": [
       "https://12factor.net/config"
     ]
   },
   {
-    "step": "19_error_handling",
+    "step": "047_error_handling",
     "comment": "domain error を HTTP error に変換する。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/handling-errors/"
     ]
   },
   {
-    "step": "20_security",
+    "step": "048_security",
     "comment": "path traversal、secret leakage、prompt injection を疑う。",
     "urls": [
       "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
     ]
   },
   {
-    "step": "65_webhooks_events",
+    "step": "049_webhooks_events",
     "comment": "webhookは署名検証とevent_idによる冪等性が重要。",
     "urls": [
       "https://docs.python.org/3/library/hmac.html"
     ]
   },
   {
-    "step": "21_api_design",
+    "step": "050_api_design",
     "comment": "pagination、sorting、error format、idempotency を設計する。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/query-params/"
     ]
   },
   {
-    "step": "62_api_pagination_deep",
+    "step": "051_api_pagination_deep",
     "comment": "cursor paginationは安定sortとnext_cursorの意味を固定する。",
     "urls": [
       "https://jsonapi.org/profiles/ethanresnick/cursor-pagination/"
     ]
   },
   {
-    "step": "75_rate_limiting",
+    "step": "052_rate_limiting",
     "comment": "APIやAI呼び出しを守るためにwindowとlimitを決める。",
     "urls": [
       "https://cloud.google.com/architecture/rate-limiting-strategies-techniques"
     ]
   },
   {
-    "step": "79_openapi_contract",
+    "step": "053_openapi_contract",
     "comment": "OpenAPIからpath、method、response codeを読み取る。",
     "urls": [
       "https://spec.openapis.org/oas/latest.html"
     ]
   },
   {
-    "step": "22_network_api",
+    "step": "054_network_api",
     "comment": "method、URL、headers、params、body、status、timeout で読む。",
     "urls": [
       "https://www.python-httpx.org/"
     ]
   },
   {
-    "step": "23_api_client",
+    "step": "055_api_client",
     "comment": "timeout、retry、backoff、rate limit を client に閉じ込める。",
     "urls": [
       "https://www.python-httpx.org/advanced/timeouts/"
     ]
   },
   {
-    "step": "64_resilience_patterns",
+    "step": "056_resilience_patterns",
     "comment": "retryはstatus、attempt、backoff、上限をセットで設計する。",
     "urls": [
       "https://cloud.google.com/architecture/framework/reliability/retry-transient-errors"
     ]
   },
   {
-    "step": "24_async",
+    "step": "057_async",
     "comment": "async は I/O 待ちの並行処理。CPU処理とは分ける。",
     "urls": [
       "https://docs.python.org/3/library/asyncio.html"
     ]
   },
   {
-    "step": "25_async_fastapi",
+    "step": "058_async_fastapi",
     "comment": "FastAPI の async endpoint と I/O 待ちを理解する。",
     "urls": [
       "https://fastapi.tiangolo.com/async/"
     ]
   },
   {
-    "step": "26_concurrency_practice",
+    "step": "059_concurrency_practice",
     "comment": "semaphore、timeout、cancellation を扱う。",
     "urls": [
       "https://docs.python.org/3/library/asyncio-sync.html"
     ]
   },
   {
-    "step": "27_processes",
+    "step": "060_processes",
     "comment": "subprocess と multiprocessing の違いを理解する。",
     "urls": [
       "https://docs.python.org/3/library/subprocess.html"
     ]
   },
   {
-    "step": "130_fastapi_middleware_lifespan",
+    "step": "061_fastapi_middleware_lifespan",
     "comment": "API横断処理、CORS、起動終了時のresource管理を分けて考える。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/middleware/"
     ]
   },
   {
-    "step": "131_fastapi_files_websocket",
+    "step": "062_fastapi_files_websocket",
     "comment": "upload検証、ファイル名安全化、WebSocket message形式を決める。",
     "urls": [
       "https://fastapi.tiangolo.com/advanced/websockets/"
     ]
   },
   {
-    "step": "132_auth_jwt_rbac",
+    "step": "063_auth_jwt_rbac",
     "comment": "認証token、JWT claim、role/action認可を分けて扱う。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/"
     ]
   },
   {
-    "step": "28_performance",
+    "step": "064_performance",
     "comment": "generator、chunk、計測で大量処理に備える。",
     "urls": [
       "https://docs.python.org/3/library/profile.html"
     ]
   },
   {
-    "step": "82_memory_profiling",
+    "step": "065_memory_profiling",
     "comment": "メモリ上限からchunk sizeを決め、一括読み込みを避ける。",
     "urls": [
       "https://docs.python.org/3/library/tracemalloc.html"
     ]
   },
   {
-    "step": "29_n_plus_one_performance",
+    "step": "066_n_plus_one_performance",
     "comment": "loop 内 DB/API 呼び出しを見つけ、bulk取得と map 化に直す。",
     "urls": [
       "https://www.mongodb.com/docs/manual/reference/operator/query/in/"
     ]
   },
   {
-    "step": "30_sql",
+    "step": "067_sql",
     "comment": "SQLite で CRUD と transaction の基本をつかむ。",
     "urls": [
       "https://docs.python.org/3/library/sqlite3.html"
     ]
   },
   {
-    "step": "31_mongo",
+    "step": "068_mongo",
     "comment": "document、query、projection、index をセットで読む。",
     "urls": [
       "https://www.mongodb.com/docs/languages/python/pymongo-driver/current/"
     ]
   },
   {
-    "step": "32_mongosh_commands",
+    "step": "069_mongosh_commands",
     "comment": "mongosh で検索、更新、集計、index、explain、seed確認を行う。",
     "urls": [
       "https://www.mongodb.com/docs/mongodb-shell/"
     ]
   },
   {
-    "step": "33_mongo_aggregation",
+    "step": "070_mongo_aggregation",
     "comment": "`$match`、`$group`、`$lookup`、`$sort` と index を見る。",
     "urls": [
       "https://www.mongodb.com/docs/manual/aggregation/"
     ]
   },
   {
-    "step": "34_mongo_deep",
+    "step": "071_mongo_deep",
     "comment": "index、compound index、upsert、explain を扱う。",
     "urls": [
       "https://www.mongodb.com/docs/languages/python/pymongo-driver/current/indexes/"
     ]
   },
   {
-    "step": "70_schema_evolution",
+    "step": "072_schema_evolution",
     "comment": "migrationは再実行可能性、dry-run、新旧schema互換性を確認する。",
     "urls": [
       "https://www.mongodb.com/docs/manual/core/schema-validation/"
     ]
   },
   {
-    "step": "35_transactions",
+    "step": "073_transactions",
     "comment": "複数書き込みの途中失敗と rollback を考える。",
     "urls": [
       "https://www.mongodb.com/docs/manual/core/transactions/"
     ]
   },
   {
-    "step": "36_cache",
+    "step": "074_cache",
     "comment": "cache key、TTL、invalidation を設計する。",
     "urls": [
       "https://redis.io/docs/latest/"
     ]
   },
   {
-    "step": "37_job_queue",
+    "step": "075_job_queue",
     "comment": "status、attempts、retry、result を持つ job を考える。",
     "urls": [
       "https://docs.python.org/3/library/queue.html"
     ]
   },
   {
-    "step": "76_background_tasks",
+    "step": "076_background_tasks",
     "comment": "job状態、idempotency key、失敗記録を設計する。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/background-tasks/"
     ]
   },
   {
-    "step": "77_scheduler_cron",
+    "step": "077_scheduler_cron",
     "comment": "定期実行はdue判定と再実行安全性をセットで考える。",
     "urls": [
       "https://docs.python.org/3/library/datetime.html"
     ]
   },
   {
-    "step": "63_etl_pipeline",
+    "step": "078_etl_pipeline",
     "comment": "extract、transform、loadを分け、大量データをstreamで扱う。",
     "urls": [
       "https://docs.python.org/3/howto/functional.html#generators"
     ]
   },
   {
-    "step": "38_file_db_export",
+    "step": "079_file_db_export",
     "comment": "DB抽出、projection、CSV header、encoding を扱う。",
     "urls": [
       "https://docs.python.org/3/library/csv.html"
     ]
   },
   {
-    "step": "83_streaming_files_large",
+    "step": "080_streaming_files_large",
     "comment": "大きいファイルはline単位のgeneratorで扱う。",
     "urls": [
       "https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files"
     ]
   },
   {
-    "step": "39_docs_pdf",
+    "step": "081_docs_pdf",
     "comment": "分割単位、ファイル名、文字化け、ページ順を見る。",
     "urls": [
       "https://pypdf.readthedocs.io/en/stable/"
     ]
   },
   {
-    "step": "40_data_analysis",
+    "step": "082_data_analysis",
     "comment": "欠損、型、重複、集計前処理を固める。",
     "urls": [
       "https://pandas.pydata.org/docs/"
     ]
   },
   {
-    "step": "78_data_contracts",
+    "step": "083_data_contracts",
     "comment": "producer/consumer間のfieldとversion互換性を見る。",
     "urls": [
       "https://docs.pydantic.dev/latest/concepts/models/"
     ]
   },
   {
-    "step": "41_pandas_excel",
+    "step": "084_pandas_excel",
     "comment": "CSV/Excel、sheet、列型、欠損を扱う。",
     "urls": [
       "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html"
     ]
   },
   {
-    "step": "42_log_analysis",
+    "step": "085_log_analysis",
     "comment": "JSONLログから error rate と latency を見る。",
     "urls": [
       "https://jsonlines.org/"
     ]
   },
   {
-    "step": "133_mongo_ops_schema",
+    "step": "086_mongo_ops_schema",
     "comment": "index候補、schema validation、slow queryを運用目線で読む。",
     "urls": [
       "https://www.mongodb.com/docs/manual/indexes/"
     ]
   },
   {
-    "step": "134_worker_dead_letter",
+    "step": "087_worker_dead_letter",
     "comment": "retry上限、backoff、dead letter queueで失敗を管理する。",
     "urls": [
       "https://docs.celeryq.dev/en/stable/userguide/tasks.html#retrying"
     ]
   },
   {
-    "step": "135_data_analysis_stats",
+    "step": "088_data_analysis_stats",
     "comment": "平均だけでなく中央値と外れ値を見て分析判断をする。",
     "urls": [
       "https://pandas.pydata.org/docs/"
     ]
   },
   {
-    "step": "43_model_mapping",
+    "step": "089_model_mapping",
     "comment": "deployment_name と model_name を分けてログに残す。",
     "urls": [
       "https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource"
     ]
   },
   {
-    "step": "69_ai_cost_control",
+    "step": "090_ai_cost_control",
     "comment": "token budget、model limit、deployment mappingで費用と品質を判断する。",
     "urls": [
       "https://platform.openai.com/tokenizer"
     ]
   },
   {
-    "step": "44_google_ai",
+    "step": "091_google_ai",
     "comment": "Gemini API と Vertex AI の認証・project・location を分ける。",
     "urls": [
       "https://ai.google.dev/gemini-api/docs"
     ]
   },
   {
-    "step": "45_langchain",
+    "step": "092_langchain",
     "comment": "prompt、model、parser、chain を分けて読む。",
     "urls": [
       "https://docs.langchain.com/oss/python"
     ]
   },
   {
-    "step": "46_langgraph",
+    "step": "093_langgraph",
     "comment": "state、node、edge、END を図にできるようにする。",
     "urls": [
       "https://langchain-ai.github.io/langgraph/"
     ]
   },
   {
-    "step": "68_vector_search_basics",
+    "step": "094_vector_search_basics",
     "comment": "RAG検索の土台としてcosine similarityとtop-kを理解する。",
     "urls": [
       "https://scikit-learn.org/stable/modules/metrics.html#cosine-similarity"
     ]
   },
   {
-    "step": "47_rag_basics",
+    "step": "095_rag_basics",
     "comment": "chunk、retrieval、context を分けて考える。",
     "urls": [
       "https://docs.langchain.com/oss/python/langchain/retrieval"
     ]
   },
   {
-    "step": "48_rag_deep",
+    "step": "096_rag_deep",
     "comment": "overlap、score threshold、citation、answerable 判定を扱う。",
     "urls": [
       "https://python.langchain.com/docs/concepts/retrieval/"
     ]
   },
   {
-    "step": "49_rag_advanced",
+    "step": "097_rag_advanced",
     "comment": "hybrid search、metadata filtering、rerank を試す。",
     "urls": [
       "https://scikit-learn.org/stable/modules/metrics.html"
     ]
   },
   {
-    "step": "50_rag_practice",
+    "step": "098_rag_practice",
     "comment": "answerable / unanswerable と citation 必須化を練習する。",
     "urls": [
       "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
     ]
   },
   {
-    "step": "51_llm_ops",
+    "step": "099_llm_ops",
     "comment": "prompt version、fallback、guardrails、token/cost を管理する。",
     "urls": [
       "https://platform.openai.com/docs/models"
     ]
   },
   {
-    "step": "52_ai_streaming",
+    "step": "100_ai_streaming",
     "comment": "SSE と StreamingResponse の形を理解する。",
     "urls": [
       "https://fastapi.tiangolo.com/advanced/custom-response/#streamingresponse"
     ]
   },
   {
-    "step": "53_batch_inference",
+    "step": "101_batch_inference",
     "comment": "大量推論は入力/出力保存、失敗行、非同期完了を考える。",
     "urls": [
       "https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/batch-prediction-gemini"
     ]
   },
   {
-    "step": "54_ai_evaluation",
+    "step": "102_ai_evaluation",
     "comment": "正解率、失敗理由、prompt/model 別比較を記録する。",
     "urls": [
       "https://scikit-learn.org/stable/modules/model_evaluation.html"
     ]
   },
   {
-    "step": "55_ai_agents",
+    "step": "103_ai_agents",
     "comment": "tool calling、planner、memory、human review を分ける。",
     "urls": [
       "https://docs.langchain.com/oss/python/langchain/agents"
     ]
   },
   {
-    "step": "98_prompt_templates",
+    "step": "104_prompt_templates",
     "comment": "promptはtemplate、変数、versionを分けて管理する。",
     "urls": [
       "https://docs.langchain.com/oss/python/langchain/prompts"
     ]
   },
   {
-    "step": "99_prompt_injection_defense",
+    "step": "105_prompt_injection_defense",
     "comment": "untrusted contextを命令として扱わず、injection疑いを検出する。",
     "urls": [
       "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
     ]
   },
   {
-    "step": "100_structured_output_parsing",
+    "step": "106_structured_output_parsing",
     "comment": "AI出力はJSON/schemaとして検証してから採用する。",
     "urls": [
       "https://docs.pydantic.dev/latest/"
     ]
   },
   {
-    "step": "101_tool_calling_contracts",
+    "step": "107_tool_calling_contracts",
     "comment": "tool callingはallowlistとarguments検証で制限する。",
     "urls": [
       "https://docs.langchain.com/oss/python/langchain/tools"
     ]
   },
   {
-    "step": "102_conversation_memory",
+    "step": "108_conversation_memory",
     "comment": "会話履歴はsystemを保持しつつtoken budget内にtrimする。",
     "urls": [
       "https://docs.langchain.com/oss/python/langchain/short-term-memory"
     ]
   },
   {
-    "step": "103_embedding_chunk_metadata",
+    "step": "109_embedding_chunk_metadata",
     "comment": "chunk id、source、metadataを持たせcitation可能にする。",
     "urls": [
       "https://python.langchain.com/docs/concepts/text_splitters/"
     ]
   },
   {
-    "step": "104_vector_db_index_design",
+    "step": "110_vector_db_index_design",
     "comment": "vector dimension、metric、metadata filterを設計する。",
     "urls": [
       "https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-overview/"
     ]
   },
   {
-    "step": "105_rag_query_rewriting",
+    "step": "111_rag_query_rewriting",
     "comment": "検索queryは正規化、synonym、metadata filterを分けて作る。",
     "urls": [
       "https://docs.langchain.com/oss/python/langchain/retrieval"
     ]
   },
   {
-    "step": "106_rag_citation_verification",
+    "step": "112_rag_citation_verification",
     "comment": "citationが実在chunkを指すか確認し、根拠なし回答を防ぐ。",
     "urls": [
       "https://python.langchain.com/docs/concepts/retrieval/"
     ]
   },
   {
-    "step": "107_ai_safety_filters",
+    "step": "113_ai_safety_filters",
     "comment": "PII mask、unsafe intent検出、安全な拒否理由を作る。",
     "urls": [
       "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
     ]
   },
   {
-    "step": "108_model_fallback_routing",
+    "step": "114_model_fallback_routing",
     "comment": "fallbackはtask、失敗種別、上限を決めてから行う。",
     "urls": [
       "https://docs.langchain.com/oss/python/langchain/model_io"
     ]
   },
   {
-    "step": "109_ai_observability_traces",
+    "step": "115_ai_observability_traces",
     "comment": "AI呼び出しはmodel、prompt_version、latency、token/costを追跡する。",
     "urls": [
       "https://opentelemetry.io/docs/languages/python/"
     ]
   },
   {
-    "step": "110_ai_regression_dataset",
+    "step": "116_ai_regression_dataset",
     "comment": "prompt/model変更は回帰datasetで比較する。",
     "urls": [
       "https://scikit-learn.org/stable/modules/model_evaluation.html"
     ]
   },
   {
-    "step": "111_domain_ai_requirements",
+    "step": "117_domain_ai_requirements",
     "comment": "特化型AIは「誰の何を助けるか」と「答えてはいけない範囲」を先に決める。",
     "urls": [
       "https://pair.withgoogle.com/guidebook/"
     ]
   },
   {
-    "step": "112_domain_knowledge_taxonomy",
+    "step": "118_domain_knowledge_taxonomy",
     "comment": "業務用語、判断ルール、例外、根拠資料を分類して検索と評価に使える形にする。",
     "urls": [
       "https://www.w3.org/TR/skos-primer/"
     ]
   },
   {
-    "step": "113_domain_dataset_curation",
+    "step": "119_domain_dataset_curation",
     "comment": "専門データは重複、古さ、PII、偏りを取り除いてから学習や評価に使う。",
     "urls": [
       "https://www.nist.gov/itl/ai-risk-management-framework"
     ]
   },
   {
-    "step": "114_domain_evaluation_rubric",
+    "step": "120_domain_evaluation_rubric",
     "comment": "正しさだけでなく根拠、拒否、業務手順、安全性を評価軸にする。",
     "urls": [
       "https://scikit-learn.org/stable/modules/model_evaluation.html"
     ]
   },
   {
-    "step": "115_expert_feedback_loop",
+    "step": "121_expert_feedback_loop",
     "comment": "専門家レビューを理由付きで残し、prompt/RAG/fine-tuningのどこを直すか判断する。",
     "urls": [
       "https://docs.langchain.com/oss/python/langsmith/evaluation"
     ]
   },
   {
-    "step": "116_domain_rag_blueprint",
+    "step": "122_domain_rag_blueprint",
     "comment": "特化型RAGはsource、chunk、metadata、citation、更新頻度を設計する。",
     "urls": [
       "https://python.langchain.com/docs/concepts/retrieval/"
     ]
   },
   {
-    "step": "117_finetuning_dataset_prep",
+    "step": "123_finetuning_dataset_prep",
     "comment": "fine-tuning用データは入出力形式、拒否例、禁止情報、検証をそろえる。",
     "urls": [
       "https://platform.openai.com/docs/guides/fine-tuning"
     ]
   },
   {
-    "step": "118_domain_guardrails_policy",
+    "step": "124_domain_guardrails_policy",
     "comment": "業務範囲外、危険な指示、根拠不足、PIIを扱う方針をコード化する。",
     "urls": [
       "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
     ]
   },
   {
-    "step": "119_specialized_ai_api_design",
+    "step": "125_specialized_ai_api_design",
     "comment": "APIはrequest、response、trace、evaluation、fallback理由を返せる形にする。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/bigger-applications/"
     ]
   },
   {
-    "step": "120_domain_ai_release_checklist",
+    "step": "126_domain_ai_release_checklist",
     "comment": "release前に評価、ログ、監視、rollback、human reviewを確認する。",
     "urls": [
       "https://cloud.google.com/architecture/framework"
     ]
   },
   {
-    "step": "136_ai_dataset_versioning",
+    "step": "127_ai_dataset_versioning",
     "comment": "AI datasetはfingerprint、review状態、label分布を追跡する。",
     "urls": [
       "https://www.nist.gov/itl/ai-risk-management-framework"
     ]
   },
   {
-    "step": "137_ai_ab_drift",
+    "step": "128_ai_ab_drift",
     "comment": "A/B testとdrift検知でAI変更の影響を見る。",
     "urls": [
       "https://developers.google.com/machine-learning/crash-course/production-ml-systems"
     ]
   },
   {
-    "step": "138_rag_ops_quality",
+    "step": "129_rag_ops_quality",
     "comment": "RAGはreindex、search log、回答不能判定まで運用する。",
     "urls": [
       "https://python.langchain.com/docs/concepts/retrieval/"
     ]
   },
   {
-    "step": "56_fastapi_ai",
+    "step": "130_fastapi_ai",
     "comment": "AI呼び出しは router ではなく service に閉じ込める。",
     "urls": [
       "https://fastapi.tiangolo.com/advanced/testing-dependencies/"
     ]
   },
   {
-    "step": "57_ai_review",
+    "step": "131_ai_review",
     "comment": "AI出力の仕様差分、境界値、テスト不足を指摘する。",
     "urls": [
       "https://docs.pytest.org/en/stable/"
     ]
   },
   {
-    "step": "72_review_comments",
+    "step": "132_review_comments",
     "comment": "レビューはseverity、問題、修正案を分けて具体化する。",
     "urls": [
       "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests"
     ]
   },
   {
-    "step": "142_api_compatibility_design",
+    "step": "133_api_compatibility_design",
     "comment": "field削除やrequired追加を破壊的変更として扱う。",
     "urls": [
       "https://spec.openapis.org/oas/latest.html"
     ]
   },
   {
-    "step": "58_capstone",
+    "step": "134_capstone",
     "comment": "FastAPI、DB、AI、ログ、評価を統合する。",
     "urls": [
       "https://fastapi.tiangolo.com/tutorial/bigger-applications/"
     ]
   },
   {
-    "step": "59_cli_tools",
+    "step": "135_cli_tools",
     "comment": "実務CLIは入力、検証、内部設定への変換を分ける。",
     "urls": [
       "https://docs.python.org/3/library/argparse.html"
     ]
   },
   {
-    "step": "66_ci_debugging",
+    "step": "136_ci_debugging",
     "comment": "CI失敗はlint、format、test、env差分に分けて読む。",
     "urls": [
       "https://docs.github.com/actions/monitoring-and-troubleshooting-workflows/using-workflow-run-logs"
     ]
   },
   {
-    "step": "67_docker_ops",
+    "step": "137_docker_ops",
     "comment": "healthcheck、env、logs、profilesを運用調査の入口にする。",
     "urls": [
       "https://docs.docker.com/compose/compose-file/05-services/#healthcheck"
     ]
   },
   {
-    "step": "71_git_workflow",
+    "step": "138_git_workflow",
     "comment": "status、ahead/behind、差分確認をcommit前の判断材料にする。",
     "urls": [
       "https://git-scm.com/docs/git-status"
     ]
   },
   {
-    "step": "73_feature_flags",
+    "step": "139_feature_flags",
     "comment": "段階リリースと緊急停止のためにflagを設計する。",
     "urls": [
       "https://martinfowler.com/articles/feature-toggles.html"
     ]
   },
   {
-    "step": "139_security_scanning",
+    "step": "140_security_scanning",
     "comment": "secret、dependency、permission leakをrelease前に確認する。",
     "urls": [
       "https://owasp.org/www-project-top-ten/"
     ]
   },
   {
-    "step": "140_observability_slo",
+    "step": "141_observability_slo",
     "comment": "error rate、burn rate、latencyでSLOを監視する。",
     "urls": [
       "https://sre.google/sre-book/service-level-objectives/"
     ]
   },
   {
-    "step": "141_deploy_release_strategy",
+    "step": "142_deploy_release_strategy",
     "comment": "canary、blue/green、rollback条件を先に決める。",
     "urls": [
       "https://martinfowler.com/bliki/BlueGreenDeployment.html"

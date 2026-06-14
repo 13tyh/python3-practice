@@ -4,7 +4,7 @@ import MentorSidebar from "./MentorSidebar.vue";
 import type { Step } from "../data/stepTypes";
 
 const step: Step = {
-  id: "01_syntax",
+  id: "001_syntax",
   title: "基本文法",
   category: "python",
   level: "基礎",
