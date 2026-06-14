@@ -17,5 +17,6 @@
 - https://martinfowler.com/bliki/BlueGreenDeployment.html
 
 ```bash
-pytest exercise_tests/deploy_release_strategy -q
+pytest steps/141_deploy_release_strategy/tests -q
 ```
+

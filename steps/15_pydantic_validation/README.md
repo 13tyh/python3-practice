@@ -3,6 +3,7 @@
 validator、enum、nested schema、custom validation。
 
 ```bash
-pytest exercise_tests/pydantic_validation -q
+pytest steps/15_pydantic_validation/tests -q
 ```
+
 

@@ -16,6 +16,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/typing_deep -q
+pytest steps/02_typing_deep/tests -q
 ```
+
 

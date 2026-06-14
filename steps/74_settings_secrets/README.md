@@ -17,5 +17,6 @@
 - https://12factor.net/config
 
 ```bash
-pytest exercise_tests/settings_secrets -q
+pytest steps/74_settings_secrets/tests -q
 ```
+

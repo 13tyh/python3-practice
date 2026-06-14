@@ -18,5 +18,6 @@
 - https://www.mongodb.com/docs/manual/core/schema-validation/
 
 ```bash
-pytest exercise_tests/mongo_ops_schema -q
+pytest steps/133_mongo_ops_schema/tests -q
 ```
+

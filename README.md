@@ -59,8 +59,8 @@ Docker Desktop では次の固定名で表示されます。
 
 - ホーム: 効率ルート、苦手カテゴリ、今日の候補、学習状況を見る
 - Step画面: 読む、書く、実行、振り返りをタブで切り替える
-- 実行: UIから `pytest` / `poetry run ...` など許可済みコマンドを実行する
-- 比較: 自分の答えと `solutions/` を見比べる
+- 実行: UIから `pytest` / `uv run ...` など許可済みコマンドを実行する
+- 比較: Step内の `solutions/` を見比べる
 - 実務ラボ: レビュー練習、AI出力採点、RAG可視化、Mongoコマンド確認、メモを使う
 - 絞り込み: 今日、未完了、基礎復習、軽量モードで学習量を調整する
 - リセット: 進捗と学習ログを最初からやり直す
@@ -114,10 +114,10 @@ Docker Desktop を起動してから、プロジェクト直下で同じコマ�
 ```bash
 docker compose up -d --build
 docker compose exec app bash
-poetry run lint
-poetry run fmt
-poetry run fmt --fix
-poetry run build
+uv run lint
+uv run fmt
+uv run fmt --fix
+uv run build
 ```
 
 基本は Docker 内で作業すれば、Windows/Mac の差をほぼ気にせず進められます。
@@ -127,7 +127,7 @@ poetry run build
 GitHub Actions は `.github/workflows/ci.yml` で次を実行します。
 
 - `docker compose build app frontend`
-- `docker compose run --rm --no-deps app poetry run build`
+- `docker compose run --rm --no-deps app uv run build`
 - `docker compose run --rm --no-deps frontend pnpm test`
 - `docker compose run --rm --no-deps frontend pnpm test:e2e`
 - `docker compose run --rm --no-deps frontend pnpm build`
@@ -135,7 +135,7 @@ GitHub Actions は `.github/workflows/ci.yml` で次を実行します。
 ローカルで同じ確認をするなら:
 
 ```bash
-docker compose run --rm --no-deps app poetry run build
+docker compose run --rm --no-deps app uv run build
 docker compose run --rm --no-deps frontend pnpm test
 docker compose run --rm --no-deps frontend pnpm test:e2e
 docker compose run --rm --no-deps frontend pnpm build
@@ -152,35 +152,38 @@ docker compose run --rm --no-deps frontend pnpm build
 ## 進め方
 
 1. `steps/00_environment` から順番に README を読む
-2. `src/mastery/` のコードを書く、または修正する
+2. `steps/<step_id>/implementation/` の対象コードを書く
 3. `pytest -q` で正しいか確認する
 4. `ruff check .`、`black --check .`、`mypy src` で品質を確認する
 5. AI に出力させたコードは `steps/57_ai_review` の観点でレビューする
 
-## Poetry
+どのディレクトリを触るか迷ったら `docs/DIRECTORY_GUIDE.md` を見ます。
+基本は `steps/<step_id>/README.md` を読み、`implementation/` を書き、`tests/` で確認します。
+
+## uv
 
 依存関係は `pyproject.toml` に書きます。
 
 ```bash
-poetry --version
-poetry install
-poetry run pytest -q
-poetry run lint
-poetry run fmt
-poetry run fmt --fix
-poetry run build
+uv --version
+uv sync --dev
+uv run pytest -q
+uv run lint
+uv run fmt
+uv run fmt --fix
+uv run build
 ```
 
 コマンドの意味:
 
-- `poetry run lint`: `ruff check .` と `mypy src`
-- `poetry run fmt`: フォーマット確認
-- `poetry run fmt --fix`: 自動修正
-- `poetry run build`: `fmt`、`lint`、`pytest -q`
+- `uv run lint`: `ruff check .` と `mypy src`
+- `uv run fmt`: フォーマット確認
+- `uv run fmt --fix`: 自動修正
+- `uv run build`: `fmt`、`lint`、`pytest -q`
 
 ## Python 基礎をたくさん書く
 
-まずは `exercises/basics/01_values.py` から順番に TODO を埋めます。
+まずは `steps/01_syntax/implementation/exercises/basics/01_values.py` から順番に TODO を埋めます。
 
 ```bash
 pytest exercise_tests -q
@@ -189,25 +192,25 @@ pytest exercise_tests -q
 最初は大量に失敗します。1ファイルずつ直すなら次のように実行します。
 
 ```bash
-pytest exercise_tests/basics/test_01_values.py -q
+pytest steps/01_syntax/tests/exercise_tests/basics/test_01_values.py -q
 ```
 
 基礎チェック表は `notes/python_basics_checklist.md` です。
 
-反復練習は `exercises/basics_repetition/` です。
+反復練習は `steps/01_syntax/implementation/exercises/basics_repetition/` です。
 
 ```bash
-pytest exercise_tests/basics_repetition/test_round_01.py -q
-pytest exercise_tests/basics_repetition/test_round_02.py -q
-pytest exercise_tests/basics_repetition/test_round_03.py -q
-pytest exercise_tests/basics_repetition/test_round_04.py -q
-pytest exercise_tests/basics_repetition/test_round_05.py -q
+pytest steps/01_syntax/tests/exercise_tests/basics_repetition/test_round_01.py -q
+pytest steps/01_syntax/tests/exercise_tests/basics_repetition/test_round_02.py -q
+pytest steps/01_syntax/tests/exercise_tests/basics_repetition/test_round_03.py -q
+pytest steps/01_syntax/tests/exercise_tests/basics_repetition/test_round_04.py -q
+pytest steps/01_syntax/tests/exercise_tests/basics_repetition/test_round_05.py -q
 ```
 
 反復は `round_01` から `round_55` まであります。まとめて実行:
 
 ```bash
-pytest exercise_tests/basics_repetition -q
+pytest steps/01_syntax/tests/exercise_tests/basics_repetition -q
 ```
 
 ## 濃い読み物
@@ -216,19 +219,20 @@ pytest exercise_tests/basics_repetition -q
 - `docs/FASTAPI_AI_ARCHITECTURE.md`: FastAPI で AI API を作る設計
 - `docs/REVIEW_CHECKLIST.md`: コードレビュー観点
 - `docs/STEP_REFERENCES.md`: 各 step の理解コメントと参考URL
+- `docs/DIRECTORY_GUIDE.md`: Stepごとのディレクトリの見方
 - `docs/BASICS_REPETITION_PLAN.md`: 基礎反復の進め方
 - `docs/mongosh/COMMANDS.md`: mongosh コマンド集
 - `docs/mongosh/PRACTICE.md`: mongosh 練習メニュー
 
 ## マスター用追加教材
 
-- `solutions/`: 解答例
+- `steps/<step_id>/solutions/`: 解答例
 - `failure_patterns/`: 失敗パターン集
 - `review_tasks/`: 汚いコードのレビュー課題
 - `write_tests/`: 自分でテストを書く課題
 - `debugging/`: traceback、breakpoint、ログ調査
 - `design_memos/`: 設計判断メモ
-- `projects/ai_review_api/`: FastAPI + MongoDB + AI の実務ミニプロジェクト
+- `steps/58_capstone/implementation/projects/ai_review_api/`: FastAPI + MongoDB + AI の実務ミニプロジェクト
 
 ## Step 一覧
 
@@ -377,3 +381,4 @@ pytest exercise_tests/basics_repetition -q
 - `140_observability_slo`: error rate、burn rate、latency alert
 - `141_deploy_release_strategy`: canary、blue/green、rollback
 - `142_api_compatibility_design`: field削除、required追加、deprecation
+

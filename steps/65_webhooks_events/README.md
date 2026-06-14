@@ -23,5 +23,6 @@
 - https://docs.python.org/3/library/hmac.html
 
 ```bash
-pytest exercise_tests/webhooks -q
+pytest steps/65_webhooks_events/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://owasp.org/www-project-top-10-for-large-language-model-applications/
 
 ```bash
-pytest exercise_tests/domain_guardrails -q
+pytest steps/118_domain_guardrails_policy/tests -q
 ```
+

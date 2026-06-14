@@ -17,5 +17,6 @@
 - https://docs.pydantic.dev/latest/
 
 ```bash
-pytest exercise_tests/structured_output -q
+pytest steps/100_structured_output_parsing/tests -q
 ```
+

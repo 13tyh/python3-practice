@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
 
 ```bash
-pytest exercise_tests/streaming_files_large -q
+pytest steps/83_streaming_files_large/tests -q
 ```
+

@@ -13,8 +13,9 @@
 ## 課題
 
 ```bash
-pytest exercise_tests/logging_python -q
+pytest steps/07_logging/tests -q
 ```
 
-`exercises/logging_python/` の TODO を埋める。
+`steps/07_logging/implementation/exercises/logging_python/` の TODO を埋める。
+
 

@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences
 
 ```bash
-pytest exercise_tests/basic_unpacking -q
+pytest steps/88_sequence_unpacking/tests -q
 ```
+

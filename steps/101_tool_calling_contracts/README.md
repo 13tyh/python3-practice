@@ -17,5 +17,6 @@
 - https://docs.langchain.com/oss/python/langchain/tools
 
 ```bash
-pytest exercise_tests/tool_calling_contracts -q
+pytest steps/101_tool_calling_contracts/tests -q
 ```
+

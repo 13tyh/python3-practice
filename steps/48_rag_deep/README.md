@@ -25,6 +25,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/rag_deep -q
+pytest steps/48_rag_deep/tests -q
 ```
+
 

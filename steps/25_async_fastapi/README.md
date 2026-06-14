@@ -3,6 +3,7 @@
 `async def`、background task、streaming の前段を学ぶ。
 
 ```bash
-pytest exercise_tests/async_fastapi -q
+pytest steps/25_async_fastapi/tests -q
 ```
+
 

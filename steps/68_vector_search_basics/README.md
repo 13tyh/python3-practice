@@ -23,5 +23,6 @@
 - https://scikit-learn.org/stable/modules/metrics.html#cosine-similarity
 
 ```bash
-pytest exercise_tests/vector_search -q
+pytest steps/68_vector_search_basics/tests -q
 ```
+

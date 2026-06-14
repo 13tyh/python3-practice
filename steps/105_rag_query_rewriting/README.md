@@ -17,5 +17,6 @@
 - https://docs.langchain.com/oss/python/langchain/retrieval
 
 ```bash
-pytest exercise_tests/rag_query_rewriting -q
+pytest steps/105_rag_query_rewriting/tests -q
 ```
+

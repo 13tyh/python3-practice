@@ -17,5 +17,6 @@
 - https://cloud.google.com/architecture/rate-limiting-strategies-techniques
 
 ```bash
-pytest exercise_tests/rate_limiting -q
+pytest steps/75_rate_limiting/tests -q
 ```
+

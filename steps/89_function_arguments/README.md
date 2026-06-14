@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions
 
 ```bash
-pytest exercise_tests/basic_function_arguments -q
+pytest steps/89_function_arguments/tests -q
 ```
+

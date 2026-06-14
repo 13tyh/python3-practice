@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions
 
 ```bash
-pytest exercise_tests/basic_comprehension_deep -q
+pytest steps/94_comprehension_deep/tests -q
 ```
+

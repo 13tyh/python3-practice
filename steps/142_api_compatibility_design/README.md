@@ -17,5 +17,6 @@
 - https://spec.openapis.org/oas/latest.html
 
 ```bash
-pytest exercise_tests/api_compatibility_design -q
+pytest steps/142_api_compatibility_design/tests -q
 ```
+

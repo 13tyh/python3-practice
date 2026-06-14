@@ -14,6 +14,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/advanced -q
+pytest steps/14_advanced/tests -q
 ```
+
 

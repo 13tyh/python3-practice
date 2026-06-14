@@ -23,5 +23,6 @@
 - https://docs.github.com/actions/monitoring-and-troubleshooting-workflows/using-workflow-run-logs
 
 ```bash
-pytest exercise_tests/ci_debugging -q
+pytest steps/66_ci_debugging/tests -q
 ```
+

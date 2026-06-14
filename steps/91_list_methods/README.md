@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/datastructures.html#more-on-lists
 
 ```bash
-pytest exercise_tests/basic_list_methods -q
+pytest steps/91_list_methods/tests -q
 ```
+

@@ -4,7 +4,7 @@
 
 | Step | コメント | 参考URL |
 | --- | --- | --- |
-| `00_environment` | Docker / Poetry / pytest / ruff / mypy の役割を分ける。 | https://python-poetry.org/docs/ / https://docs.pytest.org/en/stable/ |
+| `00_environment` | Docker / uv / pytest / ruff / mypy の役割を分ける。 | https://docs.astral.sh/uv/ / https://docs.pytest.org/en/stable/ |
 | `01_syntax` | 入力、処理、戻り値、例外で関数を読む。 | https://docs.python.org/3/tutorial/ |
 | `02_typing_deep` | 型は設計意図。`None` と `Protocol` を特に意識する。 | https://docs.python.org/3/library/typing.html |
 | `03_files` | encoding、path、上書き、存在しないファイルを見る。 | https://docs.python.org/3/library/pathlib.html |

@@ -17,5 +17,6 @@
 - https://opentelemetry.io/docs/languages/python/
 
 ```bash
-pytest exercise_tests/ai_observability -q
+pytest steps/109_ai_observability_traces/tests -q
 ```
+

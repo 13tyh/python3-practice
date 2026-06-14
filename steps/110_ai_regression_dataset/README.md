@@ -17,5 +17,6 @@
 - https://scikit-learn.org/stable/modules/model_evaluation.html
 
 ```bash
-pytest exercise_tests/ai_regression_dataset -q
+pytest steps/110_ai_regression_dataset/tests -q
 ```
+

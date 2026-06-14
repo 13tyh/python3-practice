@@ -17,5 +17,6 @@
 - https://scikit-learn.org/stable/modules/model_evaluation.html
 
 ```bash
-pytest exercise_tests/domain_eval_rubric -q
+pytest steps/114_domain_evaluation_rubric/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://docs.python.org/3/library/tracemalloc.html
 
 ```bash
-pytest exercise_tests/memory_profiling -q
+pytest steps/82_memory_profiling/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://developers.google.com/machine-learning/data-prep
 
 ```bash
-pytest exercise_tests/domain_dataset_curation -q
+pytest steps/113_domain_dataset_curation/tests -q
 ```
+

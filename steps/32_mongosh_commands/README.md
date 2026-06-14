@@ -13,3 +13,4 @@ docker compose exec mongo mongosh
 - `docs/mongosh/COMMANDS.md`
 - `docs/mongosh/PRACTICE.md`
 
+

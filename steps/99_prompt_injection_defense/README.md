@@ -17,5 +17,6 @@
 - https://owasp.org/www-project-top-10-for-large-language-model-applications/
 
 ```bash
-pytest exercise_tests/prompt_injection -q
+pytest steps/99_prompt_injection_defense/tests -q
 ```
+

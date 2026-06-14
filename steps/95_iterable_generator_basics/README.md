@@ -18,5 +18,6 @@
 - https://docs.python.org/3/howto/functional.html#generators
 
 ```bash
-pytest exercise_tests/basic_generators -q
+pytest steps/95_iterable_generator_basics/tests -q
 ```
+

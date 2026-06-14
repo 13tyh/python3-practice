@@ -17,5 +17,6 @@
 - https://spec.openapis.org/oas/latest.html
 
 ```bash
-pytest exercise_tests/openapi_contract -q
+pytest steps/79_openapi_contract/tests -q
 ```
+

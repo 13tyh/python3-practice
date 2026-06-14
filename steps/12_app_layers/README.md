@@ -18,8 +18,9 @@
 ## 課題
 
 ```bash
-pytest exercise_tests/app_layers -q
+pytest steps/12_app_layers/tests -q
 ```
 
-`exercises/app_layers/` の TODO を埋める。
+`steps/12_app_layers/implementation/exercises/app_layers/` の TODO を埋める。
+
 

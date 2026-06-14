@@ -23,5 +23,6 @@
 - https://cloud.google.com/architecture/framework/reliability/retry-transient-errors
 
 ```bash
-pytest exercise_tests/resilience -q
+pytest steps/64_resilience_patterns/tests -q
 ```
+

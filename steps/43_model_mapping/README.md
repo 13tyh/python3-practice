@@ -17,6 +17,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/model_mapping -q
+pytest steps/43_model_mapping/tests -q
 ```
+
 

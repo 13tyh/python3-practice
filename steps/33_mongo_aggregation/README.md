@@ -3,7 +3,7 @@
 目的: MongoDB の aggregation pipeline を読める・作れるようにする。
 
 ```bash
-pytest exercise_tests/mongo_aggregation -q
+pytest steps/33_mongo_aggregation/tests -q
 ```
 
 見るポイント:
@@ -12,4 +12,5 @@ pytest exercise_tests/mongo_aggregation -q
 - `$group`
 - `$sort`
 - `$project`
+
 

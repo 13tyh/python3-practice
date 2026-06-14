@@ -18,5 +18,6 @@
 - https://docs.python.org/3/library/functools.html
 
 ```bash
-pytest exercise_tests/basic_itertools_functools -q
+pytest steps/122_itertools_functools/tests -q
 ```
+

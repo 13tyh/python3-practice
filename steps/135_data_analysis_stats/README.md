@@ -18,5 +18,6 @@
 - https://numpy.org/doc/stable/
 
 ```bash
-pytest exercise_tests/data_analysis_stats -q
+pytest steps/135_data_analysis_stats/tests -q
 ```
+

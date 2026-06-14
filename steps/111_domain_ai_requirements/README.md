@@ -17,5 +17,6 @@
 - https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
 
 ```bash
-pytest exercise_tests/domain_ai_requirements -q
+pytest steps/111_domain_ai_requirements/tests -q
 ```
+

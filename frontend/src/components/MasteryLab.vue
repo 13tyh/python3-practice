@@ -232,7 +232,7 @@ const opsChecklist = [
   "envとsecretが分離されている",
   "構造化ログとrequest_idがある",
   "migration/rollback手順がある",
-  "CIでpoetry run buildが通る",
+  "CIでuv run buildが通る",
 ];
 const cheatSheets = [
   "Python: dict/list/set, 内包表記, 例外, dataclass, pathlib",

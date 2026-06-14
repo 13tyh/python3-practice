@@ -32,6 +32,7 @@ users = repo.find_users_by_ids([order.user_id for order in orders])
 ## 実行
 
 ```bash
-pytest exercise_tests/n_plus_one_performance -q
+pytest steps/29_n_plus_one_performance/tests -q
 ```
+
 

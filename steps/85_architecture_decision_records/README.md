@@ -17,5 +17,6 @@
 - https://adr.github.io/
 
 ```bash
-pytest exercise_tests/adrs -q
+pytest steps/85_architecture_decision_records/tests -q
 ```
+

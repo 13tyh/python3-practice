@@ -16,6 +16,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/core_design_thinking -q
+pytest steps/06_core_design_thinking/tests -q
 ```
+
 

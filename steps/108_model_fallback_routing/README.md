@@ -17,5 +17,6 @@
 - https://docs.langchain.com/oss/python/langchain/model_io
 
 ```bash
-pytest exercise_tests/model_fallback_routing -q
+pytest steps/108_model_fallback_routing/tests -q
 ```
+

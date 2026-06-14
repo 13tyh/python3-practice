@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import CommandRunCard from "./CommandRunCard.vue";
+import { stepDirectoryPlan } from "../data/learningUi";
 import type { Step } from "../data/stepTypes";
 
-defineProps<{
+const props = defineProps<{
   primaryCommand: string;
   runningCommand: string;
   step: Step;
 }>();
+
+const directoryPlan = computed(() => stepDirectoryPlan(props.step));
 
 defineEmits<{
   run: [command: string];
@@ -20,6 +24,11 @@ defineEmits<{
       <h3>{{ step.goals[0] }}</h3>
       <p>{{ step.files[0] }} から読み、TODOを1つずつ動かして直す。</p>
       <div class="learner-focus">
+        <div v-for="item in directoryPlan" :key="item.label">
+          <span>{{ item.label }}</span>
+          <code>{{ item.directory }}</code>
+          <small>{{ item.note }}</small>
+        </div>
         <div>
           <span>今やる1ファイル</span>
           <code>{{ step.files[0] }}</code>

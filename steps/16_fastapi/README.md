@@ -12,7 +12,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/fastapi_app -q
+pytest steps/16_fastapi/tests -q
 uvicorn exercises.fastapi_app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
@@ -21,4 +21,5 @@ uvicorn exercises.fastapi_app.main:app --host 0.0.0.0 --port 8000 --reload
 ```text
 http://localhost:8000/docs
 ```
+
 

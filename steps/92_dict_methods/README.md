@@ -18,5 +18,6 @@
 - https://docs.python.org/3/tutorial/datastructures.html#dictionaries
 
 ```bash
-pytest exercise_tests/basic_dict_methods -q
+pytest steps/92_dict_methods/tests -q
 ```
+

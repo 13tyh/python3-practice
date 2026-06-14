@@ -24,5 +24,6 @@
 - https://mypy.readthedocs.io/en/stable/type_narrowing.html
 
 ```bash
-pytest exercise_tests/static_typing -q
+pytest steps/60_static_typing_practice/tests -q
 ```
+

@@ -16,7 +16,7 @@ function mockFetch(runResult?: { exit_code: number }) {
   const runResponse = {
     ok: true,
     json: async () => ({
-      command: "pytest exercise_tests/basics/test_01_values.py -q",
+      command: "pytest steps/01_syntax/tests -q",
       exit_code: runResult?.exit_code ?? 0,
       duration_ms: 12,
       stdout: runResult?.exit_code === 0 ? "passed" : "",

@@ -17,5 +17,6 @@
 - https://docs.pytest.org/en/stable/how-to/monkeypatch.html
 
 ```bash
-pytest exercise_tests/mocking_external_services -q
+pytest steps/80_mocking_external_services/tests -q
 ```
+

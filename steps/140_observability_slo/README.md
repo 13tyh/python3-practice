@@ -18,5 +18,6 @@
 - https://sre.google/sre-book/service-level-objectives/
 
 ```bash
-pytest exercise_tests/observability_slo -q
+pytest steps/140_observability_slo/tests -q
 ```
+

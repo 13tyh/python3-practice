@@ -17,5 +17,6 @@
 - https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-overview/
 
 ```bash
-pytest exercise_tests/vector_index_design -q
+pytest steps/104_vector_db_index_design/tests -q
 ```
+

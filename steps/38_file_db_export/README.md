@@ -15,7 +15,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/file_db_export -q
+pytest steps/38_file_db_export/tests -q
 ```
 
 ## 実務での分け方
@@ -23,4 +23,5 @@ pytest exercise_tests/file_db_export -q
 - `query.py`: 検索条件を作る
 - `transform.py`: DB document を CSV row に変換
 - `csv_export.py`: CSV として書く
+
 

@@ -17,5 +17,6 @@
 - https://python.langchain.com/docs/concepts/text_splitters/
 
 ```bash
-pytest exercise_tests/embedding_metadata -q
+pytest steps/103_embedding_chunk_metadata/tests -q
 ```
+

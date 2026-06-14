@@ -17,5 +17,6 @@
 - https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not
 
 ```bash
-pytest exercise_tests/basic_boolean_logic -q
+pytest steps/86_boolean_logic/tests -q
 ```
+

@@ -1,5 +1,6 @@
 import type { Step, StepStatus } from "./steps";
 import type { RunResult } from "../api/learningApi";
+import { fileTestCommandsByStep } from "./fileTestCommands";
 import { phaseTitleForPosition } from "./phaseConfig";
 
 export const categoryLabels: Record<string, string> = {
@@ -100,7 +101,7 @@ export function runFailureHint(result: RunResult | null) {
 export function extractFileCandidates(result: RunResult | null) {
   if (!result || result.exit_code === 0) return [];
   const output = `${result.stdout}\n${result.stderr}`;
-  const candidates = output.match(/(?:exercises|exercise_tests|tests|src)\/[A-Za-z0-9_./-]+\.py/g) ?? [];
+  const candidates = output.match(/(?:steps|tests|src)\/[A-Za-z0-9_./-]+\.py/g) ?? [];
   return [...new Set(candidates)].slice(0, 8);
 }
 
@@ -120,21 +121,59 @@ export function buildStepGuide(step: Step) {
   };
 }
 
+export function stepDirectoryPlan(step: Step) {
+  const directories = new Set(step.files.map((file) => file.split("/").slice(0, -1).join("/")).filter(Boolean));
+  const workDirectory =
+    [...directories].find((dir) => dir.includes("/implementation/")) ??
+    [...directories].find((dir) => dir.startsWith("src/")) ??
+    step.files[0] ??
+    "";
+  const pytestDirs = step.commands
+    .map((command) => command.match(/pytest\s+([^ ]+)/)?.[1] ?? "")
+    .filter(Boolean)
+    .map((path) =>
+      path.endsWith(".py") ? path.split("/").slice(0, -1).join("/") : path.replace(/\/$/, ""),
+    );
+
+  return [
+    {
+      label: "読む",
+      directory: `steps/${step.id}`,
+      note: "READMEで目的を確認",
+    },
+    {
+      label: "書く",
+      directory: workDirectory,
+      note: workDirectory.includes("/implementation/") ? "TODOを実装" : "設定と手順を確認",
+    },
+    {
+      label: "確認",
+      directory: pytestDirs[0] ?? `steps/${step.id}/tests`,
+      note: "pytestで判定",
+    },
+  ].filter((item) => item.directory);
+}
+
+export function fileTestCommandsForStep(step: Step) {
+  const visibleFiles = new Set(step.files);
+  return (fileTestCommandsByStep[step.id] ?? []).filter((item) => visibleFiles.has(item.file));
+}
+
 export function isRunnable(command: string) {
   return (
     command === "python --version" ||
     command === "ruff check ." ||
     command === "black --check ." ||
     command === "mypy src" ||
-    command === "poetry run lint" ||
-    command === "poetry run fmt" ||
-    command === "poetry run fmt --fix" ||
-    command === "poetry run build" ||
+    command === "uv run lint" ||
+    command === "uv run fmt" ||
+    command === "uv run fmt --fix" ||
+    command === "uv run build" ||
     command.startsWith("pytest ") ||
-    command.startsWith("poetry run pytest ")
+    command.startsWith("uv run pytest ")
   );
 }
 
 export function isTestCommand(command: string) {
-  return command.startsWith("pytest ") || command.startsWith("poetry run pytest ");
+  return command.startsWith("pytest ") || command.startsWith("uv run pytest ");
 }

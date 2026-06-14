@@ -3,6 +3,7 @@
 SQLite の CRUD、transaction、SQL の読み方を学ぶ。
 
 ```bash
-pytest exercise_tests/sql_basics -q
+pytest steps/30_sql/tests -q
 ```
+
 

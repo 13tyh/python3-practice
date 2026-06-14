@@ -14,8 +14,9 @@
 ## 課題
 
 ```bash
-pytest exercise_tests/network_api -q
+pytest steps/22_network_api/tests -q
 ```
 
-`exercises/network_api/01_http_basics.py` の TODO を埋める。
+`steps/22_network_api/implementation/exercises/network_api/01_http_basics.py` の TODO を埋める。
+
 

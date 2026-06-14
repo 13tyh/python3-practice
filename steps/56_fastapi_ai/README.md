@@ -19,7 +19,8 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/fastapi_ai_app -q
+pytest steps/56_fastapi_ai/tests -q
 uvicorn exercises.fastapi_ai_app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
+
 

@@ -17,5 +17,6 @@
 - https://docs.python.org/3/library/traceback.html
 
 ```bash
-pytest exercise_tests/debugging_deep -q
+pytest steps/84_debugging_deep/tests -q
 ```
+

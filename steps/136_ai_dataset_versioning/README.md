@@ -17,5 +17,6 @@
 - https://www.nist.gov/itl/ai-risk-management-framework
 
 ```bash
-pytest exercise_tests/ai_dataset_versioning -q
+pytest steps/136_ai_dataset_versioning/tests -q
 ```
+

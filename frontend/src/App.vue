@@ -7,6 +7,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { fetchStepReferences, type StepReference } from "./api/learningApi";
 import CommandList from "./components/CommandList.vue";
 import CommandCenter from "./components/CommandCenter.vue";
+import FileTestList from "./components/FileTestList.vue";
 import LearningToolbar from "./components/LearningToolbar.vue";
 import LearningLogPanel from "./components/LearningLogPanel.vue";
 import LessonHeader from "./components/LessonHeader.vue";
@@ -20,7 +21,7 @@ import StudyRail from "./components/StudyRail.vue";
 import { useStepProgress } from "./composables/useStepProgress";
 import { useLearningLog } from "./composables/useLearningLog";
 import { useStepRunner } from "./composables/useStepRunner";
-import { buildStepGuide, getPhase, isRunnable, statusLabel } from "./data/learningUi";
+import { buildStepGuide, fileTestCommandsForStep, getPhase, isRunnable, statusLabel } from "./data/learningUi";
 import { learningPhases } from "./data/phaseConfig";
 import { analyzeLearningLog } from "./data/learningLogAnalysis";
 import { filterSteps, findStepById, stepAtOffset, stepNumberOf } from "./data/stepNavigation";
@@ -115,6 +116,7 @@ const runnableCommands = computed(() => selectedStep.value.commands.filter((comm
 const additionalCommands = computed(() => selectedStep.value.commands.slice(1));
 const primaryCommand = computed(() => selectedStep.value.commands[0] ?? "");
 const runCommands = computed(() => [primaryCommand.value, ...additionalCommands.value].filter(Boolean));
+const fileTestCommands = computed(() => fileTestCommandsForStep(selectedStep.value));
 const acceptanceChecklist = computed(() =>
   [
     `${primaryCommand.value || "pytest"} が成功する`,
@@ -472,6 +474,13 @@ function toggleLightMode() {
           <CommandList
             v-if="activeLessonTab === 'run'"
             :commands="runCommands"
+            :running-command="runningCommand"
+            @run="runAndShowResult"
+          />
+
+          <FileTestList
+            v-if="activeLessonTab === 'run'"
+            :items="fileTestCommands"
             :running-command="runningCommand"
             @run="runAndShowResult"
           />

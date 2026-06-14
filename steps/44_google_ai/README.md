@@ -24,8 +24,9 @@
 ## 課題
 
 ```bash
-pytest exercise_tests/google_ai -q
+pytest steps/44_google_ai/tests -q
 ```
 
-`exercises/google_ai/01_genai_config.py` の TODO を埋める。
+`steps/44_google_ai/implementation/exercises/google_ai/01_genai_config.py` の TODO を埋める。
+
 

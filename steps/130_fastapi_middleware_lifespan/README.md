@@ -18,5 +18,6 @@
 - https://fastapi.tiangolo.com/advanced/events/
 
 ```bash
-pytest exercise_tests/fastapi_middleware_lifespan -q
+pytest steps/130_fastapi_middleware_lifespan/tests -q
 ```
+

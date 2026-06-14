@@ -17,5 +17,6 @@
 - https://docs.python.org/3/howto/sorting.html
 
 ```bash
-pytest exercise_tests/basic_algorithms -q
+pytest steps/128_algorithm_complexity/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/errors.html
 
 ```bash
-pytest exercise_tests/basic_custom_exceptions -q
+pytest steps/97_custom_exceptions/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://www.w3.org/standards/semanticweb/ontology
 
 ```bash
-pytest exercise_tests/domain_taxonomy -q
+pytest steps/112_domain_knowledge_taxonomy/tests -q
 ```
+

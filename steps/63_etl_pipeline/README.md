@@ -24,5 +24,6 @@
 - https://docs.python.org/3/howto/functional.html#generators
 
 ```bash
-pytest exercise_tests/etl_pipeline -q
+pytest steps/63_etl_pipeline/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/errors.html
 
 ```bash
-pytest exercise_tests/basic_error_design -q
+pytest steps/129_error_design_deep/tests -q
 ```
+

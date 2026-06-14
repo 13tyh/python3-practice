@@ -15,7 +15,7 @@ jobs:
         run: docker compose build app frontend
 
       - name: Python quality gate
-        run: docker compose run --rm --no-deps app poetry run build
+        run: docker compose run --rm --no-deps app uv run build
 
       - name: Frontend tests
         run: docker compose run --rm --no-deps frontend pnpm test

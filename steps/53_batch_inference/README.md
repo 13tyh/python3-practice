@@ -26,8 +26,9 @@ Gemini では Vertex AI 上の Batch inference を使い、JSONL や BigQuery �
 ## 課題
 
 ```bash
-pytest exercise_tests/batch_inference -q
+pytest steps/53_batch_inference/tests -q
 ```
 
-`exercises/batch_inference/` の TODO を埋める。
+`steps/53_batch_inference/implementation/exercises/batch_inference/` の TODO を埋める。
+
 

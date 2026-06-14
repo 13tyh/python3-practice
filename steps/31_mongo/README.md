@@ -25,3 +25,4 @@ python -c "from mastery.mongo_practice import seed_users, find_high_score_users;
 - `delete_many({})` を本番で使ってよいか
 - DB 接続情報をコードに直書きしていないか
 
+

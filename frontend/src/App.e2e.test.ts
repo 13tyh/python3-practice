@@ -12,7 +12,7 @@ function mockFetch() {
     .mockResolvedValue({
       ok: true,
       json: async () => ({
-        command: "pytest exercise_tests/api_compatibility_design/test_api_compatibility.py -q",
+        command: "pytest steps/142_api_compatibility_design/tests -q",
         duration_ms: 10,
         exit_code: 0,
         stdout: "passed",

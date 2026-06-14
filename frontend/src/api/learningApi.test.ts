@@ -53,8 +53,8 @@ describe("learningApi", () => {
     const fetchMock = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        exercise_path: "exercises/basics/01_values.py",
-        solution_path: "solutions/basics/01_values.py",
+        exercise_path: "steps/01_syntax/implementation/exercises/basics/01_values.py",
+        solution_path: "steps/01_syntax/solutions/basics/01_values.py",
         exercise: "raise NotImplementedError",
         solution: "return value",
         has_solution: true,
@@ -62,12 +62,14 @@ describe("learningApi", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(fetchSolutionCompare("exercises/basics/01_values.py", "http://api")).resolves.toMatchObject({
+    await expect(
+      fetchSolutionCompare("steps/01_syntax/implementation/exercises/basics/01_values.py", "http://api"),
+    ).resolves.toMatchObject({
       has_solution: true,
-      solution_path: "solutions/basics/01_values.py",
+      solution_path: "steps/01_syntax/solutions/basics/01_values.py",
     });
     expect(fetchMock).toHaveBeenCalledWith(
-      "http://api/api/solution-compare?exercise_path=exercises%2Fbasics%2F01_values.py",
+      "http://api/api/solution-compare?exercise_path=steps%2F01_syntax%2Fimplementation%2Fexercises%2Fbasics%2F01_values.py",
     );
   });
 });

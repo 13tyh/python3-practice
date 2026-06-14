@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/modules.html
 
 ```bash
-pytest exercise_tests/basic_scope_modules -q
+pytest steps/90_scope_modules/tests -q
 ```
+

@@ -8,8 +8,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "argparseで実務CLIを作り、引数を内部設定へ変換する。",
       goals: ["CLI引数を定義する", "default値を説明する", "dry-runを扱う"],
-      files: ["exercises/cli_tools/01_argparse_cli.py", "steps/59_cli_tools/README.md"],
-      commands: [command("exercise_tests/cli_tools")],
+      files: ["steps/59_cli_tools/implementation/exercises/cli_tools/01_argparse_cli.py", "steps/59_cli_tools/README.md"],
+      commands: [command("steps/59_cli_tools/tests")],
       reviewPoints: ["引数を文字列のまま流していないか", "helpとdefaultが一致しているか"],
     },
   {
@@ -19,8 +19,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "GitHub Actionsとpytestのログから失敗箇所を抽出する。",
       goals: ["失敗stepを読む", "FAILED行を拾う", "CIとローカル差分を疑う"],
-      files: ["exercises/ci_debugging/01_actions_log.py", "steps/66_ci_debugging/README.md"],
-      commands: [command("exercise_tests/ci_debugging")],
+      files: ["steps/66_ci_debugging/implementation/exercises/ci_debugging/01_actions_log.py", "steps/66_ci_debugging/README.md"],
+      commands: [command("steps/66_ci_debugging/tests")],
       reviewPoints: ["最後の行だけで判断していないか", "lint/fmt/testを分けて見ているか"],
     },
   {
@@ -30,8 +30,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "healthcheck、env、logs、compose profilesを運用目線で読む。",
       goals: ["必須envを検査する", "health状態を返す", "degradedを表現する"],
-      files: ["exercises/docker_ops/01_health_env.py", "steps/67_docker_ops/README.md"],
-      commands: [command("exercise_tests/docker_ops")],
+      files: ["steps/67_docker_ops/implementation/exercises/docker_ops/01_health_env.py", "steps/67_docker_ops/README.md"],
+      commands: [command("steps/67_docker_ops/tests")],
       reviewPoints: ["secretをhealthに出していないか", "healthcheckが重すぎないか"],
     },
   {
@@ -41,8 +41,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "git status、ahead/behind、commit前の差分確認を読む。",
       goals: ["short statusを分類する", "branch状態を読む", "危険なcommit前状態を見つける"],
-      files: ["exercises/git_workflow/01_status_parser.py", "steps/71_git_workflow/README.md"],
-      commands: [command("exercise_tests/git_workflow")],
+      files: ["steps/71_git_workflow/implementation/exercises/git_workflow/01_status_parser.py", "steps/71_git_workflow/README.md"],
+      commands: [command("steps/71_git_workflow/tests")],
       reviewPoints: ["untrackedを見落としていないか", "push前にahead/behindを確認しているか"],
     },
   {
@@ -52,8 +52,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "flagで段階リリースし、user単位rolloutを安定させる。",
       goals: ["bucketを作る", "rollout判定を書く", "disabled時の安全側を守る"],
-      files: ["exercises/feature_flags/01_flags.py", "steps/73_feature_flags/README.md"],
-      commands: [command("exercise_tests/feature_flags")],
+      files: ["steps/73_feature_flags/implementation/exercises/feature_flags/01_flags.py", "steps/73_feature_flags/README.md"],
+      commands: [command("steps/73_feature_flags/tests")],
       reviewPoints: ["userごとに判定が揺れないか", "事故時にすぐ止められるか"],
     },
   {
@@ -63,8 +63,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "secret mask、dependency脆弱性、権限漏れレビューを学ぶ。",
       goals: ["secretをmaskする", "high riskを検知する", "permission leakを判定する"],
-      files: ["exercises/security_scanning/01_security.py", "steps/139_security_scanning/README.md"],
-      commands: [command("exercise_tests/security_scanning")],
+      files: ["steps/139_security_scanning/implementation/exercises/security_scanning/01_security.py", "steps/139_security_scanning/README.md"],
+      commands: [command("steps/139_security_scanning/tests")],
       reviewPoints: ["secretをログに出していないか", "viewerがwriteできないか"],
     },
   {
@@ -74,8 +74,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "error rate、burn rate、latency alertで本番監視を学ぶ。",
       goals: ["error率を出す", "burn rateを計算する", "alert条件を決める"],
-      files: ["exercises/observability_slo/01_slo.py", "steps/140_observability_slo/README.md"],
-      commands: [command("exercise_tests/observability_slo")],
+      files: ["steps/140_observability_slo/implementation/exercises/observability_slo/01_slo.py", "steps/140_observability_slo/README.md"],
+      commands: [command("steps/140_observability_slo/tests")],
       reviewPoints: ["SLOと単発エラーを混同していないか", "latencyも監視しているか"],
     },
   {
@@ -85,8 +85,8 @@ export const phase7Steps: Step[] = [
       level: "実務",
       summary: "canary、blue/green、rollback判断を学ぶ。",
       goals: ["canary割合を決める", "rollbackを判定する", "active環境を切り替える"],
-      files: ["exercises/deploy_release_strategy/01_release.py", "steps/141_deploy_release_strategy/README.md"],
-      commands: [command("exercise_tests/deploy_release_strategy")],
+      files: ["steps/141_deploy_release_strategy/implementation/exercises/deploy_release_strategy/01_release.py", "steps/141_deploy_release_strategy/README.md"],
+      commands: [command("steps/141_deploy_release_strategy/tests")],
       reviewPoints: ["失敗時に戻せるか", "一気に全量リリースしていないか"],
     }
 ];

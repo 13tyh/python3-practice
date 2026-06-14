@@ -3,6 +3,7 @@
 index、compound index、upsert、explain の読み方。
 
 ```bash
-pytest exercise_tests/mongo_deep -q
+pytest steps/34_mongo_deep/tests -q
 ```
+
 

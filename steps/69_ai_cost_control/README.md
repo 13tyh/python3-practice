@@ -23,5 +23,6 @@
 - https://platform.openai.com/tokenizer
 
 ```bash
-pytest exercise_tests/ai_cost_control -q
+pytest steps/69_ai_cost_control/tests -q
 ```
+

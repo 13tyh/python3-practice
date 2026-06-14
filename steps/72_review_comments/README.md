@@ -17,5 +17,6 @@
 - https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests
 
 ```bash
-pytest exercise_tests/review_comments -q
+pytest steps/72_review_comments/tests -q
 ```
+

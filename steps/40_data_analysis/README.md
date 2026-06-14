@@ -3,7 +3,7 @@
 目的: CSV や list/dict から、欠損・重複・集計を扱えるようにする。
 
 ```bash
-pytest exercise_tests/data_analysis -q
+pytest steps/40_data_analysis/tests -q
 ```
 
 見るポイント:
@@ -13,4 +13,5 @@ pytest exercise_tests/data_analysis -q
 - 重複
 - groupby
 - ranking
+
 

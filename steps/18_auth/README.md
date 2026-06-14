@@ -3,6 +3,7 @@
 API key、Bearer token、role / permission を扱う。
 
 ```bash
-pytest exercise_tests/auth -q
+pytest steps/18_auth/tests -q
 ```
+
 

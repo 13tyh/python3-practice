@@ -3,6 +3,7 @@
 hybrid search、metadata filtering、rerank、grounding check。
 
 ```bash
-pytest exercise_tests/rag_advanced -q
+pytest steps/49_rag_advanced/tests -q
 ```
+
 

@@ -14,7 +14,7 @@
 ## 実行
 
 ```bash
-pytest exercise_tests/docs_pdf -q
+pytest steps/39_docs_pdf/tests -q
 ```
 
 ## 使うライブラリ
@@ -22,4 +22,5 @@ pytest exercise_tests/docs_pdf -q
 - `reportlab`: テキストから PDF を作る
 - `pypdf`: PDF の結合・分割
 - `python-docx`: docx を読む時に使う
+
 

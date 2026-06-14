@@ -3,7 +3,7 @@
 目的: AI の出力を評価し、CSV 化・集計できるようにする。
 
 ```bash
-pytest exercise_tests/ai_evaluation -q
+pytest steps/54_ai_evaluation/tests -q
 ```
 
 見るポイント:
@@ -12,4 +12,5 @@ pytest exercise_tests/ai_evaluation -q
 - NG 理由
 - prompt 別比較
 - model 別比較
+
 

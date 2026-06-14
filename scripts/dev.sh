@@ -11,17 +11,16 @@ case "$command" in
     docker compose exec app bash
     ;;
   lint)
-    poetry run lint
+    uv run lint
     ;;
   fmt)
-    poetry run fmt "${@:2}"
+    uv run fmt "${@:2}"
     ;;
   build)
-    poetry run build
+    uv run build
     ;;
   *)
     echo "usage: ./scripts/dev.sh [up|shell|lint|fmt|build]"
     exit 2
     ;;
 esac
-

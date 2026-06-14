@@ -17,5 +17,6 @@
 - https://docs.langchain.com/oss/python/langchain/prompts
 
 ```bash
-pytest exercise_tests/prompt_templates -q
+pytest steps/98_prompt_templates/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://docs.langchain.com/oss/python/langchain/short-term-memory
 
 ```bash
-pytest exercise_tests/conversation_memory -q
+pytest steps/102_conversation_memory/tests -q
 ```
+

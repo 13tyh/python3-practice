@@ -23,5 +23,6 @@
 - https://docs.docker.com/compose/compose-file/05-services/#healthcheck
 
 ```bash
-pytest exercise_tests/docker_ops -q
+pytest steps/67_docker_ops/tests -q
 ```
+

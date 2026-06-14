@@ -23,5 +23,6 @@
 - https://jsonapi.org/profiles/ethanresnick/cursor-pagination/
 
 ```bash
-pytest exercise_tests/api_pagination_deep -q
+pytest steps/62_api_pagination_deep/tests -q
 ```
+

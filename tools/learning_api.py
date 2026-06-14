@@ -20,10 +20,10 @@ ALLOWED_EXACT = {
     "ruff check .",
     "black --check .",
     "mypy src",
-    "poetry run lint",
-    "poetry run fmt",
-    "poetry run fmt --fix",
-    "poetry run build",
+    "uv run lint",
+    "uv run fmt",
+    "uv run fmt --fix",
+    "uv run build",
 }
 
 
@@ -141,7 +141,7 @@ def _is_allowed(command: str) -> bool:
         return True
     if command.startswith("pytest "):
         return _does_not_use_shell_features(command)
-    if command.startswith("poetry run pytest "):
+    if command.startswith("uv run pytest "):
         return _does_not_use_shell_features(command)
     return False
 
@@ -164,12 +164,9 @@ def _safe_workspace_path(value: str) -> Path:
     if ".." in normalized.parts:
         raise HTTPException(status_code=400, detail="親ディレクトリ参照は指定できません")
     if normalized.parts[:1] not in {
-        ("exercises",),
-        ("exercise_tests",),
         ("tests",),
+        ("steps",),
         ("src",),
-        ("solutions",),
-        ("projects",),
         ("review_tasks",),
         ("failure_patterns",),
     }:
@@ -181,8 +178,10 @@ def _safe_workspace_path(value: str) -> Path:
 
 
 def _solution_path_for(exercise_path: str) -> str:
-    if exercise_path.startswith("exercises/"):
-        return "solutions/" + exercise_path.removeprefix("exercises/")
+    marker = "/implementation/exercises/"
+    if exercise_path.startswith("steps/") and marker in exercise_path:
+        step_prefix, relative_path = exercise_path.split(marker, 1)
+        return f"{step_prefix}/solutions/{relative_path}"
     return "solutions/" + Path(exercise_path).name
 
 

@@ -17,5 +17,6 @@
 - https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/
 
 ```bash
-pytest exercise_tests/auth_jwt_rbac -q
+pytest steps/132_auth_jwt_rbac/tests -q
 ```
+

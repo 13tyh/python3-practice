@@ -3,7 +3,7 @@
 目的: pandas で CSV / Excel を読み書きし、集計結果を出力する。
 
 ```bash
-pytest exercise_tests/pandas_excel -q
+pytest steps/41_pandas_excel/tests -q
 ```
 
 見るポイント:
@@ -13,4 +13,5 @@ pytest exercise_tests/pandas_excel -q
 - sheet 分割
 - 欠損処理
 - 型変換
+
 

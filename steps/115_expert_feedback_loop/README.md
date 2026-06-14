@@ -17,5 +17,6 @@
 - https://martinfowler.com/articles/products-over-projects.html
 
 ```bash
-pytest exercise_tests/expert_feedback_loop -q
+pytest steps/115_expert_feedback_loop/tests -q
 ```
+

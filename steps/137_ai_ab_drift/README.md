@@ -17,5 +17,6 @@
 - https://developers.google.com/machine-learning/crash-course/production-ml-systems
 
 ```bash
-pytest exercise_tests/ai_ab_drift -q
+pytest steps/137_ai_ab_drift/tests -q
 ```
+

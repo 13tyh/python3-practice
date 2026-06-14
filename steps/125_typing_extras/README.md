@@ -18,5 +18,6 @@
 - https://mypy.readthedocs.io/en/stable/more_types.html
 
 ```bash
-pytest exercise_tests/basic_typing_extras -q
+pytest steps/125_typing_extras/tests -q
 ```
+

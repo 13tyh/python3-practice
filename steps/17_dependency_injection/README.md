@@ -3,6 +3,7 @@
 service / repository / client を差し替え可能にする。
 
 ```bash
-pytest exercise_tests/dependency_injection -q
+pytest steps/17_dependency_injection/tests -q
 ```
+
 

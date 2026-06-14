@@ -3,6 +3,7 @@
 batch job、queue、status、retry を扱う。
 
 ```bash
-pytest exercise_tests/job_queue -q
+pytest steps/37_job_queue/tests -q
 ```
+
 

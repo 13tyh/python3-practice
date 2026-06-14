@@ -18,5 +18,6 @@
 - https://docs.python.org/3/library/pathlib.html
 
 ```bash
-pytest exercise_tests/basic_pathlib_glob -q
+pytest steps/96_pathlib_glob/tests -q
 ```
+

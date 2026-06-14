@@ -18,5 +18,6 @@
 - https://fastapi.tiangolo.com/advanced/websockets/
 
 ```bash
-pytest exercise_tests/fastapi_files_websocket -q
+pytest steps/131_fastapi_files_websocket/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/modules.html
 
 ```bash
-pytest exercise_tests/basic_import_modules -q
+pytest steps/126_import_module_deep/tests -q
 ```
+

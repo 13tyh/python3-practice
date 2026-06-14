@@ -3,8 +3,9 @@
 目的: 文書分割、embedding の考え方、類似検索、検索結果評価を理解する。
 
 ```bash
-pytest exercise_tests/rag_basics -q
+pytest steps/47_rag_basics/tests -q
 ```
 
 ここでは外部 embedding API を使わず、単純な bag-of-words で検索の考え方を練習する。
+
 

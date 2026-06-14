@@ -3,6 +3,7 @@
 request id、structured logging、metrics、tracing の考え方。
 
 ```bash
-pytest exercise_tests/observability -q
+pytest steps/08_observability/tests -q
 ```
+
 

@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals
 
 ```bash
-pytest exercise_tests/basic_string_formatting -q
+pytest steps/87_string_formatting_parsing/tests -q
 ```
+

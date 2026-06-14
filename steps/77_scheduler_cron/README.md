@@ -17,5 +17,6 @@
 - https://docs.python.org/3/library/datetime.html
 
 ```bash
-pytest exercise_tests/scheduler_cron -q
+pytest steps/77_scheduler_cron/tests -q
 ```
+

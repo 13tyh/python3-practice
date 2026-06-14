@@ -35,8 +35,9 @@ CPU を使う重い処理を複数プロセスに分ける仕組み。
 ## 課題
 
 ```bash
-pytest exercise_tests/processes -q
+pytest steps/27_processes/tests -q
 ```
 
-`exercises/processes/` の TODO を埋める。
+`steps/27_processes/implementation/exercises/processes/` の TODO を埋める。
+
 

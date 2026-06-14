@@ -17,5 +17,6 @@
 - https://docs.pydantic.dev/latest/concepts/models/
 
 ```bash
-pytest exercise_tests/data_contracts -q
+pytest steps/78_data_contracts/tests -q
 ```
+

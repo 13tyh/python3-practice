@@ -17,5 +17,6 @@
 - https://martinfowler.com/articles/feature-toggles.html
 
 ```bash
-pytest exercise_tests/feature_flags -q
+pytest steps/73_feature_flags/tests -q
 ```
+

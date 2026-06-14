@@ -23,5 +23,6 @@
 - https://docs.python.org/3/library/argparse.html
 
 ```bash
-pytest exercise_tests/cli_tools -q
+pytest steps/59_cli_tools/tests -q
 ```
+

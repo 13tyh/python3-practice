@@ -17,5 +17,6 @@
 - https://docs.celeryq.dev/en/stable/userguide/tasks.html#retrying
 
 ```bash
-pytest exercise_tests/worker_dead_letter -q
+pytest steps/134_worker_dead_letter/tests -q
 ```
+

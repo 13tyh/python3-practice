@@ -8,8 +8,8 @@ export const phase6Steps: Step[] = [
       level: "AI",
       summary: "FastAPIからAI serviceを呼ぶ構成を作る。",
       goals: ["AI clientを分離する", "promptを外に出す", "APIとしてテストする"],
-      files: ["exercises/fastapi_ai_app/main.py", "exercises/fastapi_ai_app/service.py", "exercises/fastapi_ai_app/ai_client.py"],
-      commands: [command("exercise_tests/fastapi_ai_app")],
+      files: ["steps/56_fastapi_ai/implementation/exercises/fastapi_ai_app/main.py", "steps/56_fastapi_ai/implementation/exercises/fastapi_ai_app/service.py", "steps/56_fastapi_ai/implementation/exercises/fastapi_ai_app/ai_client.py"],
+      commands: [command("steps/56_fastapi_ai/tests")],
       reviewPoints: ["routerでAIを直呼びしていないか", "prompt/versionを記録しているか"],
     },
   {
@@ -20,7 +20,7 @@ export const phase6Steps: Step[] = [
       summary: "AIが出したコードを疑い、テストと観点で判断する。",
       goals: ["危ないコードを見抜く", "レビューコメントを書く", "修正方針を出す"],
       files: ["steps/57_ai_review/bad_ai_output.md", "failure_patterns/bad_router.py", "review_tasks/dirty_fastapi_ai.py"],
-      commands: ["pytest -q", "poetry run lint"],
+      commands: ["pytest -q", "uv run lint"],
       reviewPoints: ["routerに全部書く悪い例を指摘できるか", "型ヒントの嘘を見抜けるか"],
     },
   {
@@ -30,8 +30,8 @@ export const phase6Steps: Step[] = [
       level: "実務",
       summary: "レビュー指摘をseverity、問題、修正案へ分けて書く。",
       goals: ["severityを選ぶ", "actionableな文を書く", "file/lineを含める"],
-      files: ["exercises/review_comments/01_review_comment.py", "steps/72_review_comments/README.md"],
-      commands: [command("exercise_tests/review_comments")],
+      files: ["steps/72_review_comments/implementation/exercises/review_comments/01_review_comment.py", "steps/72_review_comments/README.md"],
+      commands: [command("steps/72_review_comments/tests")],
       reviewPoints: ["曖昧な指摘で終わっていないか", "再現条件と修正案があるか"],
     },
   {
@@ -41,8 +41,8 @@ export const phase6Steps: Step[] = [
       level: "設計",
       summary: "field削除、required追加、deprecation headerでAPI互換性を学ぶ。",
       goals: ["削除fieldを検出する", "破壊的required追加を判定する", "非推奨headerを返す"],
-      files: ["exercises/api_compatibility_design/01_compatibility.py", "steps/142_api_compatibility_design/README.md"],
-      commands: [command("exercise_tests/api_compatibility_design")],
+      files: ["steps/142_api_compatibility_design/implementation/exercises/api_compatibility_design/01_compatibility.py", "steps/142_api_compatibility_design/README.md"],
+      commands: [command("steps/142_api_compatibility_design/tests")],
       reviewPoints: ["破壊的変更をminor扱いしていないか", "移行期間を示しているか"],
     },
   {
@@ -52,8 +52,8 @@ export const phase6Steps: Step[] = [
       level: "実務",
       summary: "FastAPI + MongoDB + AI + logger + settings + pytestをまとめる。",
       goals: ["小さいAPIを完成させる", "責務分割する", "テストとログを入れる"],
-      files: ["projects/ai_review_api/app/main.py", "projects/ai_review_api/app/service.py", "projects/ai_review_api/app/repository.py"],
-      commands: ["pytest projects/ai_review_api -q", "poetry run build"],
+      files: ["steps/58_capstone/implementation/projects/ai_review_api/app/main.py", "steps/58_capstone/implementation/projects/ai_review_api/app/service.py", "steps/58_capstone/implementation/projects/ai_review_api/app/repository.py"],
+      commands: ["pytest steps/58_capstone/implementation/projects/ai_review_api -q", "uv run build"],
       reviewPoints: ["設定/ログ/DB/AIが分離されているか", "運用時に調査できるか"],
     }
 ];

@@ -260,6 +260,13 @@
   margin-top: 6px;
 }
 
+.learner-focus small,
+.directory-row small {
+  color: #94a3b8;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .learner-focus label {
   display: flex;
   gap: 8px;
@@ -524,6 +531,22 @@
   color: #2563eb;
 }
 
+.directory-row {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+  background: #f8fafc;
+}
+
+.directory-row span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 900;
+}
+
 .warning .work-title svg {
   color: #ca8a04;
 }
@@ -775,6 +798,25 @@
   color: #1d4ed8;
   border-color: #cbd5e1;
   background: #ffffff;
+}
+
+.file-test-card::before {
+  background: #7c3aed;
+}
+
+.file-test-runner > div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.file-test-runner strong {
+  color: #111827;
+  font-size: 14px;
+}
+
+.file-test-runner code {
+  overflow-wrap: anywhere;
 }
 
 .light-mode .mentor-main {

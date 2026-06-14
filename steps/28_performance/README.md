@@ -3,6 +3,7 @@
 generator、大量CSV、chunk処理、計測。
 
 ```bash
-pytest exercise_tests/performance -q
+pytest steps/28_performance/tests -q
 ```
+
 

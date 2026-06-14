@@ -3,6 +3,7 @@
 fixture、monkeypatch、parametrize、fake client を扱う。
 
 ```bash
-pytest exercise_tests/testing_deep -q
+pytest steps/05_testing_deep/tests -q
 ```
+
 

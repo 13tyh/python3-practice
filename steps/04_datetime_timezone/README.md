@@ -3,6 +3,7 @@
 UTC、JST、aware / naive datetime、ISO8601。
 
 ```bash
-pytest exercise_tests/datetime_timezone -q
+pytest steps/04_datetime_timezone/tests -q
 ```
+
 

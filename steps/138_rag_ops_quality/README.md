@@ -17,5 +17,6 @@
 - https://python.langchain.com/docs/concepts/retrieval/
 
 ```bash
-pytest exercise_tests/rag_ops_quality -q
+pytest steps/138_rag_ops_quality/tests -q
 ```
+

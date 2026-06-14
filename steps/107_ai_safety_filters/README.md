@@ -17,5 +17,6 @@
 - https://owasp.org/www-project-top-10-for-large-language-model-applications/
 
 ```bash
-pytest exercise_tests/ai_safety_filters -q
+pytest steps/107_ai_safety_filters/tests -q
 ```
+

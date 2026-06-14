@@ -1,9 +1,9 @@
 [
   {
     "step": "00_environment",
-    "comment": "Docker / Poetry / pytest / ruff / mypy の役割を分ける。",
+    "comment": "Docker / uv / pytest / ruff / mypy の役割を分ける。",
     "urls": [
-      "https://python-poetry.org/docs/",
+      "https://docs.astral.sh/uv/",
       "https://docs.pytest.org/en/stable/"
     ]
   },

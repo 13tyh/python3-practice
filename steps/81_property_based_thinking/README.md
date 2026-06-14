@@ -17,5 +17,6 @@
 - https://hypothesis.readthedocs.io/en/latest/
 
 ```bash
-pytest exercise_tests/property_thinking -q
+pytest steps/81_property_based_thinking/tests -q
 ```
+

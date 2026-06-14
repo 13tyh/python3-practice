@@ -17,5 +17,6 @@
 - https://platform.openai.com/docs/guides/fine-tuning
 
 ```bash
-pytest exercise_tests/finetuning_dataset_prep -q
+pytest steps/117_finetuning_dataset_prep/tests -q
 ```
+

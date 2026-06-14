@@ -17,5 +17,6 @@
 - https://git-scm.com/docs/git-status
 
 ```bash
-pytest exercise_tests/git_workflow -q
+pytest steps/71_git_workflow/tests -q
 ```
+

@@ -3,6 +3,7 @@
 import の向き、circular import、public/private API。
 
 ```bash
-pytest exercise_tests/package_design -q
+pytest steps/11_package_design/tests -q
 ```
+
 

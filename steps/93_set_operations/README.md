@@ -17,5 +17,6 @@
 - https://docs.python.org/3/tutorial/datastructures.html#sets
 
 ```bash
-pytest exercise_tests/basic_set_operations -q
+pytest steps/93_set_operations/tests -q
 ```
+

@@ -17,5 +17,6 @@
 - https://fastapi.tiangolo.com/tutorial/response-model/
 
 ```bash
-pytest exercise_tests/specialized_ai_api_design -q
+pytest steps/119_specialized_ai_api_design/tests -q
 ```
+

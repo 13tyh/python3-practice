@@ -17,5 +17,6 @@
 - https://docs.langchain.com/oss/python/langchain/retrieval
 
 ```bash
-pytest exercise_tests/domain_rag_blueprint -q
+pytest steps/116_domain_rag_blueprint/tests -q
 ```
+

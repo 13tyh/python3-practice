@@ -18,5 +18,6 @@
 - https://docs.python.org/3/library/contextlib.html
 
 ```bash
-pytest exercise_tests/basic_context_manager -q
+pytest steps/124_context_manager_deep/tests -q
 ```
+

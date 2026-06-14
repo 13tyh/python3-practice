@@ -17,5 +17,6 @@
 - https://owasp.org/www-project-top-ten/
 
 ```bash
-pytest exercise_tests/security_scanning -q
+pytest steps/139_security_scanning/tests -q
 ```
+

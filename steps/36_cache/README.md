@@ -3,6 +3,7 @@
 TTL cache、cache key、invalidation を扱う。
 
 ```bash
-pytest exercise_tests/cache -q
+pytest steps/36_cache/tests -q
 ```
+
 

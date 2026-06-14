@@ -3,6 +3,7 @@
 tool calling、planner / executor、memory、human-in-the-loop。
 
 ```bash
-pytest exercise_tests/ai_agents -q
+pytest steps/55_ai_agents/tests -q
 ```
+
 

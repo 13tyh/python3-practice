@@ -3,6 +3,7 @@
 prompt versioning、model fallback、guardrails、token usage、cost estimation。
 
 ```bash
-pytest exercise_tests/llm_ops -q
+pytest steps/51_llm_ops/tests -q
 ```
+
 

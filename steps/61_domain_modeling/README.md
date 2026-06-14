@@ -23,5 +23,6 @@
 - https://docs.python.org/3/library/dataclasses.html
 
 ```bash
-pytest exercise_tests/domain_modeling -q
+pytest steps/61_domain_modeling/tests -q
 ```
+

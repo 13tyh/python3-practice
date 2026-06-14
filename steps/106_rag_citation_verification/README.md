@@ -17,5 +17,6 @@
 - https://python.langchain.com/docs/concepts/retrieval/
 
 ```bash
-pytest exercise_tests/rag_citation_verification -q
+pytest steps/106_rag_citation_verification/tests -q
 ```
+

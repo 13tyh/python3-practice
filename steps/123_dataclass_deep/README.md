@@ -17,5 +17,6 @@
 - https://docs.python.org/3/library/dataclasses.html
 
 ```bash
-pytest exercise_tests/basic_dataclass_deep -q
+pytest steps/123_dataclass_deep/tests -q
 ```
+

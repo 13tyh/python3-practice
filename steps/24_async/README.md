@@ -14,8 +14,9 @@
 ## 課題
 
 ```bash
-pytest exercise_tests/async_python -q
+pytest steps/24_async/tests -q
 ```
 
-`exercises/async_python/01_asyncio_basics.py` の TODO を埋める。
+`steps/24_async/implementation/exercises/async_python/01_asyncio_basics.py` の TODO を埋める。
+
 

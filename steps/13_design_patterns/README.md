@@ -3,6 +3,7 @@
 factory、strategy、adapter、facade を小さく練習する。
 
 ```bash
-pytest exercise_tests/design_patterns -q
+pytest steps/13_design_patterns/tests -q
 ```
+
 

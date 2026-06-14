@@ -17,5 +17,6 @@
 - https://docs.python.org/3/library/collections.html
 
 ```bash
-pytest exercise_tests/basic_collections -q
+pytest steps/121_collections_deep/tests -q
 ```
+

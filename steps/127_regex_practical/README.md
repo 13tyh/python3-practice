@@ -17,5 +17,6 @@
 - https://docs.python.org/3/library/re.html
 
 ```bash
-pytest exercise_tests/basic_regex_practical -q
+pytest steps/127_regex_practical/tests -q
 ```
+

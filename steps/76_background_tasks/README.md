@@ -17,5 +17,6 @@
 - https://fastapi.tiangolo.com/tutorial/background-tasks/
 
 ```bash
-pytest exercise_tests/background_tasks -q
+pytest steps/76_background_tasks/tests -q
 ```
+

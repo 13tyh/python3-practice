@@ -23,5 +23,6 @@
 - https://www.mongodb.com/docs/manual/core/schema-validation/
 
 ```bash
-pytest exercise_tests/schema_evolution -q
+pytest steps/70_schema_evolution/tests -q
 ```
+
