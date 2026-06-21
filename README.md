@@ -169,7 +169,7 @@ docker compose run --rm --no-deps frontend pnpm build
 
 ## 進め方
 
-1. `steps/000_environment` から順番に README を読む
+1. `steps/001_syntax` から順番に README を読む
 2. `steps/<step_id>/implementation/` の対象コードを書く
 3. `pytest -q` で正しいか確認する
 4. `ruff check .`、`black --check .`、`mypy src` で品質を確認する
@@ -207,29 +207,9 @@ uv run build
 pytest exercise_tests -q
 ```
 
-最初は大量に失敗します。1ファイルずつ直すなら次のように実行します。
-
-```bash
-pytest steps/001_syntax/tests/exercise_tests/basics/test_01_values.py -q
-```
+最初は大量に失敗します。画面の各Stepにある1つのテスト実行ボタンで確認します。
 
 基礎チェック表は `notes/python_basics_checklist.md` です。
-
-反復練習は `steps/001_syntax/implementation/exercises/basics_repetition/` です。
-
-```bash
-pytest steps/001_syntax/tests/exercise_tests/basics_repetition/test_round_01.py -q
-pytest steps/001_syntax/tests/exercise_tests/basics_repetition/test_round_02.py -q
-pytest steps/001_syntax/tests/exercise_tests/basics_repetition/test_round_03.py -q
-pytest steps/001_syntax/tests/exercise_tests/basics_repetition/test_round_04.py -q
-pytest steps/001_syntax/tests/exercise_tests/basics_repetition/test_round_05.py -q
-```
-
-反復は `round_01` から `round_55` まであります。まとめて実行:
-
-```bash
-pytest steps/001_syntax/tests/exercise_tests/basics_repetition -q
-```
 
 ## 濃い読み物
 
@@ -256,7 +236,6 @@ pytest steps/001_syntax/tests/exercise_tests/basics_repetition -q
 
 番号順に進めます。
 
-- `000_environment`: Docker、pytest、ruff、mypy の使い方
 - `001_syntax`: 基本文法、関数、例外、型ヒント
 - `023_typing_deep`: Python の型ヒント、TypedDict、Protocol、Generic
 - `025_files`: ファイル操作、JSON、CSV、パス操作

@@ -7,7 +7,7 @@ function mockFetch() {
     .spyOn(globalThis, "fetch")
     .mockResolvedValueOnce({
       ok: true,
-      json: async () => [{ step: "000_environment", comment: "env", urls: ["https://example.com"] }],
+      json: async () => [{ step: "001_syntax", comment: "syntax", urls: ["https://example.com"] }],
     } as Response)
     .mockResolvedValue({
       ok: true,
@@ -24,8 +24,7 @@ function mockFetch() {
 describe("app e2e flow", () => {
   beforeEach(() => {
     window.localStorage.clear();
-    window.localStorage.setItem("python-master-onboarding-seen", "true");
-    window.location.hash = "#000_environment";
+    window.location.hash = "#001_syntax";
     vi.restoreAllMocks();
   });
 
@@ -34,7 +33,7 @@ describe("app e2e flow", () => {
     const wrapper = mount(App);
     await flushPromises();
 
-    expect(wrapper.text()).toContain("環境構築");
+    expect(wrapper.text()).toContain("基本文法");
 
     const searchButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("検索"));
     expect(searchButton).toBeTruthy();
@@ -64,14 +63,14 @@ describe("app e2e flow", () => {
 
   it("学習メモ一覧を表示する", async () => {
     window.localStorage.setItem(
-      "python-master-lab:000_environment",
-      JSON.stringify({ answer: "Dockerの役割を説明した", ragQuestion: "なぜDockerで統一する？", review: "envとログを確認" }),
+      "python-master-lab:001_syntax",
+      JSON.stringify({ answer: "基本文法を説明した", ragQuestion: "なぜ小さい関数にする？", review: "tracebackを確認" }),
     );
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();
 
-    const reviewTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("振り返り"));
+    const reviewTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("メモ"));
     await reviewTab?.trigger("click");
     const labToggle = wrapper.findAll(".collapse-toggle").find((button) => button.text().includes("実務ラボ"));
     await labToggle?.trigger("click");
@@ -79,6 +78,6 @@ describe("app e2e flow", () => {
     await memoTab?.trigger("click");
 
     expect(wrapper.text()).toContain("学習メモ一覧");
-    expect(wrapper.text()).toContain("Dockerの役割を説明した");
+    expect(wrapper.text()).toContain("基本文法を説明した");
   });
 });

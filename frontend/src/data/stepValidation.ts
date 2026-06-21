@@ -26,6 +26,9 @@ export function validateStepCatalog(steps: Step[], learningOrder: string[], phas
     if (step.commands.length === 0 || !step.commands[0]?.trim()) {
       errors.push(`${step.id}: primary command is empty`);
     }
+    if (step.commands.length > 1) {
+      errors.push(`${step.id}: only one command is allowed`);
+    }
     if (step.reviewPoints.length === 0) errors.push(`${step.id}: reviewPoints is empty`);
   }
 

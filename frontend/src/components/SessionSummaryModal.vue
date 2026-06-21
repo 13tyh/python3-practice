@@ -28,7 +28,7 @@ function formatDate(value: string) {
     <section class="modal-panel session-summary" aria-label="学習終了サマリー">
       <button type="button" class="modal-close" title="閉じる" @click="$emit('close')">x</button>
       <span>session saved</span>
-      <h2>今日の学習を保存しました</h2>
+      <h2>学習を保存しました</h2>
       <code>{{ formatDate(summary.at) }}</code>
       <code>実行 {{ summary.totalRuns }} / 失敗 {{ summary.failedRuns }}</code>
       <strong>次回はここから</strong>

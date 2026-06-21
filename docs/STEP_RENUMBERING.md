@@ -1,4 +1,3 @@
-00_environment -> 000_environment
 01_syntax -> 001_syntax
 86_boolean_logic -> 002_boolean_logic
 87_string_formatting_parsing -> 003_string_formatting_parsing

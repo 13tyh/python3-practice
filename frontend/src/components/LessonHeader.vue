@@ -18,7 +18,7 @@ defineEmits<{
       <div class="mentor-kicker">{{ currentPhase }} / {{ step.id }}</div>
       <h2>{{ step.title }}</h2>
       <p>{{ step.goals[0] ?? step.summary }}</p>
-      <small>詳細は対象READMEで確認</small>
+      <small>説明はこの画面内にまとめています</small>
     </div>
     <div class="mentor-arrows">
       <button type="button" title="前のstep" @click="$emit('move', -1)">

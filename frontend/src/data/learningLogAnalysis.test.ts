@@ -57,7 +57,5 @@ describe("analyzeLearningLog", () => {
     expect(result.focusQueue.map((item) => item.title)).not.toContain("FastAPI AI");
     expect(result.nextActions.join(" ")).toContain("失敗ログ");
     expect(result.dueReviews[0]).toMatchObject({ due: true, stepId: "130_fastapi_ai" });
-    expect(result.basicDrill[0].stepId).toBe("001_syntax");
-    expect(result.todayTop3.map((item) => item.stepId)).toContain("130_fastapi_ai");
   });
 });

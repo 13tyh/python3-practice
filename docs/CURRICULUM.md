@@ -6,7 +6,6 @@
 
 対象:
 
-- `000_environment`
 - `001_syntax`
 - `002_boolean_logic`
 - `003_string_formatting_parsing`

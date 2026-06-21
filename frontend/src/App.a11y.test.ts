@@ -12,8 +12,7 @@ function mockFetch() {
 describe("app accessibility", () => {
   beforeEach(() => {
     window.localStorage.clear();
-    window.localStorage.setItem("python-master-onboarding-seen", "true");
-    window.location.hash = "#000_environment";
+    window.location.hash = "#001_syntax";
     vi.restoreAllMocks();
   });
 
@@ -44,7 +43,7 @@ describe("app accessibility", () => {
 
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "j" }));
     await flushPromises();
-    expect(wrapper.text()).toContain("基本文法");
+    expect(wrapper.text()).toContain("Boolean Logic");
 
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "l" }));
     await flushPromises();

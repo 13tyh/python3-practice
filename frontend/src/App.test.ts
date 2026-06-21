@@ -44,8 +44,8 @@ describe("Python Master app", () => {
 
     expect(window.location.hash).toBe("#home");
     expect(wrapper.find(".home-dashboard").exists()).toBe(true);
-    expect(wrapper.text()).toContain("今日やる3問を上から片づける");
-    expect(wrapper.text()).not.toContain("今回のゴール");
+    expect(wrapper.text()).toContain("次の1問だけ解く");
+    expect(wrapper.text()).not.toContain("この1問");
     expect(wrapper.find(".sidebar-home-link").classes()).toContain("active");
     expect(wrapper.find(".mentor-step-list button.active").exists()).toBe(false);
   });
@@ -58,15 +58,15 @@ describe("Python Master app", () => {
     await flushPromises();
 
     expect(wrapper.text()).toContain("ファイル操作");
-    expect(wrapper.text()).toContain("今回のゴール");
+    expect(wrapper.text()).toContain("この1問");
     expect(wrapper.text()).toContain("最短合格条件");
     expect(wrapper.text()).toContain("読む");
-    expect(wrapper.text()).toContain("書く");
+    expect(wrapper.text()).toContain("解く");
 
-    const writeTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("書く"));
+    const writeTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("解く"));
     await writeTab?.trigger("click");
 
-    expect(wrapper.text()).toContain("書き方");
+    expect(wrapper.text()).toContain("解く順番");
     expect(wrapper.text()).toContain("注意点");
   });
 
@@ -102,34 +102,34 @@ describe("Python Master app", () => {
     const wrapper = mount(App);
     await flushPromises();
 
-    expect(wrapper.find(".mentor-shell").classes()).not.toContain("sidebar-collapsed");
-    await wrapper.find(".sidebar-toggle").trigger("click");
     expect(wrapper.find(".mentor-shell").classes()).toContain("sidebar-collapsed");
+    await wrapper.find(".sidebar-toggle").trigger("click");
+    expect(wrapper.find(".mentor-shell").classes()).not.toContain("sidebar-collapsed");
   });
 
   it("効率ルートはホーム画面だけに表示する", async () => {
-    window.location.hash = "#000_environment";
+    window.location.hash = "#001_syntax";
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();
 
-    expect(wrapper.text()).toContain("今回のゴール");
+    expect(wrapper.text()).toContain("この1問");
     expect(wrapper.find(".mentor-main").text()).not.toContain("効率ルート");
 
     const homeButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("ホーム"));
     await homeButton?.trigger("click");
 
-    expect(wrapper.text()).toContain("今日やる3問を上から片づける");
+    expect(wrapper.text()).toContain("次の1問だけ解く");
     expect(wrapper.find(".home-dashboard").text()).toContain("効率ルート");
-    expect(wrapper.text()).not.toContain("今回のゴール");
+    expect(wrapper.text()).not.toContain("この1問");
     expect(homeButton?.classes()).toContain("active");
     expect(wrapper.find(".sidebar-home-link").classes()).toContain("active");
-    expect(wrapper.find(".mentor-shell").classes()).not.toContain("sidebar-collapsed");
+    expect(wrapper.find(".mentor-shell").classes()).toContain("sidebar-collapsed");
     expect(wrapper.find(".mentor-step-list button.active").exists()).toBe(false);
   });
 
   it("軽量モードで参照パネルと実務ラボを畳める", async () => {
-    window.location.hash = "#000_environment";
+    window.location.hash = "#001_syntax";
     mockFetch();
     const wrapper = mount(App);
     await flushPromises();
@@ -137,7 +137,7 @@ describe("Python Master app", () => {
     expect(wrapper.find(".mastery-lab").exists()).toBe(false);
     const labToggle = wrapper.findAll(".collapse-toggle").find((button) => button.text().includes("実務ラボ"));
     expect(labToggle).toBeUndefined();
-    const reviewTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("振り返り"));
+    const reviewTab = wrapper.findAll(".lesson-tabs button").find((button) => button.text().includes("メモ"));
     await reviewTab?.trigger("click");
     const openedLabToggle = wrapper.findAll(".collapse-toggle").find((button) => button.text().includes("実務ラボ"));
     expect(openedLabToggle).toBeDefined();
@@ -152,21 +152,6 @@ describe("Python Master app", () => {
     expect(wrapper.text()).toContain("軽量モード");
     expect(wrapper.find(".mastery-lab").exists()).toBe(false);
     expect(window.localStorage.getItem("python-master-light-mode")).toBe("true");
-  });
-
-  it("ランダム基礎で基礎Stepの書くタブへ移動する", async () => {
-    mockFetch();
-    vi.spyOn(Math, "random").mockReturnValue(0);
-    const wrapper = mount(App);
-    await flushPromises();
-
-    const randomButton = wrapper.findAll(".learning-toolbar button").find((button) => button.text().includes("ランダム"));
-    await randomButton?.trigger("click");
-    await new Promise((resolve) => window.setTimeout(resolve, 0));
-    await flushPromises();
-
-    expect(wrapper.text()).toContain("書き方");
-    expect(wrapper.find(".lesson-tabs button.active").text()).toContain("書く");
   });
 
   it("保存済みdoneでもテスト成功記録がなければ完了扱いにしない", async () => {

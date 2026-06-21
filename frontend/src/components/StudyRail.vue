@@ -2,7 +2,7 @@
 import { Database, ExternalLink, FileCode2, Lightbulb } from "lucide-vue-next";
 import { computed } from "vue";
 import type { StepReference } from "../api/learningApi";
-import { stepDirectoryPlan } from "../data/learningUi";
+import { primaryWorkFile } from "../data/learningUi";
 import type { Step } from "../data/stepTypes";
 
 const props = defineProps<{
@@ -11,7 +11,11 @@ const props = defineProps<{
   step: Step;
 }>();
 
-const directoryPlan = computed(() => stepDirectoryPlan(props.step));
+function fileName(path: string) {
+  return path.split("/").pop() ?? path;
+}
+
+const workFile = computed(() => primaryWorkFile(props.step));
 </script>
 
 <template>
@@ -29,15 +33,13 @@ const directoryPlan = computed(() => stepDirectoryPlan(props.step));
     <article class="rail-card">
       <div class="work-title">
         <FileCode2 :size="20" />
-        <h3>作業ディレクトリ</h3>
+        <h3>開くファイル</h3>
       </div>
-      <div v-for="item in directoryPlan" :key="item.label" class="directory-row">
-        <span>{{ item.label }}</span>
-        <code>{{ item.directory }}</code>
-        <small>{{ item.note }}</small>
+      <div class="directory-row">
+        <span>このStepはここだけ触る</span>
+        <strong>{{ fileName(workFile) }}</strong>
+        <code>{{ workFile }}</code>
       </div>
-      <h3>対象ファイル</h3>
-      <code v-for="file in step.files" :key="file">{{ file }}</code>
     </article>
 
     <article v-if="reference" class="rail-card">

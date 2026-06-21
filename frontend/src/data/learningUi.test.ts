@@ -4,13 +4,13 @@ import {
   categoryLabel,
   extractFileCandidates,
   extractRunHighlights,
-  fileTestCommandsForStep,
   getPhase,
   isRunnable,
   isTestCommand,
+  methodPrimerForStep,
+  primaryWorkFile,
   runFailureHint,
   runResultGuide,
-  stepDirectoryPlan,
 } from "./learningUi";
 import type { Step } from "./steps";
 
@@ -52,22 +52,15 @@ describe("learningUi", () => {
     expect(guide.cautions).toContain("境界値を見る");
   });
 
-  it("stepごとの作業ディレクトリを分類する", () => {
-    expect(stepDirectoryPlan(step)).toEqual([
-      { label: "読む", directory: "steps/001_syntax", note: "READMEで目的を確認" },
-      { label: "書く", directory: "steps/001_syntax/implementation/exercises/basics", note: "TODOを実装" },
-      { label: "確認", directory: "steps/001_syntax/tests", note: "pytestで判定" },
-    ]);
+  it("READMEではなく作業ファイルを返す", () => {
+    expect(primaryWorkFile({ ...step, files: ["steps/001_syntax/README.md", step.files[0]] })).toBe(step.files[0]);
   });
 
-  it("実装ファイルごとのテストコマンドを返す", () => {
-    expect(fileTestCommandsForStep(step)).toEqual([
-      {
-        command: "pytest steps/001_syntax/tests/exercise_tests/basics/test_01_values.py -q",
-        file: "steps/001_syntax/implementation/exercises/basics/01_values.py",
-        label: "01_values.py",
-      },
-    ]);
+  it("stepに合う短い座学を返す", () => {
+    const primer = methodPrimerForStep(step);
+
+    expect(primer.title).toBe("最初に使うメソッド");
+    expect(primer.items.length).toBeGreaterThan(0);
   });
 
   it("実行結果に応じた案内を返す", () => {

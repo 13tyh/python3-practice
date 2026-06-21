@@ -69,7 +69,7 @@ function formatDate(value: string) {
       <details class="log-details">
         <summary>
           <History :size="17" />
-          基礎復習
+          戻る候補
         </summary>
         <code v-for="item in analysis.staleBasics" :key="item.stepId">
           {{ item.title }} / {{ formatDate(item.lastAt) }}
@@ -94,7 +94,7 @@ function formatDate(value: string) {
         </summary>
         <code>1回15分で、読む→実行→直す→1行メモ</code>
         <code>10分詰まったら解答例を比較</code>
-        <code>新規より、失敗と基礎復習を優先</code>
+        <code>新規より、失敗と未完了の早いStepを優先</code>
       </details>
     </div>
   </section>

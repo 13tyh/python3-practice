@@ -1,13 +1,5 @@
 [
   {
-    "step": "000_environment",
-    "comment": "Docker / uv / pytest / ruff / mypy の役割を分ける。",
-    "urls": [
-      "https://docs.astral.sh/uv/",
-      "https://docs.pytest.org/en/stable/"
-    ]
-  },
-  {
     "step": "001_syntax",
     "comment": "入力、処理、戻り値、例外で関数を読む。",
     "urls": [

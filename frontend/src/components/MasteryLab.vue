@@ -16,7 +16,7 @@ import {
 } from "lucide-vue-next";
 import { computed, ref, watch } from "vue";
 import { fetchSolutionCompare, type FileCompare, type RunResult } from "../api/learningApi";
-import { categoryLabel } from "../data/learningUi";
+import { categoryLabel, primaryWorkFile } from "../data/learningUi";
 import type { Step, StepStatus } from "../data/stepTypes";
 
 type LabState = {
@@ -73,7 +73,7 @@ const labTabs: Array<{ key: LabTab; label: string }> = [
 
 const stepFiles = computed(() => props.step.files.filter((file) => file.endsWith(".py")));
 const selectedCompareFile = computed({
-  get: () => selectedFile.value || props.inspectedFile || stepFiles.value[0] || props.step.files[0] || "",
+  get: () => selectedFile.value || props.inspectedFile || stepFiles.value[0] || primaryWorkFile(props.step),
   set: (value: string) => {
     selectedFile.value = value;
   },
@@ -108,7 +108,7 @@ const mongoQueries = [
 const ragSeedText = computed(() => [
   props.step.summary,
   ...props.step.goals,
-  ...props.step.files.map((file) => `対象ファイル: ${file}`),
+  `対象ファイル: ${primaryWorkFile(props.step)}`,
 ].join("\n"));
 const ragSource = computed(() => labState.value.ragDocs.trim() || ragSeedText.value);
 const ragChunks = computed(() =>

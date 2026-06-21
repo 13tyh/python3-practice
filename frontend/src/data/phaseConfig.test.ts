@@ -3,7 +3,7 @@ import { learningPhases, phaseTitleForPosition, phaseTitleForStepId } from "./ph
 
 describe("phaseConfig", () => {
   it("phaseごとのstep数を固定する", () => {
-    expect(learningPhases.map((phase) => phase.steps.length)).toEqual([27, 15, 22, 25, 41, 5, 8]);
+    expect(learningPhases.map((phase) => phase.steps.length)).toEqual([26, 15, 22, 25, 41, 5, 8]);
   });
 
   it("positionからphase名を返す", () => {

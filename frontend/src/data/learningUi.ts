@@ -1,7 +1,12 @@
 import type { Step, StepStatus } from "./steps";
 import type { RunResult } from "../api/learningApi";
-import { fileTestCommandsByStep } from "./fileTestCommands";
 import { phaseTitleForPosition } from "./phaseConfig";
+
+export type MethodPrimer = {
+  title: string;
+  lead: string;
+  items: string[];
+};
 
 export const categoryLabels: Record<string, string> = {
   setup: "環境",
@@ -21,7 +26,7 @@ export const categoryLabels: Record<string, string> = {
 };
 
 const writingTipsByCategory: Record<string, string[]> = {
-  setup: ["まずREADMEの手順を1つずつ実行する", "失敗したコマンドとエラー行をメモする"],
+  setup: ["画面の説明に沿ってコマンドを1つずつ実行する", "失敗したコマンドとエラー行をメモする"],
   python: ["小さい関数に分けて、入力と戻り値を先に決める", "リスト内包表記は1行で読める時だけ使う"],
   test: ["正常系、異常系、境界値を分けて書く", "外部APIやDBはfakeやfixtureに置き換える"],
   design: ["router、service、modelの責務を分ける", "副作用のある処理と純粋な計算を分ける"],
@@ -43,6 +48,34 @@ const cautionTipsByCategory: Record<string, string[]> = {
   api: ["routerにDB操作やAI呼び出しを全部書かない", "型ヒントと実際の戻り値をズラさない"],
   ai: ["deployment_nameとmodel_nameを混同しない", "prompt injectionと空回答をテストする"],
   performance: ["推測で最適化しない", "N+1をループ内DB/API呼び出しとして探す"],
+};
+
+const methodPrimersByCategory: Record<string, MethodPrimer> = {
+  python: {
+    title: "最初に使うメソッド",
+    lead: "このStepは全部覚えなくてOK。まず1つ動かして、失敗ログで必要なものだけ確認します。",
+    items: ["len / range: 個数と繰り返し", "str.strip / split / join: 文字列を整える", "list.append / dict.get: 値を追加・安全に読む"],
+  },
+  test: {
+    title: "テストで見るところ",
+    lead: "pytestは答え合わせです。失敗したら、最初のFAILEDとAssertionErrorだけ見ます。",
+    items: ["assert: 期待値と実際の値を比べる", "fixture: テスト前の準備", "monkeypatch: 外部依存を一時的に差し替える"],
+  },
+  api: {
+    title: "APIで見るところ",
+    lead: "入口、型、返す値の順で見ます。routerに全部書かないのがコツです。",
+    items: ["GET / POST: 取得と作成", "status_code: 成功・失敗の種類", "json / schema: 入出力の形"],
+  },
+  db: {
+    title: "DBで見るところ",
+    lead: "全件取得より、条件・件数・並び順を先に決めます。",
+    items: ["find / filter: 必要な行だけ取る", "limit / sort: 件数と順序を絞る", "index: よく検索する列を速くする"],
+  },
+  ai: {
+    title: "AIで見るところ",
+    lead: "prompt、入力、出力schema、失敗時の扱いを分けて確認します。",
+    items: ["prompt: 指示文", "schema: AI出力の形", "fallback: 失敗した時の逃げ道"],
+  },
 };
 
 export function getPhase(number: number) {
@@ -106,6 +139,7 @@ export function extractFileCandidates(result: RunResult | null) {
 }
 
 export function buildStepGuide(step: Step) {
+  const workFile = primaryWorkFile(step);
   const categoryTips = writingTipsByCategory[step.category] ?? [
     "目的を1つ決めて、小さい単位で実装する",
     "動かした結果を見ながら修正する",
@@ -113,7 +147,7 @@ export function buildStepGuide(step: Step) {
   const cautionTips = cautionTipsByCategory[step.category] ?? [];
   return {
     writing: [
-      `まず ${step.files[0]} を開いて、TODOかREADMEの指示を読む`,
+      `開くファイルは ${workFile} だけ`,
       ...categoryTips,
       `最後に ${step.commands[0] ?? "pytest"} で確認する`,
     ],
@@ -121,42 +155,18 @@ export function buildStepGuide(step: Step) {
   };
 }
 
-export function stepDirectoryPlan(step: Step) {
-  const directories = new Set(step.files.map((file) => file.split("/").slice(0, -1).join("/")).filter(Boolean));
-  const workDirectory =
-    [...directories].find((dir) => dir.includes("/implementation/")) ??
-    [...directories].find((dir) => dir.startsWith("src/")) ??
-    step.files[0] ??
-    "";
-  const pytestDirs = step.commands
-    .map((command) => command.match(/pytest\s+([^ ]+)/)?.[1] ?? "")
-    .filter(Boolean)
-    .map((path) =>
-      path.endsWith(".py") ? path.split("/").slice(0, -1).join("/") : path.replace(/\/$/, ""),
-    );
-
-  return [
-    {
-      label: "読む",
-      directory: `steps/${step.id}`,
-      note: "READMEで目的を確認",
-    },
-    {
-      label: "書く",
-      directory: workDirectory,
-      note: workDirectory.includes("/implementation/") ? "TODOを実装" : "設定と手順を確認",
-    },
-    {
-      label: "確認",
-      directory: pytestDirs[0] ?? `steps/${step.id}/tests`,
-      note: "pytestで判定",
-    },
-  ].filter((item) => item.directory);
+export function primaryWorkFile(step: Step) {
+  return step.files.find((file) => !file.toLowerCase().endsWith("readme.md")) ?? step.files[0] ?? "";
 }
 
-export function fileTestCommandsForStep(step: Step) {
-  const visibleFiles = new Set(step.files);
-  return (fileTestCommandsByStep[step.id] ?? []).filter((item) => visibleFiles.has(item.file));
+export function methodPrimerForStep(step: Step): MethodPrimer {
+  return (
+    methodPrimersByCategory[step.category] ?? {
+      title: "最初に見ること",
+      lead: "細かい説明より、入口ファイル、TODO、テスト結果の3つを順番に見ます。",
+      items: ["画面上部: 目的を読む", "TODO: 1つだけ直す", "pytest: 結果で次を判断する"],
+    }
+  );
 }
 
 export function isRunnable(command: string) {

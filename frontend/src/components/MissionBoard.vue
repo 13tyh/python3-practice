@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import CommandRunCard from "./CommandRunCard.vue";
-import { stepDirectoryPlan } from "../data/learningUi";
+import { primaryWorkFile } from "../data/learningUi";
 import type { Step } from "../data/stepTypes";
 
 const props = defineProps<{
@@ -10,54 +10,58 @@ const props = defineProps<{
   step: Step;
 }>();
 
-const directoryPlan = computed(() => stepDirectoryPlan(props.step));
-
 defineEmits<{
   run: [command: string];
 }>();
+
+function fileName(path: string) {
+  return path.split("/").pop() ?? path;
+}
+
+const workFile = computed(() => primaryWorkFile(props.step));
 </script>
 
 <template>
   <section class="mission-board">
     <article class="mission-card">
-      <span>今回のゴール</span>
+      <span>この1問</span>
       <h3>{{ step.goals[0] }}</h3>
-      <p>{{ step.files[0] }} から読み、TODOを1つずつ動かして直す。</p>
+      <p>まず下の確認コマンドを押します。失敗したら、この1ファイルのTODOだけ直します。</p>
       <div class="learner-focus">
-        <div v-for="item in directoryPlan" :key="item.label">
-          <span>{{ item.label }}</span>
-          <code>{{ item.directory }}</code>
-          <small>{{ item.note }}</small>
+        <div>
+          <span>開くファイル</span>
+          <strong>{{ fileName(workFile) }}</strong>
+          <code>{{ workFile }}</code>
         </div>
         <div>
-          <span>今やる1ファイル</span>
-          <code>{{ step.files[0] }}</code>
+          <span>やること</span>
+          <p>TODOを1つ直して、もう一度テスト実行。</p>
         </div>
         <div>
-          <span>詰まった時ヒント</span>
-          <p>テスト名、失敗行、期待値の順に読む。解答例を見る前に1回だけ仮説を書く。</p>
+          <span>詰まった時</span>
+          <p>最初の失敗ログだけ読む。10分止まったら解答例との差分を見て次へ進む。</p>
         </div>
         <label>
           <input type="checkbox" />
-          解答例を見る前に、自分の修正理由を1文で書いた
+          直した理由を1文で言える
         </label>
       </div>
       <div class="learning-route">
         <div>
           <strong>1</strong>
-          <span>読む</span>
+          <span>説明</span>
         </div>
         <div>
           <strong>2</strong>
-          <span>書く</span>
+          <span>実行</span>
         </div>
         <div>
           <strong>3</strong>
-          <span>動かす</span>
+          <span>修正</span>
         </div>
         <div>
           <strong>4</strong>
-          <span>判断</span>
+          <span>次へ</span>
         </div>
       </div>
     </article>

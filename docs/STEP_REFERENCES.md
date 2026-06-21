@@ -4,7 +4,6 @@
 
 | Step | コメント | 参考URL |
 | --- | --- | --- |
-| `000_environment` | Docker / uv / pytest / ruff / mypy の役割を分ける。 | https://docs.astral.sh/uv/ / https://docs.pytest.org/en/stable/ |
 | `001_syntax` | 入力、処理、戻り値、例外で関数を読む。 | https://docs.python.org/3/tutorial/ |
 | `023_typing_deep` | 型は設計意図。`None` と `Protocol` を特に意識する。 | https://docs.python.org/3/library/typing.html |
 | `025_files` | encoding、path、上書き、存在しないファイルを見る。 | https://docs.python.org/3/library/pathlib.html |

@@ -1,27 +1,27 @@
 <script setup lang="ts">
 import {
   AlertTriangle,
+  ArrowRight,
+  BookOpenCheck,
   PencilLine,
+  Play,
 } from "lucide-vue-next";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { fetchStepReferences, type StepReference } from "./api/learningApi";
-import CommandList from "./components/CommandList.vue";
 import CommandCenter from "./components/CommandCenter.vue";
-import FileTestList from "./components/FileTestList.vue";
 import LearningToolbar from "./components/LearningToolbar.vue";
 import LearningLogPanel from "./components/LearningLogPanel.vue";
 import LessonHeader from "./components/LessonHeader.vue";
 import MentorSidebar from "./components/MentorSidebar.vue";
 import MasteryLab from "./components/MasteryLab.vue";
 import MissionBoard from "./components/MissionBoard.vue";
-import OnboardingModal from "./components/OnboardingModal.vue";
 import RunResultCard from "./components/RunResultCard.vue";
 import SessionSummaryModal from "./components/SessionSummaryModal.vue";
 import StudyRail from "./components/StudyRail.vue";
 import { useStepProgress } from "./composables/useStepProgress";
 import { useLearningLog } from "./composables/useLearningLog";
 import { useStepRunner } from "./composables/useStepRunner";
-import { buildStepGuide, fileTestCommandsForStep, getPhase, isRunnable, statusLabel } from "./data/learningUi";
+import { buildStepGuide, getPhase, isRunnable, methodPrimerForStep, primaryWorkFile, statusLabel } from "./data/learningUi";
 import { learningPhases } from "./data/phaseConfig";
 import { analyzeLearningLog } from "./data/learningLogAnalysis";
 import { filterSteps, findStepById, stepAtOffset, stepNumberOf } from "./data/stepNavigation";
@@ -31,26 +31,22 @@ const initialHash = window.location.hash.replace("#", "");
 const selectedId = ref(initialHash && initialHash !== "home" ? initialHash : steps[0].id);
 const query = ref("");
 const selectedCategory = ref("all");
-const hideDone = ref(window.localStorage.getItem("python-master-hide-done") === "true");
-const isSidebarOpen = ref(true);
+const isSidebarOpen = ref(window.localStorage.getItem("python-master-sidebar-open") === "true");
 const isLightMode = ref(window.localStorage.getItem("python-master-light-mode") === "true");
 const isHomeView = ref(!initialHash || initialHash === "home");
-const isOnboardingOpen = ref(false);
 const isSearchOpen = ref(false);
 const isSessionSummaryOpen = ref(false);
-const isTodayOnly = ref(window.localStorage.getItem("python-master-today-only") === "true");
 const isReferenceOpen = ref(false);
 const isLabOpen = ref(false);
 const inspectedFile = ref("");
 const latestSession = ref<SessionSummary | null>(null);
 const stepReferences = ref<StepReference[]>([]);
-type LessonTab = "read" | "write" | "run" | "review";
+type LessonTab = "read" | "write" | "review";
 const activeLessonTab = ref<LessonTab>("read");
 const lessonTabs: Array<{ id: LessonTab; label: string }> = [
-  { id: "read", label: "読む" },
-  { id: "write", label: "書く" },
-  { id: "run", label: "実行" },
-  { id: "review", label: "振り返り" },
+  { id: "read", label: "説明" },
+  { id: "write", label: "解く" },
+  { id: "review", label: "メモ" },
 ];
 const {
   getStatus,
@@ -66,9 +62,6 @@ onMounted(async () => {
   window.addEventListener("hashchange", syncSelectedFromHash);
   window.addEventListener("keydown", handleShortcut);
   syncSelectedFromHash();
-  if (window.localStorage.getItem("python-master-onboarding-seen") !== "true") {
-    isOnboardingOpen.value = true;
-  }
   try {
     stepReferences.value = await fetchStepReferences();
   } catch {
@@ -89,11 +82,8 @@ const { runCommand, runError, runningCommand, runResult } = useStepRunner(select
   setStatus,
 }, { recordRun });
 const learningAnalysis = computed(() => analyzeLearningLog(steps, getStatus, learningEvents.value));
-const todayStepIds = computed(() => new Set(learningAnalysis.value.todayTop3.map((item) => item.stepId)));
 const visibleSteps = computed(() => {
-  let result = isTodayOnly.value ? steps.filter((step) => todayStepIds.value.has(step.id)) : steps;
-  if (hideDone.value) result = result.filter((step) => getStatus(step.id) !== "done");
-  return result.length > 0 ? result : steps;
+  return steps;
 });
 const filteredSteps = computed(() => filterSteps(visibleSteps.value, query.value, selectedCategory.value));
 const phaseGroups = computed(() => {
@@ -112,11 +102,8 @@ const doingCount = computed(() => steps.filter((step) => getStatus(step.id) === 
 const progressPercent = computed(() => Math.round((doneCount.value / steps.length) * 100));
 const selectedNumber = computed(() => stepNumberOf(steps, selectedStep.value.id));
 const currentPhase = computed(() => getPhase(selectedNumber.value));
-const runnableCommands = computed(() => selectedStep.value.commands.filter((command) => isRunnable(command)));
-const additionalCommands = computed(() => selectedStep.value.commands.slice(1));
 const primaryCommand = computed(() => selectedStep.value.commands[0] ?? "");
-const runCommands = computed(() => [primaryCommand.value, ...additionalCommands.value].filter(Boolean));
-const fileTestCommands = computed(() => fileTestCommandsForStep(selectedStep.value));
+const runnableCommands = computed(() => (isRunnable(primaryCommand.value) ? [primaryCommand.value] : []));
 const acceptanceChecklist = computed(() =>
   [
     `${primaryCommand.value || "pytest"} が成功する`,
@@ -131,6 +118,40 @@ const selectedReference = computed(() =>
   stepReferences.value.find((reference) => reference.step === selectedStep.value.id),
 );
 const selectedGuide = computed(() => buildStepGuide(selectedStep.value));
+const selectedPrimer = computed(() => methodPrimerForStep(selectedStep.value));
+const selectedWorkFile = computed(() => primaryWorkFile(selectedStep.value));
+const nextFocusStep = computed(() => steps.find((step) => getStatus(step.id) !== "done") ?? steps[0]);
+const nextFocusPrimer = computed(() => methodPrimerForStep(nextFocusStep.value));
+const currentRunPassed = computed(
+  () => runResult.value?.exit_code === 0 && runResult.value.command === primaryCommand.value,
+);
+const homeFlowItems = [
+  { title: "1. この問題を解く", detail: "未完了の先頭Stepを開く" },
+  { title: "2. テスト実行", detail: "結果を見てから直す" },
+  { title: "3. 1ファイル修正", detail: "表示されたファイルだけ触る" },
+  { title: "4. 次の問題へ", detail: "成功したら止まらず進む" },
+];
+const lessonAction = computed(() => {
+  if (currentRunPassed.value) {
+    return {
+      title: "次の問題へ進む",
+      detail: "このStepは成功しています。流れを切らずに次へ進みます。",
+      state: "passed",
+    };
+  }
+  if (runResult.value && runResult.value.exit_code !== 0) {
+    return {
+      title: "開くファイルを直す",
+      detail: `${selectedWorkFile.value} のTODOか失敗行だけ直して、もう一度テスト実行します。`,
+      state: "failed",
+    };
+  }
+  return {
+    title: "まずテスト実行を押す",
+    detail: "最初に失敗内容を見ます。何を直すかはログが教えてくれます。",
+    state: "start",
+  };
+});
 
 type SessionSummary = {
   at: string;
@@ -139,8 +160,7 @@ type SessionSummary = {
   totalRuns: number;
 };
 
-watch(hideDone, (value) => window.localStorage.setItem("python-master-hide-done", String(value)));
-watch(isTodayOnly, (value) => window.localStorage.setItem("python-master-today-only", String(value)));
+watch(isSidebarOpen, (value) => window.localStorage.setItem("python-master-sidebar-open", String(value)));
 watch(
   () => selectedStep.value.id,
   () => {
@@ -171,6 +191,7 @@ function replaceHashWithHome() {
 
 function selectStep(step: Step) {
   isHomeView.value = false;
+  isSidebarOpen.value = false;
   selectedId.value = step.id;
   window.location.hash = step.id;
 }
@@ -179,15 +200,21 @@ function move(offset: number) {
   selectStep(stepAtOffset(steps, selectedStep.value.id, offset));
 }
 
+function selectNextFocusStep() {
+  selectStep(nextFocusStep.value);
+}
+
+function selectNextUnfinishedStep() {
+  const currentIndex = steps.findIndex((step) => step.id === selectedStep.value.id);
+  const afterCurrent = steps.slice(currentIndex + 1).find((step) => getStatus(step.id) !== "done");
+  const firstUnfinished = steps.find((step) => getStatus(step.id) !== "done");
+  selectStep(afterCurrent ?? firstUnfinished ?? stepAtOffset(steps, selectedStep.value.id, 1));
+}
+
 function inspectFile(file: string) {
   inspectedFile.value = file;
   activeLessonTab.value = "review";
   isLabOpen.value = true;
-}
-
-function closeOnboarding() {
-  window.localStorage.setItem("python-master-onboarding-seen", "true");
-  isOnboardingOpen.value = false;
 }
 
 function handleShortcut(event: KeyboardEvent) {
@@ -222,7 +249,6 @@ function handleShortcut(event: KeyboardEvent) {
   }
   if (event.key === "Escape") {
     isSearchOpen.value = false;
-    isOnboardingOpen.value = false;
   }
 }
 
@@ -244,42 +270,7 @@ function openHome() {
   window.location.hash = "home";
 }
 
-function toggleTodayOnly() {
-  isTodayOnly.value = !isTodayOnly.value;
-  if (isTodayOnly.value) selectFirstFocusStep();
-}
-
-function toggleHideDone() {
-  hideDone.value = !hideDone.value;
-}
-
-function startBasicReview() {
-  selectedCategory.value = "basic";
-  hideDone.value = true;
-  isTodayOnly.value = false;
-  const firstBasic = steps.find((step) => step.level === "基礎" && getStatus(step.id) !== "done");
-  if (firstBasic) selectStep(firstBasic);
-}
-
-function startRandomBasicDrill() {
-  const unfinishedBasics = steps.filter((step) => step.level === "基礎" && getStatus(step.id) !== "done");
-  const basics = unfinishedBasics.length > 0 ? unfinishedBasics : steps.filter((step) => step.level === "基礎");
-  const step = basics[Math.floor(Math.random() * basics.length)];
-  if (step) {
-    selectStep(step);
-    window.setTimeout(() => {
-      activeLessonTab.value = "write";
-    }, 0);
-  }
-}
-
-function selectFirstFocusStep() {
-  const first = steps.find((step) => step.id === learningAnalysis.value.focusQueue[0]?.stepId);
-  if (first) selectStep(first);
-}
-
 function runAndShowResult(command: string) {
-  activeLessonTab.value = "run";
   runCommand(command);
 }
 
@@ -287,7 +278,7 @@ function finishSession() {
   const summary: SessionSummary = {
     at: new Date().toISOString(),
     failedRuns: learningEvents.value.filter((event) => !event.ok).length,
-    nextItems: learningAnalysis.value.todayTop3.map((item) => `${item.label}: ${item.title}`),
+    nextItems: learningAnalysis.value.focusQueue.map((item) => `${item.label}: ${item.title}`),
     totalRuns: learningEvents.value.length,
   };
   latestSession.value = summary;
@@ -334,38 +325,40 @@ function toggleLightMode() {
 
     <main class="mentor-main">
       <LearningToolbar
-        :hide-done="hideDone"
         :is-home-view="isHomeView"
         :is-light-mode="isLightMode"
-        :is-today-only="isTodayOnly"
         @finish-session="finishSession"
         @open-home="openHome"
-        @open-guide="isOnboardingOpen = true"
         @open-search="isSearchOpen = true"
         @reset-progress="resetAllProgress"
-        @start-basic-review="startBasicReview"
-        @start-random-basic="startRandomBasicDrill"
-        @toggle-hide-done="toggleHideDone"
         @toggle-light-mode="toggleLightMode"
-        @toggle-today-only="toggleTodayOnly"
       />
 
       <section v-if="isHomeView" class="home-dashboard">
         <article class="home-hero home-focus">
-          <span>Today</span>
-          <h2>今日やる3問を上から片づける</h2>
-          <p>迷う時間を減らすために、失敗復習、基礎、次のStepだけを先に出します。</p>
-          <div class="home-focus-grid">
-            <a v-for="item in learningAnalysis.todayTop3" :key="item.stepId" :href="`#${item.stepId}`">
-              <strong>{{ item.label }}</strong>
-              <span>{{ item.title }}</span>
-              <small>{{ item.reason }}</small>
-            </a>
+          <span>Next</span>
+          <h2>次の1問だけ解く</h2>
+          <p>一覧は気にしなくて大丈夫です。まず1問だけ開いて、テストが通ったら次へ進みます。</p>
+          <div class="flow-steps" aria-label="学習の進め方">
+            <div v-for="item in homeFlowItems" :key="item.title">
+              <strong>{{ item.title }}</strong>
+              <small>{{ item.detail }}</small>
+            </div>
+          </div>
+          <div class="next-focus-card">
+            <strong>順番に進む</strong>
+            <span>{{ nextFocusStep.title }}</span>
+            <small>未完了の先頭Step</small>
+            <button type="button" @click="selectNextFocusStep">この問題を解く</button>
+          </div>
+          <div class="primer-card">
+            <strong>{{ nextFocusPrimer.title }}</strong>
+            <p>{{ nextFocusPrimer.lead }}</p>
+            <ul>
+              <li v-for="item in nextFocusPrimer.items" :key="item">{{ item }}</li>
+            </ul>
           </div>
           <div class="home-actions">
-            <button type="button" @click="toggleTodayOnly">今日だけ表示</button>
-            <button type="button" @click="startBasicReview">基礎復習</button>
-            <button type="button" @click="startRandomBasicDrill">ランダム基礎</button>
             <button type="button" @click="finishSession">学習終了</button>
           </div>
         </article>
@@ -383,7 +376,7 @@ function toggleLightMode() {
           </article>
           <article class="home-rule-card">
             <strong>15分ルール</strong>
-            <p>読む、書く、実行、1行メモ。詰まったら解答例と差分を見る。</p>
+            <p>説明、解く、直す、次へ。詰まったら解答例と差分を見る。</p>
           </article>
         </aside>
 
@@ -391,6 +384,27 @@ function toggleLightMode() {
       </section>
 
       <LessonHeader v-if="!isHomeView" :current-phase="currentPhase" :step="selectedStep" @move="move" />
+
+      <section v-if="!isHomeView" class="lesson-next-action" :class="`state-${lessonAction.state}`">
+        <div>
+          <span>今やること</span>
+          <strong>{{ lessonAction.title }}</strong>
+          <p>{{ lessonAction.detail }}</p>
+        </div>
+        <button
+          v-if="!currentRunPassed"
+          type="button"
+          :disabled="!isRunnable(primaryCommand) || Boolean(runningCommand)"
+          @click="runAndShowResult(primaryCommand)"
+        >
+          <Play :size="17" />
+          テスト実行
+        </button>
+        <button v-else type="button" @click="selectNextUnfinishedStep">
+          <ArrowRight :size="17" />
+          次の問題へ
+        </button>
+      </section>
 
       <section v-if="!isHomeView" class="lesson-strip" aria-label="lesson overview">
         <div class="lesson-chip">
@@ -403,11 +417,11 @@ function toggleLightMode() {
         </div>
         <div class="lesson-chip">
           <span>対象</span>
-          <strong>{{ selectedStep.files.length }} files</strong>
+          <strong>1 file</strong>
         </div>
         <div class="lesson-chip">
           <span>実行</span>
-          <strong>{{ runnableCommands.length }} commands</strong>
+          <strong>{{ runnableCommands.length > 0 ? "1 test" : "なし" }}</strong>
         </div>
       </section>
 
@@ -423,6 +437,19 @@ function toggleLightMode() {
         </button>
       </nav>
 
+      <article v-if="!isHomeView" class="lesson-map-card">
+        <div>
+          <BookOpenCheck :size="20" />
+          <strong>迷ったらこの順番</strong>
+        </div>
+        <ol>
+          <li>説明タブで目的と開くファイルを見る</li>
+          <li>テスト実行を押して失敗内容を見る</li>
+          <li>表示された1ファイルだけ直す</li>
+          <li>成功したら次の問題へ進む</li>
+        </ol>
+      </article>
+
       <MissionBoard
         v-if="!isHomeView && activeLessonTab === 'read'"
         :primary-command="primaryCommand"
@@ -430,6 +457,31 @@ function toggleLightMode() {
         :step="selectedStep"
         @run="runAndShowResult"
       />
+
+      <RunResultCard
+        v-if="!isHomeView && activeLessonTab === 'read' && (runResult || runError || runningCommand)"
+        :run-error="runError"
+        :run-result="runResult"
+        :running-command="runningCommand"
+        @inspect-file="inspectFile"
+      />
+
+      <article v-if="!isHomeView && activeLessonTab === 'read' && currentRunPassed" class="work-card next-step-card">
+        <strong>このStepは完了です</strong>
+        <p>止まらず次へ進めます。必要ならあとでメモに戻ればOKです。</p>
+        <button type="button" @click="selectNextUnfinishedStep">次の問題へ</button>
+      </article>
+
+      <article v-if="!isHomeView && activeLessonTab === 'read'" class="work-card primer-card">
+        <div class="work-title">
+          <PencilLine :size="20" />
+          <h3>{{ selectedPrimer.title }}</h3>
+        </div>
+        <p>{{ selectedPrimer.lead }}</p>
+        <ul>
+          <li v-for="item in selectedPrimer.items" :key="item">{{ item }}</li>
+        </ul>
+      </article>
 
       <article v-if="!isHomeView && activeLessonTab === 'read'" class="work-card acceptance-card">
         <div class="work-title">
@@ -446,7 +498,7 @@ function toggleLightMode() {
           <article v-if="activeLessonTab === 'write'" class="work-card">
             <div class="work-title">
               <PencilLine :size="20" />
-              <h3>書き方</h3>
+              <h3>解く順番</h3>
             </div>
             <ol class="step-guide">
               <li v-for="tip in selectedGuide.writing" :key="tip">{{ tip }}</li>
@@ -463,33 +515,12 @@ function toggleLightMode() {
             </ul>
           </article>
 
-          <RunResultCard
-            v-if="activeLessonTab === 'run'"
-            :run-error="runError"
-            :run-result="runResult"
-            :running-command="runningCommand"
-            @inspect-file="inspectFile"
-          />
-
-          <CommandList
-            v-if="activeLessonTab === 'run'"
-            :commands="runCommands"
-            :running-command="runningCommand"
-            @run="runAndShowResult"
-          />
-
-          <FileTestList
-            v-if="activeLessonTab === 'run'"
-            :items="fileTestCommands"
-            :running-command="runningCommand"
-            @run="runAndShowResult"
-          />
         </div>
 
         <section v-if="activeLessonTab === 'review' && !isLightMode" class="collapse-stack">
           <article class="collapsible-panel">
             <button type="button" class="collapse-toggle" @click="isReferenceOpen = !isReferenceOpen">
-              参照リソース / 対象ファイル
+              参考リンク / 開くファイル
               <span>{{ isReferenceOpen ? "閉じる" : "開く" }}</span>
             </button>
             <StudyRail
@@ -528,7 +559,6 @@ function toggleLightMode() {
       </section>
     </main>
 
-    <OnboardingModal :open="isOnboardingOpen" @close="closeOnboarding" />
     <CommandCenter :open="isSearchOpen" :steps="steps" @close="isSearchOpen = false" @select-step="selectStep" />
     <SessionSummaryModal :open="isSessionSummaryOpen" :summary="latestSession" @close="isSessionSummaryOpen = false" />
   </div>

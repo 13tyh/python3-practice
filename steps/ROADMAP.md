@@ -2,7 +2,7 @@
 
 ## Phase 1: Python 基礎集中
 
-- `000_environment`、`001_syntax`、`002_boolean_logic` から `013_custom_exceptions`
+- `001_syntax`、`002_boolean_logic` から `013_custom_exceptions`
 - `014_collections_deep` から `022_error_design_deep`
 - `023_typing_deep`、`024_static_typing_practice`、`025_files`、`026_datetime_timezone`
 - bool、文字列、list、dict、set、関数、型、ファイル、日時を序盤で固める
